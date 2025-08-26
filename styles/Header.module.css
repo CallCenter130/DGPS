@@ -1,0 +1,80 @@
+/* styles/Header.module.css - Fusionado y Refinado */
+.header {
+  width: 100%;
+  padding: 1.5rem 5%; /* Más espaciado vertical para un look premium */
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-light);
+  border-bottom: 1px solid rgba(236, 240, 241, 0.1); /* Línea sutil de separación */
+}
+
+/* Izquierda: Logo */
+.brand {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* Centro: Navegación */
+.mainNav {
+  flex: 2; /* Ocupa más espacio */
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem; /* Más espacio entre enlaces */
+}
+
+.mainNav a {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 400;
+  position: relative;
+  padding-bottom: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.mainNav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--accent-gold);
+  transition: width 0.3s ease;
+}
+
+.mainNav a:hover {
+  color: var(--accent-gold);
+}
+
+.mainNav a:hover::after {
+  width: 100%;
+}
+
+/* Derecha: Acciones */
+.actions {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ctaButton {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--accent-gold);
+  color: var(--primary-dark);
+  font-weight: bold;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ctaButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
