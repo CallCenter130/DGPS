@@ -1,0 +1,6 @@
+"scripts": {
+  "dev": "next dev",
+  "build": "next build", // Ya no necesitamos '&& next export' aquí
+  "start": "next start",
+  "lint": "next lint"
+},
