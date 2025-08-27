@@ -5,7 +5,7 @@ import Header from '../components/Header'; // Asegúrate de que esta línea exis
 function MyApp({ Component, pageProps }) {
   return (
     <>
-      <Header /> {/* Y que el componente Header se muestre aquí */}
+      <Header /> {/* Y que el componente Header se muestre aquí: */}
       <Component {...pageProps} />
     </>
   );
