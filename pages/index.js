@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Hero from '../components/Hero';
-// Importaremos más componentes aquí a medida que los construyamos
+// Importaremos más componentes aquí a medida que los--- construyamos
 // import PropuestaDeValor from '../components/PropuestaDeValor';
 
 export default function Home() {

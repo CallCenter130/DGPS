@@ -1,6 +1,6 @@
 // pages/_app.js
 import '../styles/globals.css';
-import Header from '../components/Header'; // Asegúrate de que esta línea exista
+import Header from '../components/Header'; // Asegúrate de que -- esta línea exista
 
 function MyApp({ Component, pageProps }) {
   return (
