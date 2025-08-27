@@ -57,17 +57,27 @@
   flex: 2;
   display: flex;
   justify-content: center;
-  gap: 2.5rem;
+  /* Aumentamos dramáticamente el espacio para un look más limpio */
+  gap: 4rem; 
 }
 
 .mainNav a {
   color: inherit;
   font-family: var(--font-sans);
-  font-size: 1rem;
-  font-weight: 400;
+  /* Ajustes de tipografía para más elegancia */
+  font-size: 0.9rem; 
+  font-weight: 500; /* Un poco más de peso */
+  text-transform: uppercase; /* Mayúsculas para un look formal */
+  letter-spacing: 0.05em; /* Espacio entre letras */
+  
   position: relative;
   padding-bottom: 0.5rem;
   transition: color 0.3s ease;
+}
+
+/* ESTILO PARA EL ENLACE DE LA PÁGINA ACTIVA */
+.activeLink {
+  color: var(--accent-gold); /* El enlace activo se destaca en dorado */
 }
 
 .mainNav a::after {
