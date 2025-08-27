@@ -1,35 +1,67 @@
-/* styles/Header.module.css - Fusionado y Refinado */
+/* styles/Header.module.css - VERSIÓN PROFESIONAL */
+
 .header {
   width: 100%;
-  padding: 1.5rem 5%; /* Más espaciado vertical para un look premium */
-  background-color: transparent;
+  padding: 1.5rem 5%;
+  background-color: transparent; /* Transparente por defecto */
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 10;
+  z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: var(--text-light);
-  border-bottom: 1px solid rgba(236, 240, 241, 0.1); /* Línea sutil de separación */
+  transition: background-color 0.4s ease, padding 0.4s ease, box-shadow 0.4s ease; /* Transición suave */
 }
 
-/* Izquierda: Logo */
+/* ESTADO SCROLLED: se activa con JS */
+.scrolled {
+  position: fixed; /* Se fija en la parte superior */
+  background-color: var(--primary-dark);
+  padding: 1rem 5%; /* Un poco más compacto al hacer scroll */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Izquierda: Logo e Identificación */
 .brand {
   flex: 1;
   display: flex;
   justify-content: flex-start;
 }
 
+.brandLink {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Espacio entre el logo y el nombre */
+}
+
+/* SOLUCIÓN AL LOGO ALARGADO */
+.brandLink img {
+  object-fit: contain; /* Mantiene las proporciones */
+  height: 45px;
+  width: auto;
+}
+
+/* ESTILO PARA LA IDENTIFICACIÓN */
+.brandName {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding-left: 1rem;
+  border-left: 1px solid rgba(236, 240, 241, 0.3);
+}
+
 /* Centro: Navegación */
 .mainNav {
-  flex: 2; /* Ocupa más espacio */
+  flex: 2;
   display: flex;
   justify-content: center;
-  gap: 2.5rem; /* Más espacio entre enlaces */
+  gap: 2.5rem;
 }
 
 .mainNav a {
+  color: inherit;
   font-family: var(--font-sans);
   font-size: 1rem;
   font-weight: 400;
