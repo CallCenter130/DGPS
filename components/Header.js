@@ -1,4 +1,4 @@
-// components/Header.js - VERSIÓN CON ESTADO ACTIVO
+// components/Header.js -- VERSIÓN CON ESTADO ACTIVO
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
