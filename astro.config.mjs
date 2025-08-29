@@ -4,11 +4,11 @@ import alpinejs from "@astrojs/alpinejs";
 
 // https://astro.build/config
 export default defineConfig({
-  // El 'site' es el dominio raíz, SIN la subcarpeta.
-  site: 'https://callcenter130.github.io/DGPS/', 
+  // Añade la URL completa de tu sitio de GitHub Pages
+  site: 'https://callcenter130.github.io/DGPS/',
   
-  // La 'base' es FIJA, es la subcarpeta.
-  base: '/DGPS/',
+  // La base condicional que ya teníamos
+  base: process.env.NODE_ENV === 'production' ? '/DGPS/' : '/',
 
   integrations: [tailwind(), alpinejs()]
 });
