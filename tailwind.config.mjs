@@ -4,10 +4,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        'primary': '#272f39ff',
+        'primary': '#1e2631',      
         'secondary': '#B4B8AB',
         'accent': '#D4AF37',
-        'light': '#F5F5F5',       // CORRECCIÓN AQUÍ: Estaba mal escrito antes
+        'light': '#F5F5F5',
         'dark': '#212121',
       },
       fontFamily: {
@@ -17,4 +17,4 @@ export default {
     },
   },
   plugins: [],
-}
+}; 

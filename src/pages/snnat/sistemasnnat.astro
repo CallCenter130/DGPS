@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Definimos las URLs en variables para mantener el código limpio
+const snnatPlatformUrl = "https://snnat.mtps.gob.sv/";
+const snnatTutorialUrl = "https://view.genially.com/671a7c15492642fd42797592";
+---
+<BaseLayout 
+    title="Sistema Nacional de Notificación de Accidentes de Trabajo (SNNAT) | DGPS"
+    description="Plataforma virtual y tutorial para la notificación de accidentes laborales."
+>
+    <section class="py-16 bg-light">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            
+            <!-- Encabezado de la Página -->
+            <div class="text-center mb-12">
+                <h1 class="font-display text-4xl md:text-5xl font-bold text-primary">
+                    Sistema SNNAT
+                </h1>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                    Plataforma virtual para que los patronos notifiquen los accidentes laborales, según el Artículo 66 de la Ley General de Prevención de Riesgos en los Lugares de Trabajo.
+                </p>
+            </div>
+
+            <!-- Sistema de Pestañas con Alpine.js (sin marco blanco) -->
+            <div x-data="{ tab: 'plataforma' }">
+                <!-- Botones de las Pestañas (Centrados) -->
+                <div class="border-b border-gray-300 mb-8">
+                    <nav class="-mb-px flex justify-center space-x-8" aria-label="Tabs">
+                        <button
+                            @click="tab = 'plataforma'"
+                            :class="{ 'border-accent text-primary font-bold': tab === 'plataforma', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': tab !== 'plataforma' }"
+                            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg transition-colors duration-200"
+                        >
+                            Plataforma SNNAT
+                        </button>
+                        <button
+                            @click="tab = 'tutorial'"
+                            :class="{ 'border-accent text-primary font-bold': tab === 'tutorial', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': tab !== 'tutorial' }"
+                            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg transition-colors duration-200"
+                        >
+                            Tutorial de Registro
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Contenido de las Pestañas -->
+                <div>
+                    <!-- Panel de la Plataforma SNNAT -->
+                    <div x-show="tab === 'plataforma'" x-transition>
+                        <div class="bg-white p-4 sm:p-6 rounded-lg shadow-lg">
+                             <iframe src={snnatPlatformUrl} class="w-full h-[80vh] border-2 border-gray-200 rounded-lg" title="Plataforma Virtual de Notificaciones SNNAT"></iframe>
+                        </div>
+                       
+                        <div class="text-center mt-6">
+                            <p class="text-gray-600">
+                                <strong class="text-red-600">Nota:</strong> Si el recuadro aparece en blanco, puede acceder directamente aquí:
+                                <a href={snnatPlatformUrl} target="_blank" rel="noopener noreferrer" class="ml-2 inline-block bg-primary text-white font-bold py-2 px-4 rounded-md hover:bg-opacity-80 transition-colors">
+                                    Abrir en Nueva Pestaña
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Panel del Tutorial de Genially -->
+                    <div x-show="tab === 'tutorial'" x-transition>
+                         <div class="max-w-5xl mx-auto aspect-video bg-gray-200 rounded-lg shadow-lg overflow-hidden">
+                             <iframe src={snnatTutorialUrl} class="w-full h-full" title="Manual de Registro SNNAT" allowfullscreen></iframe>
+                         </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</BaseLayout>

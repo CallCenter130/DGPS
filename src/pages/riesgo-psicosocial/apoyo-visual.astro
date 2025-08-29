@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Usaremos la URL de "embed" de youtube-nocookie para cada video individual.
+// ¡Reemplaza los VIDEO_ID con los de tu playlist!
+const videos = [
+    { title: "Salud Mental y Condiciones de Trabajo", videoId: '_fBYpIPo61Q' },
+    { title: "Protocolo de Riesgos Psicosociales", videoId: 'gw0BKv7YnYI' },
+    { title: "Actuaciones Personales", videoId: 'K6WKAc-Yx3A' }
+    // Agrega más videos de tu playlist aquí...
+];
+
+const buildEmbedUrl = (videoId: string) => `https://www.youtube-nocookie.com/embed/${videoId}?rel=0`;
+---
+<BaseLayout 
+    title="Apoyo Visual - Riesgo Psicosocial | DGPS"
+    description="Material audiovisual de apoyo para la gestión y comprensión del riesgo psicosocial."
+>
+    <section class="py-16 bg-light">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="text-center mb-12">
+                <h1 class="font-display text-4xl md:text-5xl font-bold text-primary">
+                    Material de Apoyo Visual
+                </h1>
+                <p class="mt-4 text-lg text-gray-600">Seleccione un video de la lista para reproducirlo.</p>
+            </div>
+
+            <!-- Estructura de Reproductor con Playlist Visible -->
+            <div 
+                x-data=`{ activeVideoId: '${videos[0].videoId}' }` 
+                class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
+            >
+                
+                <!-- Columna del Reproductor Principal -->
+                <div class="lg:col-span-2 aspect-video bg-black rounded-lg shadow-lg overflow-hidden">
+                    <iframe 
+                        :src="`https://www.youtube-nocookie.com/embed/${activeVideoId}?rel=0&autoplay=1`"
+                        class="w-full h-full" 
+                        title="YouTube video player"
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen
+                    ></iframe>
+                </div>
+
+                <!-- Columna de la Playlist (Visible por defecto) -->
+                <div class="bg-white p-4 rounded-lg shadow-lg max-h-[60vh] overflow-y-auto">
+                    <h3 class="text-xl font-bold text-dark mb-4 border-b pb-2 sticky top-0 bg-white">
+                        Lista de Reproducción
+                    </h3>
+                    <div class="space-y-2">
+                        {videos.map((video, index) => (
+                            <button 
+                                @click=`activeVideoId = '${video.videoId}'`
+                                class="w-full text-left p-3 rounded-md transition-all duration-200 flex items-center space-x-3"
+                                :class="activeVideoId === '${video.videoId}' ? 'bg-primary text-white font-semibold' : 'hover:bg-gray-100 text-gray-800'"                                
+                            >
+                                <span class="text-gray-400 font-mono w-6 text-center">{index + 1}.</span>
+                                <span class="flex-1">{video.title}</span>
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de Texto Adicional -->
+            <div class="mt-16 pt-12 border-t border-gray-200 max-w-4xl mx-auto">
+                 <!-- ... El texto sobre Chile va aquí ... -->
+            </div>
+
+        </div>
+    </section>
+</BaseLayout>

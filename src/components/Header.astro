@@ -1,5 +1,87 @@
-<header class="bg-primary text-white p-5 shadow-lg">
-    <div class="container mx-auto">
-        <p class="font-display text-xl">ENCABEZADO DEL SITIO</p>
+---
+// La estructura de datos correcta para el comportamiento deseado.
+const menuItems = [
+    { name: 'Inicio', url: '/' },
+    { 
+        name: 'Riesgo Psicosocial', 
+        url: '/riesgo-psicosocial/riesgopsicosocial', // Enlace a la página de Prezi
+        children: [
+            { name: 'Denuncias', url: '/riesgo-psicosocial/denuncias' },
+            { name: 'Apoyo Visual', url: '/riesgo-psicosocial/apoyo-visual' },
+        ]
+    },
+    { name: 'Sistema SNNAT', url: '/snnat/sistemasnnat' },
+    { name: 'Organización de SSO', url: '/sso' },
+    { name: 'Peritos', url: '/peritos' },
+    { name: 'Generadores de Vapor', url: '/generadores-vapor' },
+];
+---
+<header x-data="{ mobileMenuOpen: false }" class="bg-primary text-white shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20">
+
+            <!-- Logo -->
+            <a href="/" class="flex-shrink-0 text-2xl font-display font-bold tracking-wider hover:text-accent transition-colors">
+                DGPS
+            </a>
+
+            <!-- Menú de Escritorio -->
+            <nav class="hidden md:flex items-center space-x-6">
+                {menuItems.map(item => (
+                    item.children ? (
+                        <div 
+                            class="relative h-20 flex items-center" 
+                            x-data="{ open: false }"
+                            @mouseenter="open = true"
+                            @mouseleave="open = false"
+                        >
+                            <!-- El elemento principal es un enlace <a> que abre el menú al pasar el ratón -->
+                            <a 
+                                href={item.url}
+                                class="flex items-center text-sm font-semibold uppercase tracking-wide hover:text-accent focus:text-accent transition-colors duration-300"
+                            >
+                                <span>{item.name}</span>
+                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </a>
+                            
+                            <div 
+                                x-show="open" 
+                                x-transition
+                                class="absolute top-full left-1/2 -translate-x-1/2 mt-0 w-48 bg-white text-dark rounded-md shadow-lg py-1 z-50"
+                            >
+                                {item.children.map(child => (
+                                    <a href={child.url} class="block px-4 py-2 text-sm hover:bg-light">{child.name}</a>
+                                ))}
+                            </div>
+                        </div>
+                    ) : (
+                        <a href={item.url} class="text-sm font-semibold uppercase tracking-wide hover:text-accent transition-colors duration-300">
+                            {item.name}
+                        </a>
+                    )
+                ))}
+            </nav>
+
+            <!-- Botones -->
+            <div class="hidden md:flex items-center space-x-4">
+                 <a href="/conectate" class="bg-accent text-primary font-bold py-2 px-4 rounded-md hover:bg-yellow-600 transition-colors duration-300">
+                    Conéctate
+                </a>
+            </div>
+
+            <!-- Menú Móvil (Botón) -->
+            <div class="md:hidden flex items-center">
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="inline-flex items-center justify-center p-2 rounded-md">
+                    <svg x-show="!mobileMenuOpen" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h4" /></svg>
+                    <svg x-show="mobileMenuOpen" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Panel Menú Móvil -->
+    <div x-show="mobileMenuOpen" x-transition class="md:hidden">
+       <!-- Aquí iría la lógica del menú móvil, la he simplificado por ahora -->
     </div>
 </header>
