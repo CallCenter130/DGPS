@@ -5,6 +5,6 @@ import alpinejs from "@astrojs/alpinejs";
 
 // https://astro.build/config
 export default defineConfig({
-  base: '/DGPS/',
+  base: process.env.NODE_ENV === 'production' ? '/DGPS/' : '/',
   integrations: [tailwind(), alpinejs()]
 });
