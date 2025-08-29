@@ -1,19 +1,19 @@
 ---
 // La estructura de datos correcta para el comportamiento deseado.
 const menuItems = [
-    { name: 'Inicio', url: '/' },
+    { name: 'Inicio', url: '/DGPS/' },
     { 
         name: 'Riesgo Psicosocial', 
-        url: '/riesgo-psicosocial/riesgopsicosocial', // Enlace a la página de Prezi
+        url: '/DGPS/riesgo-psicosocial/riesgopsicosocial', // Enlace a la página de Prezi
         children: [
-            { name: 'Denuncias', url: '/riesgo-psicosocial/denuncias' },
-            { name: 'Apoyo Visual', url: '/riesgo-psicosocial/apoyo-visual' },
+            { name: 'Denuncias', url: '/DGPS/riesgo-psicosocial/denuncias' },
+            { name: 'Apoyo Visual', url: '/DGPS/riesgo-psicosocial/apoyo-visual' },
         ]
     },
-    { name: 'Sistema SNNAT', url: '/snnat/sistemasnnat' },
-    { name: 'Organización de SSO', url: '/sso' },
-    { name: 'Peritos', url: '/peritos' },
-    { name: 'Generadores de Vapor', url: '/generadores-vapor' },
+    { name: 'Sistema SNNAT', url: '/DGPS/snnat/sistemasnnat' },
+    { name: 'Organización de SSO', url: '/DGPS/sso' },
+    { name: 'Peritos', url: '/DGPS/peritos' },
+    { name: 'Generadores de Vapor', url: '/DGPS/generadores-vapor' },
 ];
 ---
 <header x-data="{ mobileMenuOpen: false }" class="bg-primary text-white shadow-md sticky top-0 z-50">
