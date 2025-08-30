@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout 
+    title="Seguridad y Salud Ocupacional (SSO) | DGPS"
+    description="Gestión integral de la Seguridad y Salud Ocupacional, incluyendo políticas, programas y organización de comités."
+>
+    <section class="py-16 bg-light">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            
+            <!-- Encabezado de la Página -->
+            <div class="text-center mb-12">
+                <h1 class="font-display text-4xl md:text-5xl font-bold text-primary">
+                    Seguridad y Salud Ocupacional (SSO)
+                </h1>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                    Fundamentos y estructura para la gestión de la prevención de riesgos en los lugares de trabajo.
+                </p>
+            </div>
+
+            <!-- Sistema de Pestañas Principales con Alpine.js -->
+            <div x-data="{ mainTab: 'politica' }">
+                <!-- Botones de las Pestañas Principales (Centrados) -->
+                <div class="border-b border-gray-300 mb-8">
+                    <nav class="-mb-px flex justify-center space-x-4 md:space-x-8" aria-label="Tabs">
+                        <button
+                            @click="mainTab = 'politica'"
+                            :class="{ 'border-accent text-primary font-bold': mainTab === 'politica', 'border-transparent text-gray-500 hover:text-gray-700': mainTab !== 'politica' }"
+                            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg transition-colors"
+                        >
+                            Política SSO
+                        </button>
+                        <button
+                            @click="mainTab = 'programa'"
+                            :class="{ 'border-accent text-primary font-bold': mainTab === 'programa', 'border-transparent text-gray-500 hover:text-gray-700': mainTab !== 'programa' }"
+                            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg transition-colors"
+                        >
+                            Programa de Gestión
+                        </button>
+                        <button
+                            @click="mainTab = 'organizacion'"
+                            :class="{ 'border-accent text-primary font-bold': mainTab === 'organizacion', 'border-transparent text-gray-500 hover:text-gray-700': mainTab !== 'organizacion' }"
+                            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg transition-colors"
+                        >
+                            Organización SSO
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Contenido de las Pestañas Principales -->
+                <div>
+                    <!-- Panel 1: Política SSO -->
+                    <div x-show="mainTab === 'politica'" x-transition class="bg-white p-6 sm:p-8 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-bold text-dark mb-4">Política en Materia de Seguridad y Salud Ocupacional</h2>
+                        <div class="prose prose-lg max-w-none text-gray-700">
+                            <p>Siendo el empleador el responsable final de las condiciones de seguridad y salud ocupacional del lugar de trabajo, deberá formular por escrito, con la participación del Comité, tal como lo establece el Art. 17, literal a) de la Ley, una política que reflejará el compromiso de alta dirección en esta materia y que constituirá el fundamento a partir del cual se desarrollan los objetivos y los fines del sistema de gestión.</p>
+                            <p>La política en materia de seguridad y salud ocupacional deberá incluir como mínimo los siguientes principios y objetivos, respecto de los cuales el empleador expresa su compromiso:</p>
+                            <ul>
+                                <li><strong>a)</strong> La protección de la seguridad y salud ocupacional de todos los trabajadores, mediante la prevención de lesiones, daños, enfermedades y sucesos peligrosos relacionados con el trabajo.</li>
+                                <li><strong>b)</strong> El cumplimiento de los requisitos legales pertinentes sobre la materia en los contratos colectivos de trabajo, en caso de existir, en el reglamento interno de trabajo y en otras fuentes del Derecho del Trabajo.</li>
+                                <li><strong>c)</strong> La garantía que los trabajadores y sus representantes sean consultados y asumen una participación activa en todos los elementos de la gestión.</li>
+                                <li><strong>d)</strong> La mejora continua del desempeño del sistema de gestión.</li>
+                            </ul>
+                            <p>La política formulada deberá cumplir con las siguientes características, para su efectiva aplicación:</p>
+                             <ul>
+                                <li><strong>a)</strong> Ser específica para la actividad que se desempeña en el lugar de trabajo.</li>
+                                <li><strong>b)</strong> Ser concisa y estar redactada con claridad, firmada por el empleador.</li>
+                                <li><strong>c)</strong> Ser revisada periódicamente para adaptarse a las condiciones particulares del lugar de trabajo.</li>
+                            </ul>
+                            <p>La política se deberá dar a conocer y ser accesible a los trabajadores y sus representantes y tenerse a disposición de las autoridades con competencia en la materia.</p>
+                        </div>
+                        <footer class="mt-8 pt-4 border-t text-right text-gray-500 italic">
+                            ARTÍCULO 58-61 - DECRETO 86: REGLAMENTO DE GESTION DE LA PREVENCION DE RIESGOS EN LOS LUGARES DE TRABAJO
+                        </footer>
+                    </div>
+
+                    <!-- Panel 2: Programa de Gestión SSO -->
+                    <div x-show="mainTab === 'programa'" x-transition class="bg-white p-8 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-bold text-dark">Programa de Gestión SSO</h2>
+                        <p class="mt-4">Aquí irá la información sobre el Programa de Gestión.</p>
+                    </div>
+
+                    <!-- Panel 3: Organización SSO (con pestañas anidadas) -->
+                    <div x-show="mainTab === 'organizacion'" x-transition x-data="{ subTab: 'medidas' }" class="bg-white p-8 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-bold text-dark mb-6">Organización del Sistema de Gestión</h2>
+                        <!-- Pestañas Secundarias -->
+                        <div class="border-b border-gray-200 mb-6">
+                             <nav class="-mb-px flex space-x-6" aria-label="SubTabs">
+                                <button @click="subTab = 'medidas'" :class="{ 'border-accent text-primary font-bold': subTab === 'medidas', 'border-transparent text-gray-500': subTab !== 'medidas' }" class="py-2 px-1 border-b-2 font-medium">
+                                    Medidas Sustitutivas
+                                </button>
+                                <button @click="subTab = 'comites'" :class="{ 'border-accent text-primary font-bold': subTab === 'comites', 'border-transparent text-gray-500': subTab !== 'comites' }" class="py-2 px-1 border-b-2 font-medium">
+                                    Comités SSO
+                                </button>
+                            </nav>
+                        </div>
+                        <!-- Contenido de Pestañas Secundarias -->
+                        <div>
+                            <div x-show="subTab === 'medidas'" x-transition>
+                                <h3 class="text-xl font-semibold mb-2">Medidas Sustitutivas SSO</h3>
+                                <p>Aquí irá la información sobre las Medidas Sustitutivas.</p>
+                            </div>
+                             <div x-show="subTab === 'comites'" x-transition>
+                                <h3 class="text-xl font-semibold mb-2">Comités de Seguridad y Salud Ocupacional</h3>
+                                <p>Aquí irá la información sobre los Comités SSO.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</BaseLayout>
