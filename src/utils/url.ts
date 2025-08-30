@@ -1,6 +1,6 @@
 const base = import.meta.env.BASE_URL;
 
-export function formatUrl(url) {
+export function formatUrl(url: string) {
   // Si la URL es solo la raíz, devolvemos la base tal cual.
   if (url === '/') {
     return base;
