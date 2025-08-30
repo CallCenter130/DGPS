@@ -1,25 +1,24 @@
 import { defineConfig } from 'astro/config';
 import tailwind from "@astrojs/tailwind";
 import alpinejs from "@astrojs/alpinejs";
+import sitemap from '@astrojs/sitemap';
+import icon from 'astro-icon';
+//import sitemap from "@astrojs/sitemap"; // <-- Nueva pieza instalada
+//import icon from "astro-icon";          // <-- Nueva pieza instalada
 
 // https://astro.build/config
 export default defineConfig({
-  // Añade la URL completa de tu sitio de GitHub Pages
-  site: 'https://callcenter130.github.io/DGPS/',
-  
-  // La base condicional que ya teníamos
-  base: process.env.NODE_ENV === 'production' ? '/DGPS/' : '/',
+  // --- Configuración para GitHub Pages (la que ya funciona) ---
+  site: 'https://callcenter130.github.io', 
+  base: '/DGPS/',
 
-  // Esta es la configuración que mantendrá tus URLs intactas.
   build: {
-    // 'directory': mantiene la estructura de carpetas (ej. /pagina/index.html)
-    // 'file': crea archivos .html (ej. /pagina.html)
-    // Usar 'directory' es mejor para "pretty URLs".
-    format: 'directory' 
-  },
-  
-  // Esta configuración ayuda a que los enlaces relativos se resuelvan correctamente.
+    format: 'directory'
+},
   trailingSlash: 'always',
+  // -----------------------------------------------------------
 
-  integrations: [tailwind(), alpinejs()]
+  integrations: [//sitemap(), // <-- Integración de sitemap añadida
+  tailwind(), //icon()     // <-- Integración de iconos añadida
+  alpinejs(), sitemap(), icon()]
 });
