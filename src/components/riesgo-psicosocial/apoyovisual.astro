@@ -1,33 +1,25 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-
-// Usaremos la URL de "embed" de youtube-nocookie para cada video individual.
-// ¡Reemplaza los VIDEO_ID con los de tu playlist!
+// Definimos los videos aquí mismo, dentro del componente.
 const videos = [
     { title: "Salud Mental y Condiciones de Trabajo", videoId: '_fBYpIPo61Q' },
     { title: "Protocolo de Riesgos Psicosociales", videoId: 'gw0BKv7YnYI' },
     { title: "Actuaciones Personales", videoId: 'K6WKAc-Yx3A' }
-    // Agrega más videos de tu playlist aquí...
 ];
-
-const buildEmbedUrl = (videoId: string) => `https://www.youtube-nocookie.com/embed/${videoId}?rel=0`;
+// La función buildEmbedUrl no es necesaria porque construimos la URL directamente en el iframe.
 ---
-<BaseLayout 
-    title="Apoyo Visual - Riesgo Psicosocial | DGPS"
-    description="Material audiovisual de apoyo para la gestión y comprensión del riesgo psicosocial."
->
-    <section class="py-16 bg-light">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+<!-- El div raíz con los estilos que lo integran en el sistema de pestañas -->
+<div class="bg-white p-6 sm:p-8 rounded-lg shadow-md">
+    <div class="text-center mb-10">
+        <h2 class="font-display text-3xl font-bold text-primary">
+            Material Audiovisual de Apoyo
+        </h2>
+        <p class="mt-2 text-lg text-gray-600">
+            Seleccione un video de la lista para reproducirlo.
+        </p>
+    </div>
 
-            <div class="text-center mb-12">
-                <h1 class="font-display text-4xl md:text-5xl font-bold text-primary">
-                    Material de Apoyo Visual
-                </h1>
-                <p class="mt-4 text-lg text-gray-600">Seleccione un video de la lista para reproducirlo.</p>
-            </div>
-
-            <!-- Estructura de Reproductor con Playlist Visible -->
-            <div 
+    <!-- Tu estructura original, ahora dentro del componente -->
+     <div 
                 x-data=`{ activeVideoId: '${videos[0].videoId}' }` 
                 class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
             >
@@ -35,7 +27,7 @@ const buildEmbedUrl = (videoId: string) => `https://www.youtube-nocookie.com/emb
                 <!-- Columna del Reproductor Principal -->
                 <div class="lg:col-span-2 aspect-video bg-black rounded-lg shadow-lg overflow-hidden">
                     <iframe 
-                        :src="`https://www.youtube-nocookie.com/embed/${activeVideoId}?rel=0&autoplay=1`"
+                        :src="`https://www.youtube-nocookie.com/embed/${activeVideoId}?rel=0&autoplay=0`"
                         class="w-full h-full" 
                         title="YouTube video player"
                         frameborder="0" 
@@ -63,12 +55,6 @@ const buildEmbedUrl = (videoId: string) => `https://www.youtube-nocookie.com/emb
                     </div>
                 </div>
             </div>
-
-            <!-- Sección de Texto Adicional -->
-            <div class="mt-16 pt-12 border-t border-gray-200 max-w-4xl mx-auto">
-                 <!-- ... El texto sobre Chile va aquí ... -->
-            </div>
-
-        </div>
-    </section>
-</BaseLayout>
+    
+    <!-- La sección sobre Chile la podemos dejar en la página principal o moverla aquí si prefieres -->
+</div>

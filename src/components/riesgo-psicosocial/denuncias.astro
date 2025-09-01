@@ -1,0 +1,13 @@
+---
+const denunciasUrl = "https://denuncias.mtps.gob.sv/";
+---
+<div class="bg-white p-6 sm:p-8 rounded-lg shadow-md">
+    <h2 class="text-3xl font-bold text-primary text-center mb-6">Canal Oficial de Denuncias</h2>
+    <p class="mb-6 text-gray-600">
+        <strong class="text-red-600">Nota:</strong> Si el recuadro aparece en blanco, puede acceder directamente haciendo clic en el botón de abajo.
+    </p>
+    <iframe src={denunciasUrl} class="w-full h-[80vh] border-2 border-gray-200 rounded-lg" title="Plataforma de Denuncias"></iframe>
+    <a href={denunciasUrl} target="_blank" rel="noopener noreferrer" class="inline-block mt-6 bg-primary text-white font-bold py-3 px-6 rounded-md hover:bg-opacity-80 transition-colors">
+        Abrir en una Nueva Pestaña
+    </a>
+</div>

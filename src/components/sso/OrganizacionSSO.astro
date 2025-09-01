@@ -1,0 +1,34 @@
+<!-- Este componente necesita su propio estado de Alpine.js -->
+<div x-data="{ subTab: 'medidas' }" class="bg-white p-8 rounded-lg shadow-md">
+    <h2 class="text-3xl font-bold text-dark mb-4 text-center underline">Organización de la Seguridad y Salud Ocupacional</h2>
+    <!-- Pestañas Secundarias -->
+    <div class="border-b border-gray-200 mb-6">
+         <nav class="-mb-px flex space-x-6" aria-label="SubTabs">
+            <button 
+                @click="subTab = 'medidas'" 
+                :class="{ 'border-accent text-primary font-bold': subTab === 'medidas', 'border-transparent text-gray-500 hover:text-gray-700': subTab !== 'medidas' }" 
+                class="py-2 px-1 border-b-2 font-medium transition-colors"
+            >
+                Medidas Sustitutivas
+            </button>
+            <button 
+                @click="subTab = 'comites'" 
+                :class="{ 'border-accent text-primary font-bold': subTab === 'comites', 'border-transparent text-gray-500 hover:text-gray-700': subTab !== 'comites' }" 
+                class="py-2 px-1 border-b-2 font-medium transition-colors"
+            >
+                Comités SSO
+            </button>
+        </nav>
+    </div>
+    <!-- Contenido de Pestañas Secundarias -->
+    <div>
+        <div x-show="subTab === 'medidas'" x-transition>
+            <h3 class="text-2xl font-bold text-dark mb-3 text-center underline">Medidas Sustitutivas SSO</h3>
+            <p>Aquí irá la información sobre las Medidas Sustitutivas.</p>
+        </div>
+         <div x-show="subTab === 'comites'" x-transition>
+            <h3 class="text-2xl font-bold text-dark mb-3 text-center underline">Comités de Seguridad y Salud Ocupacional</h3>
+            <p>Aquí irá la información sobre los Comités SSO.</p>
+        </div>
+    </div>
+</div>

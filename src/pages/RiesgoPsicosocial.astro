@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+// Importamos nuestros nuevos componentes
+import PresentacionPrezi from '../components/riesgo-psicosocial/riesgopsicosocial.astro';
+import CanalDenuncias from '../components/riesgo-psicosocial/denuncias.astro';
+import ApoyoVisual from '../components/riesgo-psicosocial/apoyovisual.astro';
+---
+<BaseLayout 
+    title="Riesgo Psicosocial | DGPS"
+    description="Herramientas y recursos para la gestión del riesgo psicosocial en el entorno laboral."
+>
+    <section class="py-16 bg-light">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            
+            <div class="text-center mb-12">
+                <h1 class="font-display text-4xl md:text-5xl font-bold text-primary">
+                    Gestión del Riesgo Psicosocial
+                </h1>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                    Explore nuestros recursos interactivos, canales de denuncia y material de apoyo.
+                </p>
+            </div>
+
+            <div x-data="{ tab: 'presentacion' }">
+                <div class="border-b border-gray-300 mb-8">
+                    <nav class="-mb-px flex justify-center space-x-8" aria-label="Tabs">
+                        <button
+                            @click="tab = 'presentacion'"
+                            :class="{ 'border-accent text-primary font-bold': tab === 'presentacion', 'border-transparent text-gray-500 hover:text-gray-700': tab !== 'presentacion' }"
+                            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg transition-colors"
+                        >
+                            Presentación
+                        </button>
+                        <button
+                            @click="tab = 'denuncias'"
+                            :class="{ 'border-accent text-primary font-bold': tab === 'denuncias', 'border-transparent text-gray-500 hover:text-gray-700': tab !== 'denuncias' }"
+                            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg transition-colors"
+                        >
+                            Canal de Denuncias
+                        </button>
+                        <button
+                            @click="tab = 'apoyo'"
+                            :class="{ 'border-accent text-primary font-bold': tab === 'apoyo', 'border-transparent text-gray-500 hover:text-gray-700': tab !== 'apoyo' }"
+                            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg transition-colors"
+                        >
+                            Apoyo Visual
+                        </button>
+                    </nav>
+                </div>
+
+                <div>
+                    <div x-show="tab === 'presentacion'" x-transition>
+                        <PresentacionPrezi />
+                    </div>
+                    <div x-show="tab === 'denuncias'" x-transition>
+                        <CanalDenuncias />
+                    </div>
+                    <div x-show="tab === 'apoyo'" x-transition>
+                        <ApoyoVisual />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</BaseLayout>

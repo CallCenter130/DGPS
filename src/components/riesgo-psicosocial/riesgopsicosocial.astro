@@ -1,0 +1,16 @@
+---
+const preziEmbedUrl = "https://prezi.com/view/IKDkxmAKRIRdADK0sGIG/embed";
+---
+<div class="bg-white p-6 sm:p-8 rounded-lg shadow-md">
+    <div class="text-center mb-10">
+        <h2 class="font-display text-3xl font-bold text-primary">
+            Presentación Interactiva
+        </h2>
+        <p class="mt-2 text-lg text-gray-600">
+            Navegue a través de nuestra presentación para comprender los desafíos y soluciones.
+        </p>
+    </div>
+    <div class="max-w-6xl mx-auto aspect-video bg-gray-200 rounded-lg shadow-inner overflow-hidden">
+        <iframe src={preziEmbedUrl} class="w-full h-full" title="Presentación sobre Riesgo Psicosocial" allow="autoplay; fullscreen"></iframe>
+    </div>
+</div>
