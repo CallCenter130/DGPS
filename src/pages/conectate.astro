@@ -99,59 +99,91 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     <!-- Script de JavaScript para enviar el formulario a Google Apps Script -->
     <script>
-  // Usamos el evento 'DOMContentLoaded', que se dispara cuando el DOM está completamente cargado.
-  document.addEventListener('DOMContentLoaded', function() {
+        const gasUrl = 'https://script.google.com/macros/s/AKfycbzRNNGbNCkkkQfe4MRStrMn5DVWIXQ47uUTjmS8AwNkLWGRWn9TGqDEBMSMyLIHCwof/exec';
+  
+        // Esta función contiene toda la lógica. La llamaremos en el momento adecuado.
+    function setupContactForm() {
+    console.log('[DGPS Debug] Intentando configurar el formulario...');
     
     const form = document.getElementById('contact-form') as HTMLFormElement;
-    const submitButton = document.getElementById('submit-button') as HTMLButtonElement;
-    const formStatus = document.getElementById('form-status') as HTMLDivElement;
+    const submitButton = document.getElementById('submit-button');
+    const formStatus = document.getElementById('form-status');
     
-    // ¡IMPORTANTE! Pega aquí la URL de tu aplicación web de Google Apps Script.
-    const gasUrl = 'https://script.google.com/macros/s/AKfycbzRNNGbNCkkkQfe4MRStrMn5DVWIXQ47uUTjmS8AwNkLWGRWn9TGqDEBMSMyLIHCwof/exec';
+    // Log para ver si encontramos los elementos
+    console.log('[DGPS Debug] Formulario encontrado:', form);
+    console.log('[DGPS Debug] Botón encontrado:', submitButton);
+    console.log('[DGPS Debug] Status div encontrado:', formStatus);
 
-    // Si el formulario no existe en la página actual, no hacemos nada.
-    if (!form) return;
+    // Si falta algún elemento, nos detenemos.
+    if (!form || !submitButton || !formStatus) {
+      console.error('[DGPS Debug] ERROR: Uno o más elementos del formulario no se encontraron en el DOM. Deteniendo.');
+      return;
+    }
 
-    // Evitamos añadir el mismo listener múltiples veces si el usuario navega
-    // de ida y vuelta a la página de contacto.
-    if (form.dataset.listenerAttached) return;
+    // Evitamos añadir el listener múltiples veces
+    if (form.dataset.listenerAttached === 'true') {
+      console.log('[DGPS Debug] El listener ya está adjunto. No se hará nada.');
+      return;
+    }
     form.dataset.listenerAttached = 'true';
+    console.log('[DGPS Debug] Adjuntando el EventListener de "submit"...');
 
     form.addEventListener('submit', async (e) => {
+      // 1. Prevenir el envío normal del formulario
       e.preventDefault();
-      
-      submitButton.disabled = true;
+      console.log('[DGPS Debug] Envío por defecto PREVENIDO.');
+
+      // 2. Cambiar estado del botón
+      (submitButton as HTMLButtonElement).disabled = true;
       submitButton.textContent = 'Enviando...';
       formStatus.textContent = '';
-
+      console.log('[DGPS Debug] Botón deshabilitado. Estado: Enviando...');
+      
       const formData = new FormData(form);
+      console.log('[DGPS Debug] Datos del formulario capturados:', Object.fromEntries(formData.entries()));
 
       try {
+        console.log('[DGPS Debug] Enviando datos a GAS URL:', gasUrl);
         const response = await fetch(gasUrl, {
           method: 'POST',
           body: formData,
         });
+        
+        console.log('[DGPS Debug] Respuesta recibida del servidor. Status:', response.status);
 
+        if (!response.ok) {
+          throw new Error(`Respuesta del servidor no fue OK: ${response.statusText}`);
+        }
+        
         const result = await response.json();
+        console.log('[DGPS Debug] Respuesta JSON de GAS:', result);
 
         if (result.result === 'success') {
+          console.log('[DGPS Debug] ¡ÉXITO! GAS reportó éxito.');
           formStatus.textContent = '¡Gracias! Su mensaje ha sido enviado exitosamente.';
           formStatus.className = 'text-center mt-4 font-semibold text-green-600';
           form.reset();
         } else {
-          throw new Error(result.details || 'Ocurrió un error al enviar el formulario.');
+          console.error('[DGPS Debug] ERROR: GAS reportó un fallo.', result.details);
+          throw new Error(result.details || 'GAS reportó un error desconocido.');
         }
       } catch (error) {
-        formStatus.textContent = 'Hubo un problema con el envío. Por favor, intente de nuevo más tarde o utilice otro canal de contacto.';
-        formStatus.className = 'text-center mt-4 font-semibold text-red-600';
-        console.error('Error al enviar el formulario:', error);
+        console.error('[DGPS Debug] ERROR CATASTRÓFICO en el bloque catch:', error);
+        formStatus.textContent = 'Hubo un problema con el envío. Por favor, intente de nuevo.';
+    formStatus.className = 'text-center mt-4 font-semibold text-red-600';
       } finally {
-        submitButton.disabled = false;
+        console.log('[DGPS Debug] Bloque "finally" ejecutado. Reactivando botón.');
+        (submitButton as HTMLButtonElement).disabled = false;
         submitButton.textContent = 'Solicitar Consulta';
       }
     });
+  }
 
-  });
+  // Ejecutamos la función de configuración en CADA carga de página de Astro
+  document.addEventListener('astro:page-load', setupContactForm);
+
+  // Como respaldo, también la ejecutamos en la carga inicial por si astro:page-load falla
+  setupContactForm();
 </script>
 </BaseLayout>
         </div>
