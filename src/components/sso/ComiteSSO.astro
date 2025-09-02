@@ -1,0 +1,250 @@
+---
+// Definimos los datos de la tabla para generarla dinámicamente.
+const tablaMiembros = [
+  { trabajadores: 'De 15 a 49', miembros: 4, patronal: 2, trabajadoresRep: 2, delegados: 1 },
+  { trabajadores: 'De 50 a 99', miembros: 6, patronal: 3, trabajadoresRep: 3, delegados: 2 },
+  { trabajadores: 'De 100 a 499', miembros: 8, patronal: 4, trabajadoresRep: 4, delegados: 3 },
+  { trabajadores: 'De 500 a 999', miembros: 10, patronal: 5, trabajadoresRep: 5, delegados: 4 },
+  { trabajadores: 'De 1000 a 2000', miembros: 12, patronal: 6, trabajadoresRep: 6, delegados: 5 },
+  { trabajadores: 'De 2000 a 3001', miembros: 14, patronal: 7, trabajadoresRep: 7, delegados: 6 },
+  { trabajadores: 'De 3000 en adelante', miembros: 16, patronal: 8, trabajadoresRep: 8, delegados: 7 },
+];
+
+const sedesRegionales = [
+  { depto: 'Santa Ana', tel: '2240-4056', ubi: '4ª Calle Pte. y 4ª. Avenida Nte. # 9, Santa Ana.' },
+  { depto: 'Ahuachapán', tel: '2240-4085', ubi: '1ra Calle Poniente entre 2da y 4ta Avenida Sur, Ahuachapán.' },
+  { depto: 'Sonsonate', tel: '2240-4002', ubi: 'Urbanización Rafael Campo, Pasaje Privado # 11, Barrio El Ángel, Sonsonate.' },
+  { depto: 'San Salvador', tel: '2529-3999', ubi: 'Alameda Juan Pablo II y 17 Av. Norte, Edificio 4, Segundo Nivel, Puerta 2, Centro de Gobierno, San Salvador.' },
+  { depto: 'La Libertad', tel: '2240-4034', ubi: 'Av. Manuel Gallardo No. 3-11, Santa Tecla, La Libertad.' },
+  { depto: 'Chalatenango', tel: '2240-4113', ubi: '3 ra Calle Ote., y 4ª Av. Norte, Barrio El Calvario. Chalatenango' },
+  { depto: 'La Paz', tel: '2240-4021', ubi: '3ª Av. Sur, Casa # 2, Barrio Candelaria, Zacatecoluca, La Paz' },
+  { depto: 'Cabañas', tel: '2240-4123', ubi: '5ª Avenida Sur, Centro de Gobierno, Barrio El Calvario, Sensuntepeque. Cabañas' },
+  { depto: 'Cuscatlán', tel: '2240-4075', ubi: '8 va.  Avenida sur, Calle Los Copanastes No. 2, Cojutepeque. Cuscatlán' },
+  { depto: 'San Vicente', tel: '2240-4045', ubi: '3 ra Calle Poniente, casa 24, Barrio El Calvario, San Vicente' },
+  { depto: 'San Miguel', tel: '2240-4017', ubi: 'Avenida José Simeón Cañas No. 408, Barrio El Calvario, San Miguel.' },
+  { depto: 'Usulután', tel: '2240-4102', ubi: 'Final 3 ra. Calle Oriente # 30, Local de Migración y Extranjería, Usulután.' },
+  { depto: 'Morazán', tel: '2240-4091', ubi: '4ª Calle Oriente # 19, Barrio La Cruz, San Francisco Gotera, Morazán' },
+  { depto: 'La Unión', tel: '2240-4067', ubi: '8 va. Avenida Sur, Final Calle San Carlos, Barrio San Carlos. La Unión' },
+];
+---
+
+<!-- TEXTO INTRODUCTORIO -->
+<div class="prose prose-lg max-w-none text-gray-700">
+    <h3 class="text-xl font-semibold">Conformación del Comité de Seguridad y Salud Ocupacional</h3>
+    <p>Es obligación de todo empleador la conformación del Comité de Seguridad y Salud Ocupacional, de acuerdo a lo establecido en la Ley General de Prevención de Riesgos en los Lugares de Trabajo y en este reglamento, siempre y cuando:</p>
+    <ul class="list-[lower-alpha] list-outside pl-6">
+        <li>El lugar de trabajo cuente con quince o más trabajadores; y,</li>
+        <li>Aquellos lugares de trabajo que laboren menos de quince trabajadores, pero que, a juicio de la Dirección General de Previsión Social, se considere necesario por las labores que desarrollan.</li>
+    </ul>
+</div>
+<footer class="mt-4 pt-2 mb-8 border-t text-right text-gray-500 italic text-sm">
+    ARTÍCULO 13 - LEY GENERAL DE PREVENSION DE RIESGOS EN LOS LUGARES DE TRABAJO
+</footer>
+<p class="text-lg text-gray-800 font-medium mt-8">Por lo que es importante realizar los procedimientos que a continuación se detallan:</p>
+
+<!-- ACORDEÓN INTERACTIVO -->
+<div x-data="{ openPanel: '' }" class="mt-6 space-y-4">
+
+    <!-- ACORDEÓN ITEM: CONFORMACIÓN -->
+    <div class="border rounded-lg overflow-hidden bg-white">
+        <button @click="openPanel = (openPanel === 'conformacion' ? '' : 'conformacion')" class="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 transition">
+            <span class="font-bold text-lg text-primary text-left">CONFORMACIÓN DEL COMITÉ DE SEGURIDAD OCUPACIONAL</span>
+            <svg class="w-6 h-6 transform transition-transform flex-shrink-0" :class="{ 'rotate-180': openPanel === 'conformacion' }"><path d="M19 9l-7 7-7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div x-show="openPanel === 'conformacion'" x-transition class="p-6 border-t">
+            <div class="prose max-w-none">
+                <p>Este proceso consiste en la obligación del Empleador de crear y presentar al MTPS, un grupo de personas trabajadoras y trabajadores, el cual estará conformado por partes iguales de representantes del empleador y trabajador en proporción al número de trabajadores totales del Lugar de Trabajo.</p>
+                <p><strong>Los documentos siguientes son los establecidos para Modificación, Renovación y Creación de nuevos Comités de Salud y Seguridad Ocupacional:</strong></p>
+
+                <h4 class="shadow text-md text-center">CARTA DIRIGIDA A LA DIRECCION GENERAL DE PREVISION SOCIAL:</h4>
+                <ol>
+                    <li>1.- En aquellos casos que el lugar de trabajo se encuentre en San Salvador, la nota se dirige a la Directora de Previsión Social, salvo aquellos casos en los que el lugar de trabajo se encuentre en otro departamento, la nota se dirige al Jefe de la Departamental o regional con su respectivo cargo dentro del Ministerio de Trabajo.</li>
+                    <li>2.- En el Recuadro de la parte superior se debe marcar con X cuando el Comité es Nuevo.</li>
+                    <li>3.- En el siguiente campo se detalla la razón social, institución pública, municipales o si es persona natural, detallando si este lugar de trabajo cuenta con Sucursal, Dependencia, Agencia, Proyecto, el cual debe ser especificado.</li>
+                    <li>4.- Se debe detallar la ubicación del lugar de trabajo que está conformando el comité de seguridad y salud ocupacional.</li>
+                    <li>5.- Se debe especificar el Número total de personas trabajadoras, detallando la proporción de hombres y mujeres.</li>
+                    <li>6.- Se debe especificar la actividad económica a la cual se dedica este lugar de trabajo.</li>
+                    <li>7.- Se coloca una persona de contacto, con su respectivo número telefónico de contacto y correo electrónico.</li>
+                    <li>8.- En la parte inferior de esta nota deberá ir nombre y firma del Representante legal/apoderado, sello, DUI y Cargo dentro de la institución.</li>
+                    <li>9.- Cuando esta nota o escrito se presenta a través de un tercero, debe autenticar la firma ante notario (Firma legalizada del Representante legal).</li>
+                </ol>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
+                    <a href="https://www.mtps.gob.sv/download/formato-de-inicio-y-renovacion-de-comites-de-seguridad-y-salud-ocupacional-oficinas-departamentales/?wpdmdl=7619&masterkey=oVVHL1TTk929BOrhDIaFWPUROCgavf2QMwipScq45ET9qF2DjfbwkIAOhPBRUKfQ730QRy7eRGA72GG9VbNeD5RikdPIneqqvg07PLiGx1g" target="_blank" rel="noopener noreferrer" class="bg-primary text-white font-bold py-3 px-4 rounded-md text-center hover:bg-opacity-80 transition">SOLICITUD DE CREACIÓN O RENOVACIÓN DE COMITE SSO</a>
+                    <a href="https://www.mtps.gob.sv/download/formato-de-notificacion-de-modificaciones-al-comite-de-seguridad-y-salud-ocupacional-oficinas-departamentales/?wpdmdl=7621&masterkey=83X94uIdu3HWi3On5XGpyRpVcOypqbmReJ-OWoYDBc7v-UJwqQKYQRSju185q5C2JC6heQ4QoqSisIdArRCL_bTfXV76dIL-VCELXC6opKo" target="_blank" rel="noopener noreferrer" class="bg-primary text-white font-bold py-3 px-4 rounded-md text-center hover:bg-opacity-80 transition">SOLICITUD DE MODIFICACIÓN DE COMITE SSO</a>
+                </div>
+
+                <h4 class="shadow text-md text-center">ANEXO 1: REPRESENTACIÓN DE LA PARTE PATRONAL Y DE LA PARTE TRABAJADORA</h4>
+                <h5>Anexo 1: Acta del proceso de elección de representantes de las personas trabajadoras</h5>
+                 <ol>
+                    <li>1.- En este anexo se coloca la hora, día, mes y año en la cual se realiza la reunión donde se eligen sus representantes, en el cual se requiere la presencia mínima del 50%+1 del total de trabajadores de este lugar de trabajo, especificando la metodología utilizada para elegir a sus representantes.</li>
+                    <li>2.- Luego se adjunta el listado de los trabajadores que participaron en la elección de sus representantes (Nombres completos según su DUI, Numero de DUI y firma) En dicho listado.</li>
+                </ol>
+
+                <h4 class="shadow text-md text-center">ANEXO 2: NOTA O ACUERDO DE DESIGNACION DEL O LOS REPRESENTANTES DE LA PERSONA EMPLEADORA Y/O DELEGADO(S) DE PREVENCIÓN</h4>
+                <ol>
+                    <li>1.- En este anexo se coloca la fecha en la cual se llenó la documentación.</li>
+                    <li>2.- En el recuadro se colocan los representantes del Empleador, los cuales son designados por el patrono.</li>
+                    <li>3.- De acuerdo al número de Miembros del comité de SSO que le corresponde, así debe relacionarse el número de Delegados que deben elegir y colocar en el recuadro inferior.</li>
+                    <li>4.- Colocar Nombre y firma del Representante Legal y su respectivo sello.</li>
+                </ol>
+                <p>En el recuadro se coloca la representación de los trabajadores con su respectivo número de DUI, recordando que dicha representación es acorde al rango de trabajadores, basándonos en el art.15 de LGPRLT:</p>
+                
+                <!-- TABLA DE MIEMBROS -->
+                <div class="overflow-x-auto my-6">
+                    <table class="min-w-full text-center text-sm border">
+                        <thead class=" font-bold uppercase text-sm center">
+                            <tr>
+                                <th rowspan="2" class="p-3 border align-middle">Cantidad de Trabajadores</th>
+                                <th rowspan="2" class="p-3 border align-middle">Miembros CSSO</th>
+                                <th colspan="2" class="p-3 border align-middle">Representantes</th>
+                                <th rowspan="2" class="p-3 border align-middle">Cantidad de Delegados</th>
+                            </tr>
+                            <tr>
+                                <th class="p-3 border align-middle">Patronal</th>
+                                <th class="p-3 border align-middle">Trabajadores</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {tablaMiembros.map((fila, index) => (
+                                <tr class:list={[index % 2 === 0 ? 'bg-white' : 'bg-light']}>
+                                    <td class="p-2 border font-semibold text-primary">{fila.trabajadores}</td>
+                                    <td class="p-2 border text-green-700 font-bold">{fila.miembros}</td>
+                                    <td class="p-2 border bg-yellow-100">{fila.patronal}</td>
+                                    <td class="p-2 border bg-yellow-100">{fila.trabajadoresRep}</td>
+                                    <td class="p-2 border text-green-700 font-bold">{fila.delegados}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
+                    <a href="https://drive.google.com/file/d/1P1QKwcUTc_huBOW0kHm6-suKDledystd/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="bg-primary text-white font-bold py-3 px-4 rounded-md text-center hover:bg-opacity-80 transition">ACTA DE ELECCIÓN (TRABAJADORES)</a>
+                    <a href="https://drive.google.com/file/d/1q-NOsJKt3ki0FdcnHL835FF-HnbIIpL0/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="bg-primary text-white font-bold py-3 px-4 rounded-md text-center hover:bg-opacity-80 transition">NOTA DE DESIGNACIÓN (EMPLEADOR)</a>
+                </div>
+
+                <h4 class="shadow text-md text-center">ANEXO 3: NOTA DE DESIGNACIÓN DE LA PERSONA REPRESENTANTE DEL SINDICATO MAYORITARIO</h4>
+                <ol>
+                    <li>1.- En este anexo se deberá colocar la representación Sindical, en caso de que cuenten con varios Sindicatos legalmente constituidos, deberá elegirse un representante del Sindicato que cuente con el mayor número de afiliados (Sindicato Mayoritario)</li>
+                    <li>2.- En el recuadro se debe colocar el nombre completo según DUI del designado por el Sindicato y su respectivo Número de DUI.</li>
+                    <li>3.- Luego deberá colocar Nombre, firma y sello del Secretario General del Sindicato elegido para su representación.</li>
+                    <li>4.- En aquellos casos que no se cuente con sindicato legalmente constituido se puede omitir la presentación de este Anexo o simplemente colocar que no se cuenta con Sindicato legalmente constituido en donde el Representante legal de fe que no existe ningún sindicato.</li>
+                </ol>
+                <div class="my-6">
+                     <a href="https://drive.google.com/file/d/1oJQMTEbsp8Yc2kR53kVrROZJ2BRozneI/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="bg-primary text-white font-bold py-3 px-4 rounded-md text-center hover:bg-opacity-80 transition inline-block">NOTA DE DESIGNACION DE LA PERSONA REPRESENTANTE DEL SINDICATO MAYORITARIO</a>
+                </div>
+
+                <h4 class="shadow text-md text-center">ANEXO 4: ACTA DE CONSTITUCIÓN DEL COMITÉ DE SEGURIDAD Y SALUD OCUPACIONAL</h4>
+                <ol>
+                    <li>1.-	En este anexo se deberá colocar la fecha en la cual se está presentando la documentación (Dia, Mes, Año), el nombre o razón social, institución pública, municipales o persona natural, especificando si cuentan con proyecto, agencia, sucursal)</li>
+                    <li>2.-	Se debe colocar el número total de personas trabajadoras, detallando la proporción de hombres y mujeres de este lugar de trabajo.</li>
+                    <li>3.-	En el recuadro debemos colocar como queda conformado el comité de seguridad y salud ocupacional con nombres según DUI, detallando con una X Cada una de las representaciones en donde RP: Representación Patronal, D: Delegados, RT: Representación de los trabajadores, el cargo que ostentan dentro del comité de SSO y la firma de cada uno de los miembros que conforman el comité.</li>
+                    <li>4.-	Al final del anexo se deberá colocar el nombre, firma, teléfono del Representante legal o apoderado y sello de la empresa, institución o municipalidad</li>
+                </ol>
+                 <div class="my-6">
+                     <a href="https://drive.google.com/file/d/1N7tMft2WUi5gl8ktm9MK0S0CqY7a6xsy/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="bg-primary text-white font-bold py-3 px-4 rounded-md text-center hover:bg-opacity-80 transition inline-block">ACTA DE CONSTITUCIÓN DEL COMITÉ SSO</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ACORDEÓN ITEM: DISPOSICIONES FINALES -->
+     <div class="border rounded-lg overflow-hidden bg-white">
+        <button @click="openPanel = (openPanel === 'disposiciones' ? '' : 'disposiciones')" class="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 transition">
+            <span class="font-bold text-lg text-primary text-left">DISPOSICIONES FINALES</span>
+            <svg class="w-6 h-6 transform transition-transform flex-shrink-0" :class="{ 'rotate-180': openPanel === 'disposiciones' }"><path d="M19 9l-7 7-7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div x-show="openPanel === 'disposiciones'" x-transition class="p-6 border-t">
+            <div class="prose max-w-none">
+                <h4>Disposiciones Finales</h4>
+                <ol>
+                    <li>El empleador procede a la revisión de la documentación y requisitos, a través de una lista de revisión (CheckList), si cumple con lo solicitado en dicho formulario, procederá a presentar toda la documentación a la Sección de Prevención de riesgos Ocupacionales, para que el Técnico Educador realice la revisión, de haber observaciones para corrección se devolverá la documentación, caso contrario se recepciona y posteriormente se le notificará la fecha de capacitación</li>
+                    <li>La notificación de la fecha de capacitación se hace a través del correo electrónico que el empleador suscribió en la carta dirigida a la Dirección General de Previsión Social.</li>
+                    <li>La notificación contiene un link de la sala virtual de la plataforma en que se desarrollaran las 2 jornadas de 4 horas en las fechas y horas agendadas.</li>
+                    <li>Los miembros del comité deberán registrar su participación en la capacitación en las fechas agendadas, a través del formulario que se enviara en el chat de la sala virtual, este registro hará constar la participación de los miembros del comité SSO de la empresa.</li>
+                    <li>Una vez verificado el registro y participación de los miembros del comité SSO en las 2 jornadas de capacitación, se procederá a la elaboración de las acreditaciones</li>
+                    <li>Se notificará a través del correo electrónico y por la vía telefónica la emisión de la acreditación y que proceda al retiro de las mismas.</li>
+                </ol>
+                <div class="my-6">
+                     <a href="https://drive.google.com/file/d/1whA6uMrVqhAfDedqa8_vD4U8PJjhPSTg/view" target="_blank" rel="noopener noreferrer" class="bg-primary text-white font-bold py-3 px-4 rounded-md text-center hover:bg-opacity-80 transition inline-block">CHECKLIST PARA EL CONTROL DE DOCUMENTOS PARA ACREDITACION DEL COMITE SSO</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- ACORDEÓN ITEM: FORMAS DE PAGO Y CONTACTOS -->
+    <div class="border rounded-lg overflow-hidden bg-white">
+        <button @click="openPanel = (openPanel === 'pago' ? '' : 'pago')" class="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 transition">
+            <span class="font-bold text-lg text-primary text-left">FORMAS DE PAGO Y CONTACTOS</span>
+            <svg class="w-6 h-6 transform transition-transform flex-shrink-0" :class="{ 'rotate-180': openPanel === 'pago' }"><path d="M19 9l-7 7-7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div x-show="openPanel === 'pago'" x-transition class="p-6 border-t">
+            <div class="prose max-w-none">
+                 <h4>Tarifas y Formas de Pago</h4>
+                 <p><strong>Tarifas de los servicios:</strong></p>
+                 <ul>
+                    <li>💼 $100.00 – Trámite para la acreditación del Comité de Seguridad y Salud Ocupacional (CSSO).</li>
+                    <li>📄 $100.00 – Solicitud de constancia de capacitación para integrar el CSSO.</li>
+                 </ul>
+                 <p><strong>Formas de Pago:</strong></p>
+                 <ul>
+                    <li><strong>Transferencia:</strong> Banco Agrícola. Cuenta Corriente: 590-059829-6; Denominada MH-DGT-FAE Ministerio de Trabajo y Previsión Social. Posteriormente debe presentar el comprobante de transferencia al correo electrónico del tecnico que realiza su tramite. ademas, puede solicitar documento fiscal conveniente.</li>
+                    <li><strong>Pago en Efectivo:</strong> Puede realizar el pago en efectivo. Siga las indicaciones según corresponda la sede donde realice el trámite.</li>
+                 </ul>
+                 <h4>Números Telefónicos de Sedes Regionales y Departamentales</h4>
+                <div class="overflow-x-auto mt-6">
+                    <table class="min-w-full text-left text-sm">
+                        <thead class="bg-gray-100 font-semibold">
+                            <tr>
+                                <th class="p-2 border">Departamento</th>
+                                <th class="p-2 border">Número telefónico</th>
+                                <th class="p-2 border">Ubicación</th>
+                            </tr>
+                        </thead>
+                         <tbody>
+                            {sedesRegionales.map((sede, index) => (
+                                <tr class:list={[index % 2 !== 0 ? 'bg-white' : 'bg-gray-50']}>
+                                    <td class="p-2 border">{sede.depto}</td>
+                                    <td class="p-2 border">{sede.tel}</td>
+                                    <td class="p-2 border">{sede.ubi}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- ACORDEÓN ITEM: INFORMACION PARA TRAMITE -->
+     <div class="border rounded-lg overflow-hidden bg-white">
+        <button @click="openPanel = (openPanel === 'informacion' ? '' : 'informacion')" class="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 transition">
+            <span class="font-bold text-lg text-primary text-left">INFORMACIÓN PARA TRÁMITE</span>
+            <svg class="w-6 h-6 transform transition-transform flex-shrink-0" :class="{ 'rotate-180': openPanel === 'informacion' }"><path d="M19 9l-7 7-7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div x-show="openPanel === 'informacion'" x-transition class="p-6 border-t">
+            <div class="prose max-w-none"></div>
+                <h4>Información para Trámite</h4>
+                 <dl class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-4">
+                    <dt class="font-bold col-span-1">Objetivo de servicio:</dt>
+                    <dd class="col-span-1 md:col-span-2">Determinar un lugar de trabajo con quince o más personas trabajadoras, el cual está en la obligación de crear y acreditar a través del Ministerio de Trabajo y Previsión Social un órgano consultivo de promoción, investigación, verificación y vigilancia de aspectos específicos sobre seguridad y salud ocupacional.</dd>
+
+                    <dt class="font-bold col-span-1">Entidad / persona beneficiada:</dt>
+                    <dd class="col-span-1 md:col-span-2">Lugares de trabajo, personas trabajadoras y empleadores.</dd>
+                    
+                    <dt class="font-bold col-span-1">Procedimiento:</dt>
+                    <dd class="col-span-1 md:col-span-2">Presentación de documentación, Programación de capacitación y Emisión de acreditación.</dd>
+                    
+                    <dt class="font-bold col-span-1">Horario de atención:</dt>
+                    <dd class="col-span-1 md:col-span-2">Lunes a viernes en horario de 7:30 a.m. a 12:30 p.m. y de 1:10 p.m. a 3:30 p.m.</dd>
+
+                    <dt class="font-bold col-span-1">Base Legal:</dt>
+                    <dd class="col-span-1 md:col-span-2">Art. 13, 14,16, 17 de la Ley General de Prevención de Riesgos en los Lugares de Trabajo y artículos 5, 7, 8, 9,15, 21, 22 del Reglamento de Gestión de la Prevención de Riesgos en los Lugares de Trabajo</dd>
+                 </dl>
+            
+        </div>
+    </div>
+</div>
+
+    

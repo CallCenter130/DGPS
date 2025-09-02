@@ -1,3 +1,7 @@
+---
+import ComiteSSO from '../sso/ComiteSSO.astro';
+// Or update the path to the correct location where ComiteSSO.astro exists.
+---
 <!-- Este componente necesita su propio estado de Alpine.js -->
 <div x-data="{ subTab: 'medidas' }" class="bg-white p-8 rounded-lg shadow-md">
     <h2 class="text-3xl font-bold text-dark mb-4 text-center underline">Organización de la Seguridad y Salud Ocupacional</h2>
@@ -6,29 +10,82 @@
          <nav class="-mb-px flex space-x-6" aria-label="SubTabs">
             <button 
                 @click="subTab = 'medidas'" 
-                :class="{ 'border-accent text-primary font-bold': subTab === 'medidas', 'border-transparent text-gray-500 hover:text-gray-700': subTab !== 'medidas' }" 
+                :class="{ 'border-accent text-primary text-center font-bold': subTab === 'medidas', 'border-transparent text-gray-500 hover:text-gray-700': subTab !== 'medidas' }" 
                 class="py-2 px-1 border-b-2 font-medium transition-colors"
             >
                 Medidas Sustitutivas
             </button>
             <button 
                 @click="subTab = 'comites'" 
-                :class="{ 'border-accent text-primary font-bold': subTab === 'comites', 'border-transparent text-gray-500 hover:text-gray-700': subTab !== 'comites' }" 
+                :class="{ 'border-accent text-primary text-center font-bold': subTab === 'comites', 'border-transparent text-gray-500 hover:text-gray-700': subTab !== 'comites' }" 
                 class="py-2 px-1 border-b-2 font-medium transition-colors"
             >
-                Comités SSO
+                Comités de Seguridad y Salud Ocupacional
             </button>
         </nav>
     </div>
     <!-- Contenido de Pestañas Secundarias -->
     <div>
-        <div x-show="subTab === 'medidas'" x-transition>
-            <h3 class="text-2xl font-bold text-dark mb-3 text-center underline">Medidas Sustitutivas SSO</h3>
-            <p>Aquí irá la información sobre las Medidas Sustitutivas.</p>
+        <!-- Contenido de la Pestaña "Medidas Sustitutivas" -->
+<div x-show="subTab === 'medidas'" x-transition>
+    <div class="prose prose-lg max-w-none text-gray-700">
+        <h3 class="text-xl font-semibold">Definición de Medidas Sustitutivas</h3>
+        <p>
+            En aquellas empresas en las que laboren menos de quince <strong>(15)</strong> trabajadores o trabajadoras, el empleador tiene la obligación de contar con un Programa de Gestión de Prevención de Riesgos Ocupacionales; sin embargo, esta obligación podrá sustituirse por medidas establecidas por el Ministerio de Trabajo y Previsión Social.
+        </p>
+    </div>
+    <footer class="mt-4 pt-2 mb-8 border-t text-right text-gray-500 italic text-sm">
+        ARTÍCULO 12 - LEY GENERAL DE PREVENCION DE RIESGOS EN LOS LUGARES DE TRABAJO
+    </footer>
+
+    <!-- Sección de Descargas -->
+    <div class="mt-6">
+        <h3 class="text-xl font-semibold mb-4 text-gray-800">Formatos de Medidas Sustitutivas</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Botón de Descarga 1 -->
+            <a 
+                href="https://drive.google.com/file/d/1KzVPaOG6AMthOaoYjSVvdAsxP97_7qTE/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="block p-6 bg-primary text-white rounded-lg shadow-md hover:bg-opacity-90 hover:shadow-lg transition-all duration-300"
+            >
+                <div class="flex items-start space-x-4">
+                    <!-- Icono de Descarga -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    <div>
+                        <h4 class="text-lg font-bold">LUGAR DE TRABAJO CON PERSONERÍA NATURAL</h4>
+                        <p class="text-sm opacity-80 mt-1">Haga clic para descargar el formato.</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Botón de Descarga 2 -->
+            <a 
+                href="https://drive.google.com/file/d/1BCaNDXBXBKwNAerCK6asygdpT4deYSYO/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="block p-6 bg-primary text-white rounded-lg shadow-md hover:bg-opacity-90 hover:shadow-lg transition-all duration-300"
+            >
+                <div class="flex items-start space-x-4">
+                     <!-- Icono de Descarga -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    <div>
+                        <h4 class="text-lg font-bold">LUGAR DE TRABAJO CON PERSONERÍA JURÍDICA</h4>
+                        <p class="text-sm opacity-80 mt-1">Haga clic para descargar el formato.</p>
+                    </div>
+                </div>
+            </a>
+
         </div>
+    </div>
+</div>
          <div x-show="subTab === 'comites'" x-transition>
-            <h3 class="text-2xl font-bold text-dark mb-3 text-center underline">Comités de Seguridad y Salud Ocupacional</h3>
-            <p>Aquí irá la información sobre los Comités SSO.</p>
+            <ComiteSSO />
         </div>
     </div>
 </div>

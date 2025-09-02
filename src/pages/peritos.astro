@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout 
+    title="Peritos y Empresas Acreditadas | DGPS"
+    description="Información legal y listado de entidades acreditadas para la gestión de generadores de vapor y otros servicios."
+>
+    <section class="py-16 bg-light">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            
+            <!-- Encabezado de la Página -->
+            <div class="text-center mb-12">
+                <h1 class="font-display text-4xl md:text-5xl font-bold text-primary">
+                    Peritos y Empresas Acreditadas
+                </h1>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                    Base legal para el registro de equipos y listado oficial de entidades acreditadas.
+                </p>
+            </div>
+
+            <!-- Sistema de Pestañas con Alpine.js -->
+            <div x-data="{ tab: 'legal' }">
+                <!-- Botones de las Pestañas (Centrados) -->
+                <div class="border-b border-gray-300 mb-8">
+                    <nav class="-mb-px flex justify-center space-x-8" aria-label="Tabs">
+                        <button
+                            @click="tab = 'legal'"
+                            :class="{ 'border-accent text-primary font-bold': tab === 'legal', 'border-transparent text-gray-500 hover:text-gray-700': tab !== 'legal' }"
+                            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg transition-colors"
+                        >
+                            Base Legal
+                        </button>
+                        <button
+                            @click="tab = 'acreditaciones'"
+                            :class="{ 'border-accent text-primary font-bold': tab === 'acreditaciones', 'border-transparent text-gray-500 hover:text-gray-700': tab !== 'acreditaciones' }"
+                            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg transition-colors"
+                        >
+                            Acreditaciones
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Contenido de las Pestañas -->
+                <div>
+                    <!-- Panel 1: Base Legal -->
+                    <div x-show="tab === 'legal'" x-transition class="bg-white p-6 sm:p-8 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-bold text-dark mb-4">Registro y Notificación de Generadores de Vapor</h2>
+                        <div class="prose prose-lg max-w-none text-gray-700">
+                            <p>Todo usuario que pretenda utilizar generadores de vapor, deberá dar aviso a la Dirección, con la finalidad que quede registrado el que utiliza generadores de vapor y para la posterior verificación de la Bitácora correspondiente.</p>
+                            <p>El aviso de uso de generador deberá realizarse en formularios que para el efecto lleva la Dirección, el cual contendrá información, tal como el nombre del propietario y usuario, dirección de instalación del equipo, nombre del fabricante, número de fabricación, año de elaboración o construcción, superficie, presión, tipo de combustible empleado, certificado de pruebas de seguridad, copia del manual de operación, planos, entre otra información establecida por la Dirección.</p>
+                            <p>La Dirección le otorgará un número de registro, el cual concederá un número de orden para cada Generador de Vapor o recipiente y tendrá toda la información remitida por el interesado y la obtenida de las acciones de vigilancia que se realicen.</p>
+                            <p>Se deberá dar aviso a la Dirección cuando se compre un generador; cuando se realice cualquier modificación a las características del mismo; cuando estos dejen de funcionar; se venda, preste, traslade a otra instalación, se ubique en otro lugar del centro de trabajo, se exporte, se deje de utilizar, así como cualquier acción que se tome sobre el mismo. Dichas circunstancias se anotarán en el registro correspondiente.</p>
+                        </div>
+                        <footer class="mt-8 pt-4 border-t text-right text-gray-500 italic">
+                            ARTÍCULO 5 - DECRETO 87: REGLAMENTO PARA LA VERIFICACIÓN DEL FUNCIONAMIENTO Y MANTENIMIENTO DE GENERADORES DE VAPOR
+                        </footer>
+                    </div>
+                </div>
+
+                    <!-- Panel 2: Acreditaciones (Looker Studio) -->
+                <div>
+                    <div x-show="tab === 'acreditaciones'" x-transition>
+                        <div class="bg-white p-4 sm:p-6 rounded-lg shadow-lg">
+                            <div class="aspect-video w-full h-[900px] bg-gray-200 rounded-lg shadow-inner overflow-hidden">
+                                <iframe 
+                                    width="100%" 
+                                    height="100%" 
+                                    src="https://lookerstudio.google.com/embed/reporting/1ac3adfc-1bd3-493c-ba66-82941f43833b/page/1HQBE" 
+                                    frameborder="0" 
+                                    style="border:0" 
+                                    allowfullscreen 
+                                    sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+                                    title="Listado de Peritos y Empresas Acreditadas">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</BaseLayout>
