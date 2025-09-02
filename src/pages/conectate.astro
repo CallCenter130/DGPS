@@ -105,7 +105,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     function setupContactForm() {
     console.log('[DGPS Debug] Intentando configurar el formulario...');
     
-    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const form = document.getElementById('contact-form');
     const submitButton = document.getElementById('submit-button');
     const formStatus = document.getElementById('form-status');
     
@@ -134,7 +134,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       console.log('[DGPS Debug] Envío por defecto PREVENIDO.');
 
       // 2. Cambiar estado del botón
-      (submitButton as HTMLButtonElement).disabled = true;
+      submitButton.disabled = true;
       submitButton.textContent = 'Enviando...';
       formStatus.textContent = '';
       console.log('[DGPS Debug] Botón deshabilitado. Estado: Enviando...');
@@ -170,10 +170,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       } catch (error) {
         console.error('[DGPS Debug] ERROR CATASTRÓFICO en el bloque catch:', error);
         formStatus.textContent = 'Hubo un problema con el envío. Por favor, intente de nuevo.';
-    formStatus.className = 'text-center mt-4 font-semibold text-red-600';
+        formStatus.className = 'text-center mt-4 font-semibold text-red-600';
       } finally {
         console.log('[DGPS Debug] Bloque "finally" ejecutado. Reactivando botón.');
-        (submitButton as HTMLButtonElement).disabled = false;
+        submitButton.disabled = false;
         submitButton.textContent = 'Solicitar Consulta';
       }
     });
