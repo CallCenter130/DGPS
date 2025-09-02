@@ -100,54 +100,56 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     <!-- Script de JavaScript para enviar el formulario a Google Apps Script -->
     <script>
-      const form = document.getElementById('contact-form') as HTMLFormElement;
-      const submitButton = document.getElementById('submit-button') as HTMLButtonElement;
-      const formStatus = document.getElementById('form-status') as HTMLDivElement;
+  // Espera a que todo el contenido HTML de la página esté cargado y listo.
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    // Ahora sí, podemos seleccionar los elementos con seguridad.
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const submitButton = document.getElementById('submit-button') as HTMLButtonElement;
+    const formStatus = document.getElementById('form-status') as HTMLDivElement;
+    
+    // ¡IMPORTANTE! Pega aquí la URL de tu aplicación web de Google Apps Script.
+    const gasUrl = 'URL_DE_TU_SCRIPT_DE_GOOGLE_APPS';
+
+    // Si el formulario no existe en la página, no hacemos nada más.
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
       
-      // ¡IMPORTANTE! Pega aquí la URL de tu aplicación web de Google Apps Script.
-      const gasUrl = 'https://script.google.com/macros/s/AKfycbzRNNGbNCkkkQfe4MRStrMn5DVWIXQ47uUTjmS8AwNkLWGRWn9TGqDEBMSMyLIHCwof/exec';
+      submitButton.disabled = true;
+      submitButton.textContent = 'Enviando...';
+      formStatus.textContent = '';
 
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        // 1. Mostrar estado de "Enviando..." y limpiar mensajes anteriores.
-        submitButton.disabled = true;
-        submitButton.textContent = 'Enviando...';
-        formStatus.textContent = '';
+      const formData = new FormData(form);
 
-        // Creamos un objeto FormData a partir del formulario HTML
-        const formData = new FormData(form);
+      try {
+        const response = await fetch(gasUrl, {
+          method: 'POST',
+          body: formData,
+        });
 
-        try {
-          // Enviamos los datos al script de Google usando 'fetch'
-          const response = await fetch(gasUrl, {
-            method: 'POST',
-            body: formData,
-          });
+        const result = await response.json();
 
-          // Esperamos la respuesta del script (que será en formato JSON)
-          const result = await response.json();
-
-          if (result.result === 'success') {
-            // 2. Si el script responde 'success', mostramos un mensaje de éxito.
-            formStatus.textContent = '¡Gracias! Su mensaje ha sido enviado exitosamente.';
-            formStatus.className = 'text-center mt-4 font-semibold text-green-600';
-            form.reset(); // Limpiamos el formulario
-          } else {
-            // 3. Si el script responde 'error', mostramos un mensaje de error genérico.
-            throw new Error(result.details || 'Ocurrió un error al enviar el formulario.');
-          }
-        } catch (error) {
-          formStatus.textContent = 'Hubo un problema con el envío. Por favor, intente de nuevo más tarde o utilice otro canal de contacto.';
-          formStatus.className = 'text-center mt-4 font-semibold text-red-600';
-          console.error('Error al enviar el formulario:', error);
-        } finally {
-          // 4. Pase lo que pase, volvemos a activar el botón.
-          submitButton.disabled = false;
-          submitButton.textContent = 'Solicitar Consulta';
+        if (result.result === 'success') {
+          formStatus.textContent = '¡Gracias! Su mensaje ha sido enviado exitosamente.';
+          formStatus.className = 'text-center mt-4 font-semibold text-green-600';
+          form.reset();
+        } else {
+          throw new Error(result.details || 'Ocurrió un error al enviar el formulario.');
         }
-      });
-    </script>
+      } catch (error) {
+        formStatus.textContent = 'Hubo un problema con el envío. Por favor, intente de nuevo más tarde o utilice otro canal de contacto.';
+        formStatus.className = 'text-center mt-4 font-semibold text-red-600';
+        console.error('Error al enviar el formulario:', error);
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Solicitar Consulta';
+      }
+    });
+
+  });
+</script>
 </BaseLayout>
         </div>
     </section>
