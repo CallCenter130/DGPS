@@ -99,8 +99,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     <!-- Script de JavaScript para enviar el formulario a Google Apps Script -->
     <script>
-  // Usamos el evento 'astro:page-load', que se dispara en cada navegación.
-  document.addEventListener('astro:page-load', function() {
+  // Usamos el evento 'DOMContentLoaded', que se dispara cuando el DOM está completamente cargado.
+  document.addEventListener('DOMContentLoaded', function() {
     
     const form = document.getElementById('contact-form') as HTMLFormElement;
     const submitButton = document.getElementById('submit-button') as HTMLButtonElement;
