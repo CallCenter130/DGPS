@@ -1,0 +1,53 @@
+---
+import { formatUrl } from '../utils/url.ts';
+const pathname = new URL(Astro.request.url).pathname;
+
+const menuItems = [
+    { name: 'Inicio', url: '/?embed=true', icon: '<path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>' },
+    { name: 'Riesgo Psicosocial', url: '/riesgo-psicosocial?embed=true', icon: '<path d="M9 8h6M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>' },
+    { name: 'Sistema SNNAT', url: '/sistema-snnat?embed=true', icon: '<path d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>' },
+    // ... (añade aquí el resto de tus menuItems con su icono)
+];
+---
+
+<!-- 
+x-data="{ isSidebarOpen: true }" -> Inicia abierto por defecto.
+Cambia a 'false' si quieres que inicie cerrado.
+-->
+<aside 
+    x-data="{ isSidebarOpen: true }"
+    class="flex-shrink-0 bg-primary text-gray-200 transition-all duration-300 ease-in-out"
+    :class="isSidebarOpen ? 'w-64' : 'w-20'"
+>
+    <div class="flex items-center justify-between p-4 h-20 border-b border-gray-700">
+        <!-- Logo que se encoge -->
+        <a href={formatUrl('/?embed=true')} class="flex items-center space-x-2 overflow-hidden">
+             <img src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/images/logo.svg`} alt="Logo DGPS" class="h-10 w-10 flex-shrink-0" />
+             <span x-show="isSidebarOpen" class="font-display font-bold text-xl whitespace-nowrap">DGPS</span>
+        </a>
+        <!-- Botón para ocultar/mostrar el texto -->
+         <button @click="isSidebarOpen = !isSidebarOpen" class="p-2 rounded-md hover:bg-gray-700 md:hidden">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+    </div>
+    
+    <nav class="mt-4">
+        {menuItems.map(item => {
+            const itemUrl = formatUrl(item.url);
+            const isActive = pathname.startsWith(itemUrl.split('?')[0]); // Compara sin el ?embed=true
+            return (
+                <a 
+                    href={itemUrl} 
+                    title={item.name}
+                    class="flex items-center py-3 px-6 transition-colors duration-200"
+                    class:list={[
+                        isActive ? "bg-accent/20 text-white border-l-4 border-accent" : "text-gray-400 hover:bg-gray-700 hover:text-white"
+                    ]}
+                >
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" set:html={item.icon} />
+                    <span x-show="isSidebarOpen" class="ml-4 font-semibold whitespace-nowrap">{item.name}</span>
+                </a>
+            )
+        })}
+    </nav>
+</aside>
