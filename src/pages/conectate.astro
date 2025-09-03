@@ -127,58 +127,56 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     console.log('[DGPS Debug] Adjuntando el EventListener de "submit"...');
 
     form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      console.log('[DGPS Debug] Envío por defecto PREVENIDO.');
+  e.preventDefault();
+  console.log('[DGPS Debug] Envío por defecto PREVENIDO.');
 
-      submitButton.disabled = true;
-      submitButton.textContent = 'Enviando...';
-      formStatus.textContent = '';
-      console.log('[DGPS Debug] Botón deshabilitado. Estado: Enviando...');
-      
-      const formData = new FormData(form);
-      // CAMBIO CLAVE #1: Convertir FormData a un objeto plano de JavaScript.
-      const data = Object.fromEntries(formData.entries());
-      
-      // CAMBIO CLAVE #2: Añadir el token secreto al objeto de datos.
-      data.token = secretToken;
+  submitButton.disabled = true;
+  submitButton.textContent = 'Enviando...';
+  formStatus.textContent = '';
+  console.log('[DGPS Debug] Botón deshabilitado. Estado: Enviando...');
+  
+  const formData = new FormData(form);
+  // Paso 1: Convertir los datos del formulario a un objeto simple.
+  const data = Object.fromEntries(formData.entries());
+  
+  // ¡ESTA ES LA LÍNEA CRÍTICA QUE RESUELVE EL PROBLEMA!
+  // Paso 2: Añadir el token secreto al objeto de datos antes de enviarlo.
+  data.token = secretToken;
 
-      console.log('[DGPS Debug] Datos del formulario capturados y convertidos a objeto:', data);
+  console.log('[DGPS Debug] Objeto final a enviar (con token):', data);
 
-      try {
-        console.log('[DGPS Debug] Enviando datos JSON a GAS URL:', gasUrl);
-        const response = await fetch(gasUrl, {
-          method: 'POST',
-          // CAMBIO CLAVE #3: Especificar el tipo de contenido como JSON.
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          // CAMBIO CLAVE #4: Enviar los datos como una cadena JSON.
-          body: JSON.stringify(data),
-          mode: 'no-cors', // Opcional, pero a veces necesario con GAS. Prueba sin él primero.
-        });
-        
-        // ¡IMPORTANTE! Cuando se usa 'no-cors', la respuesta es opaca. 
-        // No podemos leer el resultado de GAS directamente. 
-        // Asumimos éxito si la solicitud no falla. La validación real se ve en la hoja de cálculo.
-        // Si el modo 'no-cors' no es necesario, el bloque 'if/else' original para leer el JSON funcionará.
-        // Por ahora, implementaremos una lógica que funciona con o sin `no-cors`.
-
-        console.log('[DGPS Debug] Solicitud enviada a GAS. Asumiendo éxito para la UI.');
-        
-        formStatus.textContent = '¡Gracias! Su mensaje ha sido enviado exitosamente.';
-        formStatus.className = 'text-center mt-4 font-semibold text-green-600';
-        form.reset();
-
-      } catch (error) {
-        console.error('[DGPS Debug] ERROR CATASTRÓFICO en el bloque catch:', error);
-        formStatus.textContent = 'Hubo un problema con el envío. Por favor, intente de nuevo.';
-        formStatus.className = 'text-center mt-4 font-semibold text-red-600';
-      } finally {
-        console.log('[DGPS Debug] Bloque "finally" ejecutado. Reactivando botón.');
-        submitButton.disabled = false;
-        submitButton.textContent = 'Solicitar Consulta';
-      }
+  try {
+    console.log('[DGPS Debug] Enviando datos JSON a GAS URL:', gasUrl);
+    const response = await fetch(gasUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // Paso 3: Convertir el objeto COMPLETO (con token) a una cadena JSON.
+      body: JSON.stringify(data),
+      // Mantenemos el modo 'no-cors' por ahora para evitar problemas de CORS con GAS.
+      mode: 'no-cors', 
     });
+    
+    // Como usamos 'no-cors', no podemos leer la respuesta. Asumimos éxito.
+    // La prueba real es que la fila aparece en la hoja de cálculo y no hay correo de error.
+    console.log('[DGPS Debug] Solicitud enviada a GAS. Asumiendo éxito para la UI.');
+    
+    formStatus.textContent = '¡Gracias! Su mensaje ha sido enviado exitosamente.';
+    formStatus.className = 'text-center mt-4 font-semibold text-green-600';
+    form.reset();
+
+  } catch (error) {
+    console.error('[DGPS Debug] ERROR CATASTRÓFICO en el bloque catch:', error);
+    formStatus.textContent = 'Hubo un problema con el envío. Por favor, intente de nuevo.';
+    formStatus.className = 'text-center mt-4 font-semibold text-red-600';
+  } finally {
+    console.log('[DGPS Debug] Bloque "finally" ejecutado. Reactivando botón.');
+    submitButton.disabled = false;
+    submitButton.textContent = 'Solicitar Consulta';
+  }
+});
+    console.log('[DGPS Debug] EventListener de "submit" adjuntado correctamente.');
   }
 
   document.addEventListener('astro:page-load', setupContactForm);
