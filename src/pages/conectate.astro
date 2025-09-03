@@ -100,14 +100,11 @@ import '/scripts/secuencia.js';
                         </button>
                     </div>
                 </form>
-                <!-- ¡LA LÍNEA CRÍTICA ESTÁ AQUÍ! --
                 <div id="form-status" class="text-center mt-4 font-semibold"></div>
-                <script src="https://www.google.com/recaptcha/api.js?render=6Lfb6bwrAAAAAGwHL3PsiifhI2gko8a_Ad0xdrV9"></script>
-                <script is:inline src="/scripts/secuencia.js"></script> -->
             </div>
     </section>
 
-    <!-- Script de JavaScript para enviar el formulario a Google Apps Script 
+    <!-- Script de JavaScript para enviar el formulario a Google Apps Script -->
     <script>
         const gasUrl = 'https://script.google.com/macros/s/AKfycbwtoQmBb7SlXcx0Qe5haMstL6o_DyRs58yIp0UN8tLHc2CQPzLIYXyXiBXbKH-KNPml/exec';
   
@@ -148,8 +145,15 @@ import '/scripts/secuencia.js';
       submitButton.textContent = 'Enviando...';
       formStatus.textContent = '';
       console.log('[DGPS Debug] Botón deshabilitado. Estado: Enviando...');
-      
+
+        // ¡AQUÍ ESTÁ NUESTRO TOKEN SECRETO! (Debe coincidir con el de GAS)
+        const secretToken = "6Lfb6bwrAAAAAFcGP77eRkx8FCpbOj93plP9oVHa"; 
+        
+        // La URL de tu NUEVA implementación de Google Apps Script
+        const gasUrl = 'https://script.google.com/macros/s/AKfycbwtoQmBb7SlXcx0Qe5haMstL6o_DyRs58yIp0UN8tLHc2CQPzLIYXyXiBXbKH-KNPml/exec';
+
       const formData = new FormData(form);
+      formData.append('token', secretToken); 
       console.log('[DGPS Debug] Datos del formulario capturados:', Object.fromEntries(formData.entries()));
 
       try {
@@ -194,8 +198,6 @@ import '/scripts/secuencia.js';
 
   // Como respaldo, también la ejecutamos en la carga inicial por si astro:page-load falla
   setupContactForm();
-</script-->
-</BaseLayout>
-        </div>
+    </script>
     </section>
 </BaseLayout>
