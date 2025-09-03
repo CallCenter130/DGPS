@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-//import '/scripts/secuencia.js'; 
 ---
 <BaseLayout 
     title="Conéctate | Iniciemos una Conversación Estratégica | DGPS"
@@ -35,7 +34,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     <p class="text-gray-600 mb-4">Ideal para consultas detalladas. Respuesta en &lt; 24 h hábiles.</p>
                     <a href="mailto:previsionsocial@mtps.gob.sv" class="font-semibold text-primary hover:text-accent transition">previsionsocial@mtps.gob.sv</a>
                 </div>
-
                 <!-- Tarjeta 3: Google Chat -->
             <div class="bg-white p-8 rounded-lg shadow-md">
                 <!-- Icono de Google Chat -->
@@ -44,7 +42,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <p class="text-gray-600 mb-4">Inicie una conversación a través de Google Chat.</p>
                 <a href="https://mail.google.com/chat/u/0/#chat/space/AAQA-1au-dc" target="_blank" rel="noopener noreferrer" class="font-semibold text-primary hover:text-accent transition">Iniciar Conversación</a>
             </div>
-
                 <!-- 4. Ubicación Física (Opcional) -->
             <!-- Si tienes una dirección, descomenta y rellena este bloque -->
             
@@ -56,7 +53,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                  </div>
             </div>
 
-            <!-- 5. Formulario de Contacto Inteligente -->
+            <!-- 3. Formulario de Contacto Inteligente -->
             <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-bold text-center text-dark mb-6">O Agende una Consulta Programada</h2>
                 
@@ -100,103 +97,101 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                         </button>
                     </div>
                 </form>
+                <!-- ¡LA LÍNEA CRÍTICA ESTÁ AQUÍ! -->
                 <div id="form-status" class="text-center mt-4 font-semibold"></div>
             </div>
     </section>
 
     <!-- Script de JavaScript para enviar el formulario a Google Apps Script -->
+    <script>
+        const gasUrl = 'https://script.google.com/macros/s/AKfycby879uSmNYWsATSII2hQRHrr-H1gxGoPgwZZQrNwfiUCwmomRVjzIQwwlEKDRxbt6zy/exec';
+        const secretToken = '6Lfb6bwrAAAAAFcGP77eRkx8FCpbOj93plP9oVHa';
 
-<script is:inline>
-    // ================== CONFIGURACIÓN ==================
-    // 1. Pega aquí la URL DE LA ÚLTIMA implementación de tu Web App de Google.
-    const gasUrl = 'https://script.google.com/macros/s/AKfycbwtoQmBb7SlXcx0Qe5haMstL6o_DyRs58yIp0UN8tLHc2CQPzLIYXyXiBXbKH-KNPml/exec';
-    
-    // 2. Pega aquí el MISMO token secreto que configuraste en las Propiedades del Script de Google.
-    const secretToken = "6Lfb6bwrAAAAAFcGP77eRkx8FCpbOj93plP9oVHa"; // ¡¡¡CAMBIA ESTO POR TU TOKEN REAL!!!
-    // =================================================
-
+        // Esta función contiene toda la lógica. La llamaremos en el momento adecuado.
     function setupContactForm() {
-        console.log('[DGPS Debug] Ejecutando setupContactForm...');
-        
-        const form = document.getElementById('contact-form');
-        const submitButton = document.getElementById('submit-button');
-        const formStatus = document.getElementById('form-status');
+    console.log('[DGPS Debug] Intentando configurar el formulario...');
+    
+    const form = document.getElementById('contact-form');
+    const submitButton = document.getElementById('submit-button');
+    const formStatus = document.getElementById('form-status');
+    
+    // Log para ver si encontramos los elementos
+    console.log('[DGPS Debug] Formulario encontrado:', form);
+    console.log('[DGPS Debug] Botón encontrado:', submitButton);
+    console.log('[DGPS Debug] Status div encontrado:', formStatus);
 
-        if (!form || !submitButton || !formStatus) {
-            console.error('[DGPS Debug] ERROR: Faltan elementos del formulario. Abortando.');
-            return;
-        }
-
-        // Prevenir añadir el listener múltiples veces durante las transiciones de página de Astro
-        if (form.dataset.listenerAttached === 'true') {
-            console.log('[DGPS Debug] Listener ya adjunto. No se hará nada.');
-            return;
-        }
-
-        form.dataset.listenerAttached = 'true';
-        console.log('[DGPS Debug] Adjuntando listener de "submit".');
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            console.log('[DGPS Debug] Envío prevenido.');
-
-            submitButton.disabled = true;
-            submitButton.textContent = 'Enviando...';
-            formStatus.textContent = '';
-            console.log('[DGPS Debug] Botón deshabilitado.');
-
-            // CORRECCIÓN #1: Convertir FormData a un objeto JavaScript simple.
-            const formData = new FormData(form);
-            const formObject = Object.fromEntries(formData.entries());
-            
-            // CORRECCIÓN #2: Añadir el token secreto al objeto.
-            formObject.token = secretToken;
-
-            console.log('[DGPS Debug] Objeto a enviar:', formObject);
-
-            try {
-                console.log('[DGPS Debug] Enviando datos a GAS URL:', gasUrl);
-
-                // CORRECCIÓN #3: Enviar los datos como una cadena JSON.
-                const response = await fetch(gasUrl, {
-                    method: 'POST',
-                    body: JSON.stringify(formObject),
-                    // Opcional, pero buena práctica para evitar que el navegador envíe `Content-Type: text/plain`
-                    headers: { 
-                        'Content-Type': 'application/json'
-                    }, 
-                });
-
-                console.log('[DGPS Debug] Respuesta recibida. Status:', response.status);
-                
-                // La respuesta de GAS siempre debe ser JSON, la leemos.
-                const result = await response.json();
-                console.log('[DGPS Debug] Respuesta JSON:', result);
-
-                if (result.result === 'success') {
-                    console.log('[DGPS Debug] ¡ÉXITO!');
-                    formStatus.textContent = '¡Gracias! Su mensaje ha sido enviado exitosamente.';
-                    formStatus.className = 'text-center mt-4 font-semibold text-green-600';
-                    form.reset();
-                } else {
-                    // Si GAS devuelve un error, lo lanzamos para que lo capture el bloque catch.
-                    throw new Error(result.details || 'GAS reportó un error desconocido.');
-                }
-            } catch (error) {
-                console.error('[DGPS Debug] ERROR CATASTRÓFICO:', error);
-                formStatus.textContent = `Hubo un problema con el envío: ${error.message}. Por favor, intente de nuevo.`;
-                formStatus.className = 'text-center mt-4 font-semibold text-red-600';
-            } finally {
-                console.log('[DGPS Debug] Ejecutando bloque "finally".');
-                submitButton.disabled = false;
-                submitButton.textContent = 'Solicitar Consulta';
-            }
-        });
+    // Si falta algún elemento, nos detenemos.
+    if (!form || !submitButton || !formStatus) {
+      console.error('[DGPS Debug] ERROR: Uno o más elementos del formulario no se encontraron en el DOM. Deteniendo.');
+      return;
     }
 
-    // Usar el evento 'astro:page-load' es la forma correcta y robusta en Astro.
-    // Se dispara tanto en la carga inicial como en cada transición de página.
-    document.addEventListener('astro:page-load', setupContactForm);
+    // Evitamos añadir el listener múltiples veces
+    if (form.dataset.listenerAttached === 'true') {
+      console.log('[DGPS Debug] El listener ya está adjunto. No se hará nada.');
+      return;
+    }
+    form.dataset.listenerAttached = 'true';
+    console.log('[DGPS Debug] Adjuntando el EventListener de "submit"...');
+
+    form.addEventListener('submit', async (e) => {
+      // 1. Prevenir el envío normal del formulario
+      e.preventDefault();
+      console.log('[DGPS Debug] Envío por defecto PREVENIDO.');
+
+      // 2. Cambiar estado del botón
+      submitButton.disabled = true;
+      submitButton.textContent = 'Enviando...';
+      formStatus.textContent = '';
+      console.log('[DGPS Debug] Botón deshabilitado. Estado: Enviando...');
+      
+      const formData = new FormData(form);
+      console.log('[DGPS Debug] Datos del formulario capturados:', Object.fromEntries(formData.entries()));
+
+      try {
+        console.log('[DGPS Debug] Enviando datos a GAS URL:', gasUrl);
+        const response = await fetch(gasUrl, {
+          method: 'POST',
+          body: formData,
+        });
+        
+        console.log('[DGPS Debug] Respuesta recibida del servidor. Status:', response.status);
+
+        if (!response.ok) {
+          throw new Error(`Respuesta del servidor no fue OK: ${response.statusText}`);
+        }
+        
+        const result = await response.json();
+        console.log('[DGPS Debug] Respuesta JSON de GAS:', result);
+
+        if (result.result === 'success') {
+          console.log('[DGPS Debug] ¡ÉXITO! GAS reportó éxito.');
+          formStatus.textContent = '¡Gracias! Su mensaje ha sido enviado exitosamente.';
+          formStatus.className = 'text-center mt-4 font-semibold text-green-600';
+          form.reset();
+        } else {
+          console.error('[DGPS Debug] ERROR: GAS reportó un fallo.', result.details);
+          throw new Error(result.details || 'GAS reportó un error desconocido.');
+        }
+      } catch (error) {
+        console.error('[DGPS Debug] ERROR CATASTRÓFICO en el bloque catch:', error);
+        formStatus.textContent = 'Hubo un problema con el envío. Por favor, intente de nuevo.';
+        formStatus.className = 'text-center mt-4 font-semibold text-red-600';
+      } finally {
+        console.log('[DGPS Debug] Bloque "finally" ejecutado. Reactivando botón.');
+        submitButton.disabled = false;
+        submitButton.textContent = 'Solicitar Consulta';
+      }
+    });
+  }
+
+  // Ejecutamos la función de configuración en CADA carga de página de Astro
+  document.addEventListener('astro:page-load', setupContactForm);
+
+  // Como respaldo, también la ejecutamos en la carga inicial por si astro:page-load falla
+  setupContactForm();
 </script>
+</BaseLayout>
+        </div>
     </section>
 </BaseLayout>
