@@ -1,95 +1,68 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// Definimos las URLs para mantener el código limpio
-const iso9001Url = "https://www.iso.org/obp/ui/es/#iso:std:iso:9001:ed-5:v1:es";
-const iso37001Url = "https://www.iso.org/obp/ui#iso:std:iso:37001:ed-1:v1:es";
-const insstUrl = "https://www.insst.es/materias";
+// Definimos los recursos en un array para mantener el código limpio y escalable
+const recursos = [
+    {
+        titulo: "Sistemas de gestión de la calidad ISO 9001:2015",
+        descripcion: "Acceda a la documentación oficial de la norma ISO 9001 para la optimización de procesos y garantía de calidad, directamente desde la Plataforma de Navegación en Línea de ISO.",
+        url: "https://www.iso.org/obp/ui/es/#iso:std:iso:9001:ed-5:v1:es",
+        etiquetaBoton: "Consultar Norma ISO 9001"
+    },
+    {
+        titulo: "Sistemas de gestión antisoborno ISO 37001",
+        descripcion: "Consulte la norma ISO 37001, el estándar internacional para implementar, mantener y mejorar un sistema de gestión de cumplimiento para prevenir el soborno.",
+        url: "https://www.iso.org/obp/ui#iso:std:iso:37001:ed-1:v1:es",
+        etiquetaBoton: "Consultar Norma ISO 37001"
+    },
+    {
+        titulo: "Formación en Materia Laboral (Regulación Española)",
+        descripcion: "Explore el portal de materias del Instituto Nacional de Seguridad y Salud en el Trabajo de España (INSST), una fuente completa de recursos sobre prevención de riesgos laborales.",
+        url: "https://www.insst.es/materias",
+        etiquetaBoton: "Visitar Portal INSST"
+    }
+];
 ---
 <BaseLayout 
     title="Formación y Normativas | DGPS"
     description="Centro de recursos con acceso a normativas ISO y material de formación en materia laboral."
 >
     <section class="py-16 bg-light">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
             
             <div class="text-center mb-12">
                 <h1 class="font-display text-4xl md:text-5xl font-bold text-primary">
                     Centro de Formación y Normativas
                 </h1>
-                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-                    Explore las normativas y recursos de formación directamente desde sus fuentes oficiales.
+                <p class="mt-4 text-lg text-gray-600">
+                    Acceso directo a recursos y normativas clave de fuentes oficiales.
                 </p>
             </div>
 
-            <!-- Sistema de Pestañas con Alpine.js -->
-            <div x-data="{ tab: 'iso9001' }">
-                <div class="border-b border-gray-300 mb-8">
-                    <nav class="-mb-px flex justify-center flex-wrap gap-x-6 sm:gap-x-8" aria-label="Tabs">
-                        <button
-                            @click="tab = 'iso9001'"
-                            :class="{ 'border-accent text-primary font-bold': tab === 'iso9001', 'border-transparent text-gray-500 hover:text-gray-700': tab !== 'iso9001' }"
-                            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg transition-colors"
-                        >
-                            ISO 9001:2015
-                        </button>
-                        <button
-                            @click="tab = 'iso37001'"
-                            :class="{ 'border-accent text-primary font-bold': tab === 'iso37001', 'border-transparent text-gray-500 hover:text-gray-700': tab !== 'iso37001' }"
-                            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg transition-colors"
-                        >
-                            ISO 37001
-                        </button>
-                        <button
-                            @click="tab = 'laboral'"
-                            :class="{ 'border-accent text-primary font-bold': tab === 'laboral', 'border-transparent text-gray-500 hover:text-gray-700': tab !== 'laboral' }"
-                            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg transition-colors"
-                        >
-                            Formación Laboral (INSST)
-                        </button>
-                    </nav>
-                </div>
-
-                <!-- Contenido de las Pestañas -->
-                <div>
-                    <!-- Panel 1: ISO 9001 -->
-                    <div x-show="tab === 'iso9001'" x-transition class="bg-white p-6 sm:p-8 rounded-lg shadow-md">
-                        <h2 class="text-2xl font-bold text-dark mb-4">Sistemas de gestión de la calidad ISO 9001:2015</h2>
-                        <p class="text-red-600 font-semibold mb-4">Nota Importante: El sitio web de iso.org no permite la incrustación directa. Por favor, utilice el botón de abajo para acceder al contenido.</p>
-                        <a href={iso9001Url} target="_blank" rel="noopener noreferrer" class="inline-block bg-primary text-white font-bold py-3 px-6 rounded-md hover:bg-opacity-80 transition-colors">
-                            Abrir Norma ISO 9001 en Nueva Pestaña
-                        </a>
-                        <div class="mt-6 border rounded-lg overflow-hidden h-[70vh] hidden">
-                            <iframe src={iso9001Url} class="w-full h-full" title="Norma ISO 9001:2015"></iframe>
+            <!-- Lista Ejecutiva de Recursos -->
+            <div class="space-y-8">
+                {recursos.map(recurso => (
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-accent transition-all duration-300 hover:shadow-xl hover:border-primary">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                            <!-- Columna de Información -->
+                            <div class="flex-1 mb-4 sm:mb-0 sm:pr-6">
+                                <h2 class="text-xl font-bold text-dark mb-2">{recurso.titulo}</h2>
+                                <p class="text-gray-600">{recurso.descripcion}</p>
+                            </div>
+                            <!-- Columna del Botón -->
+                            <div class="flex-shrink-0">
+                                <a 
+                                    href={recurso.url} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    class="inline-block bg-primary text-white font-bold py-3 px-6 rounded-md hover:bg-opacity-80 transition-colors"
+                                >
+                                    {recurso.etiquetaBoton}
+                                </a>
+                            </div>
                         </div>
                     </div>
-
-                    <!-- Panel 2: ISO 37001 -->
-                    <div x-show="tab === 'iso37001'" x-transition class="bg-white p-6 sm:p-8 rounded-lg shadow-md">
-                        <h2 class="text-2xl font-bold text-dark mb-4">Sistemas de gestión antisoborno ISO 37001</h2>
-                        <p class="text-red-600 font-semibold mb-4">Nota Importante: El sitio web de iso.org no permite la incrustación directa. Por favor, utilice el botón de abajo para acceder al contenido.</p>
-                        <a href={iso37001Url} target="_blank" rel="noopener noreferrer" class="inline-block bg-primary text-white font-bold py-3 px-6 rounded-md hover:bg-opacity-80 transition-colors">
-                            Abrir Norma ISO 37001 en Nueva Pestaña
-                        </a>
-                         <div class="mt-6 border rounded-lg overflow-hidden h-[70vh] hidden">
-                            <iframe src={iso37001Url} class="w-full h-full" title="Norma ISO 37001"></iframe>
-                        </div>
-                    </div>
-                    
-                    <!-- Panel 3: Formación Laboral (INSST) -->
-                    <div x-show="tab === 'laboral'" x-transition class="bg-white p-6 sm:p-8 rounded-lg shadow-md">
-                         <h2 class="text-2xl font-bold text-dark mb-4">Formación en Materia Laboral (Regulación Española)</h2>
-                         <p class="text-gray-600 mb-4">A continuación se muestra el portal de materias del Instituto Nacional de Seguridad y Salud en el Trabajo de España. Si el recuadro aparece en blanco, utilice el botón para abrirlo en una nueva pestaña.</p>
-                         <div class="mb-6">
-                            <a href={insstUrl} target="_blank" rel="noopener noreferrer" class="inline-block bg-primary text-white font-bold py-3 px-6 rounded-md hover:bg-opacity-80 transition-colors">
-                                Abrir Portal INSST en Nueva Pestaña
-                            </a>
-                        </div>
-                         <div class="border rounded-lg overflow-hidden h-[80vh]">
-                            <iframe src={insstUrl} class="w-full h-full" title="Portal de Formación Laboral INSST"></iframe>
-                        </div>
-                    </div>
-                </div>
+                ))}
             </div>
 
         </div>
