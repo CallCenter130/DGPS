@@ -34,6 +34,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     <p class="text-gray-600 mb-4">Ideal para consultas detalladas. Respuesta en &lt; 24 h hábiles.</p>
                     <a href="mailto:previsionsocial@mtps.gob.sv" class="font-semibold text-primary hover:text-accent transition">previsionsocial@mtps.gob.sv</a>
                 </div>
+
                 <!-- Tarjeta 3: Google Chat -->
             <div class="bg-white p-8 rounded-lg shadow-md">
                 <!-- Icono de Google Chat -->
@@ -42,6 +43,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <p class="text-gray-600 mb-4">Inicie una conversación a través de Google Chat.</p>
                 <a href="https://mail.google.com/chat/u/0/#chat/space/AAQA-1au-dc" target="_blank" rel="noopener noreferrer" class="font-semibold text-primary hover:text-accent transition">Iniciar Conversación</a>
             </div>
+
                 <!-- 4. Ubicación Física (Opcional) -->
             <!-- Si tienes una dirección, descomenta y rellena este bloque -->
             
@@ -53,7 +55,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                  </div>
             </div>
 
-            <!-- 3. Formulario de Contacto Inteligente -->
+            <!-- 5. Formulario de Contacto Inteligente -->
             <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-bold text-center text-dark mb-6">O Agende una Consulta Programada</h2>
                 
@@ -99,12 +101,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 </form>
                 <!-- ¡LA LÍNEA CRÍTICA ESTÁ AQUÍ! -->
                 <div id="form-status" class="text-center mt-4 font-semibold"></div>
+                <script src="../utils/secuencia.js"></script>
             </div>
     </section>
 
-    <!-- Script de JavaScript para enviar el formulario a Google Apps Script -->
+    <!-- Script de JavaScript para enviar el formulario a Google Apps Script --
     <script>
-        const gasUrl = 'https://script.google.com/macros/s/AKfycbzd-vqBcIUHnFNj_mgRIBhAVCbYvuQrUjSi9T_j7Ee8YtaiULI5P2Ej3nBBMCjzIANg/exec';
+        const gasUrl = 'https://script.google.com/macros/s/AKfycbwtoQmBb7SlXcx0Qe5haMstL6o_DyRs58yIp0UN8tLHc2CQPzLIYXyXiBXbKH-KNPml/exec';
   
         // Esta función contiene toda la lógica. La llamaremos en el momento adecuado.
     function setupContactForm() {
@@ -189,7 +192,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   // Como respaldo, también la ejecutamos en la carga inicial por si astro:page-load falla
   setupContactForm();
-</script>
+</script-->
 </BaseLayout>
         </div>
     </section>
