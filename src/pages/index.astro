@@ -1,108 +1,105 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-// Importaremos un componente para los iconos que crearemos más abajo
-import FeatureIcon from '../components/icons/FeatureIcon.astro';
+import FeatureIcon from '../components/icons/FeatureIcon.astro'; // Reutilizamos el componente de iconos
 ---
 
 <BaseLayout
-  title="DGPS | Consultoría Experta en Previsión Social y Seguridad Ocupacional"
-  description="Optimizamos la gestión de riesgos laborales para proteger su activo más valioso: su gente. Soluciones integrales en Riesgo Psicosocial, SSO, normativas y peritajes para empresas de alto nivel."
+  title="Dirección General de Previsión Social | Ministerio de Trabajo y Previsión Social"
+  description="Portal oficial de la Dirección General de Previsión Social, dedicado a la gestión y prevención de riesgos laborales para garantizar un entorno de trabajo seguro y digno para todos los salvadoreños."
 >
   <!-- =============================================== -->
-  <!-- 1. HERO SECTION: Captura de Atención Inmediata -->
+  <!-- 1. HERO SECTION: Institucional y de Bienvenida -->
   <!-- =============================================== -->
-  <section class="relative bg-primary text-white py-20 md:py-32">
-    <div class="absolute inset-0 bg-black opacity-40"></div>
-    <div class="relative container mx-auto px-4 text-center">
-      <h1 class="font-display text-4xl md:text-6xl font-bold leading-tight">
-        Protegemos su Activo Más Valioso: Su Gente.
+  <section class="bg-primary text-white py-16 md:py-24" style="background-image: url('URL_DE_IMAGEN_DE_FONDO_SUTIL'); background-size: cover; background-position: center;">
+    <div class="container mx-auto px-4 text-center">
+      <img src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/images/escudo_sv_blanco.png`} alt="Escudo de El Salvador" class="h-24 mx-auto mb-6">
+      <h1 class="font-display text-3xl md:text-5xl font-bold leading-tight">
+        Dirección General de Previsión Social
       </h1>
-      <p class="mt-6 text-lg md:text-xl max-w-3xl mx-auto text-gray-200">
-        Brindamos consultoría experta en Previsión Social para garantizar el cumplimiento normativo, minimizar riesgos y fomentar un entorno laboral seguro y productivo.
+      <p class="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-200 font-light">
+        Trabajando por la seguridad y salud de los trabajadores de El Salvador.
       </p>
-      <div class="mt-10">
-        <a href={import.meta.env.BASE_URL + 'conectate/'} class="bg-accent text-primary font-bold py-3 px-8 rounded-md text-lg hover:bg-yellow-600 transition-transform duration-300 hover:scale-105 inline-block">
-          Agendar una Consulta
-        </a>
-      </div>
     </div>
   </section>
 
   <!-- ======================================================= -->
-  <!-- 2. SECCIÓN DE SERVICIOS CLAVE: ¿Qué Hacemos? -->
+  <!-- 2. SECCIÓN DE ACCESOS DIRECTOS: Funcional y Clara -->
   <!-- ======================================================= -->
   <section class="py-20 bg-light">
     <div class="container mx-auto px-4">
       <div class="text-center mb-12">
-        <h2 class="font-display text-3xl md:text-4xl font-bold text-primary">Nuestras Áreas de Expertise</h2>
-        <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Soluciones integrales para cada aspecto de la seguridad y salud ocupacional.</p>
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-primary">Servicios y Gestiones Principales</h2>
+        <p class="mt-4 text-lg text-gray-600">Acceda directamente a nuestros sistemas y programas de gestión.</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Servicio 1: Riesgo Psicosocial -->
-        <a href={import.meta.env.BASE_URL + 'riesgo-psicosocial/'} class="block bg-white p-8 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+        <!-- Tarjeta 1: Riesgo Psicosocial -->
+        <a href={import.meta.env.BASE_URL + 'riesgo-psicosocial/'} class="block bg-white p-8 rounded-lg border border-gray-200 hover:border-primary hover:shadow-lg transition-all duration-300">
           <FeatureIcon icon="brain" />
-          <h3 class="text-xl font-bold text-dark mt-4 mb-2">Gestión de Riesgo Psicosocial</h3>
-          <p class="text-gray-600">Evaluamos y mitigamos factores de riesgo para promover el bienestar mental y cumplir con la normativa vigente.</p>
+          <h3 class="text-xl font-bold text-dark mt-4 mb-2">Riesgo Psicosocial</h3>
+          <p class="text-gray-600">Recursos y herramientas para la gestión del bienestar mental en el entorno laboral.</p>
         </a>
 
-        <!-- Servicio 2: SSO -->
-        <a href={import.meta.env.BASE_URL + 'sso/'} class="block bg-white p-8 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+        <!-- Tarjeta 2: SSO -->
+        <a href={import.meta.env.BASE_URL + 'sso/'} class="block bg-white p-8 rounded-lg border border-gray-200 hover:border-primary hover:shadow-lg transition-all duration-300">
           <FeatureIcon icon="shield-check" />
           <h3 class="text-xl font-bold text-dark mt-4 mb-2">Seguridad y Salud Ocupacional</h3>
-          <p class="text-gray-600">Desarrollamos e implementamos políticas, programas de gestión y comités de SSO a la medida de su empresa.</p>
+          <p class="text-gray-600">Consulte políticas, programas y la organización de los Comités de SSO.</p>
         </a>
 
-        <!-- Servicio 3: Peritos -->
-        <a href={import.meta.env.BASE_URL + 'peritos/'} class="block bg-white p-8 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+        <!-- Tarjeta 3: SNNAT -->
+        <a href={import.meta.env.BASE_URL + 'sistema-snnat/'} class="block bg-white p-8 rounded-lg border border-gray-200 hover:border-primary hover:shadow-lg transition-all duration-300">
           <FeatureIcon icon="gavel" />
-          <h3 class="text-xl font-bold text-dark mt-4 mb-2">Peritos y Acreditaciones</h3>
-          <p class="text-gray-600">Asesoría experta y acceso a profesionales acreditados para auditorías, litigios y certificaciones.</p>
+          <h3 class="text-xl font-bold text-dark mt-4 mb-2">Sistema SNNAT</h3>
+          <p class="text-gray-600">Plataforma para la notificación de accidentes de trabajo y enfermedades profesionales.</p>
         </a>
       </div>
     </div>
   </section>
 
   <!-- ========================================================== -->
-  <!-- 3. SECCIÓN DE VALOR AÑADIDO: ¿Por Qué Nosotros? -->
+  <!-- 3. SECCIÓN DE ANUNCIO O NOTICIA DESTACADA -->
   <!-- ========================================================== -->
   <section class="py-20 bg-white">
-     <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <div>
-          <h2 class="font-display text-3xl md:text-4xl font-bold text-primary">Experiencia y Rigor Normativo a su Servicio</h2>
-          <p class="mt-4 text-lg text-gray-600">No solo resolvemos problemas, construimos sistemas de gestión robustos basados en estándares internacionales que protegen su reputación y optimizan sus operaciones.</p>
-          <ul class="mt-6 space-y-4">
-            <li class="flex items-start">
-              <svg class="h-6 w-6 text-accent flex-shrink-0 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              <span><strong>Cumplimiento Garantizado:</strong> Profundo conocimiento de la legislación local y normativas ISO (9001, 37001, 27001).</span>
-            </li>
-             <li class="flex items-start">
-              <svg class="h-6 w-6 text-accent flex-shrink-0 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              <span><strong>Enfoque Estratégico:</strong> Vemos la previsión social no como un gasto, sino como una inversión en productividad y retención de talento.</span>
-            </li>
-             <li class="flex items-start">
-              <svg class="h-6 w-6 text-accent flex-shrink-0 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              <span><strong>Confidencialidad y Discreción:</strong> Entendemos la sensibilidad de la información y operamos con los más altos estándares de seguridad.</span>
-            </li>
-          </ul>
+     <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
+        <!-- Imagen Destacada -->
+        <div class="md:col-span-2">
+          <img src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/images/trabajadores-industria.jpg`} alt="Trabajadores en un entorno seguro" class="rounded-lg shadow-xl w-full h-auto object-cover">
         </div>
-        <!--div class="text-center">
-            <!-- Idealmente, aquí iría una imagen profesional del equipo o una infografía --
-            <img src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/images/office-meeting.jpg`} alt="Reunión de consultoría estratégica" class="rounded-lg shadow-xl">
-        </div-->
+        <!-- Texto del Anuncio -->
+        <div class="md:col-span-3">
+          <span class="text-accent font-bold uppercase">Compromiso Nacional</span>
+          <h2 class="font-display text-3xl md:text-4xl font-bold text-primary mt-2">Construyendo un Futuro Laboral Seguro</h2>
+          <p class="mt-4 text-lg text-gray-700 leading-relaxed">
+            El Gobierno de El Salvador, a través del Ministerio de Trabajo y Previsión Social, reafirma su compromiso con la clase trabajadora mediante la modernización de los sistemas de gestión de riesgos. Nuestro objetivo es claro: reducir la siniestralidad laboral y promover una cultura de prevención que beneficie a empleadores y trabajadores por igual.
+          </p>
+          <div class="mt-6">
+             <a href="https://www.mtps.gob.sv/" target="_blank" rel="noopener noreferrer" class="font-semibold text-primary hover:text-accent transition">
+                Conozca más sobre el Ministerio de Trabajo &rarr;
+            </a>
+          </div>
+        </div>
      </div>
   </section>
 
   <!-- ======================================================== -->
-  <!-- 4. SECCIÓN DE LLAMADO A LA ACCIÓN FINAL (CTA) -->
+  <!-- 4. SECCIÓN DE ENLACES DE INTERÉS -->
   <!-- ======================================================== -->
-  <section class="bg-primary">
-    <div class="container mx-auto px-4 py-16 text-center text-white">
-      <h2 class="font-display text-3xl font-bold">¿Listo para transformar la gestión de riesgos en su empresa?</h2>
-      <p class="mt-4 max-w-2xl mx-auto text-gray-200">Permítanos realizar un diagnóstico preliminar sin compromiso y mostrarle cómo podemos fortalecer su organización.</p>
-       <div class="mt-8">
-        <a href={import.meta.env.BASE_URL + 'conectate/'} class="bg-accent text-primary font-bold py-3 px-8 rounded-md text-lg hover:bg-yellow-600 transition-transform duration-300 hover:scale-105 inline-block">
-          Contactar a un Experto
+  <section class="bg-primary text-white">
+    <div class="container mx-auto px-4 py-16">
+      <h2 class="font-display text-3xl font-bold text-center mb-8">Enlaces Institucionales</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+        <a href={import.meta.env.BASE_URL + 'peritos/'} class="bg-white/10 p-6 rounded-lg hover:bg-white/20 transition">
+            <p class="font-semibold">Peritos y Empresas Acreditadas</p>
+        </a>
+         <a href={import.meta.env.BASE_URL + 'generadores-vapor/'} class="bg-white/10 p-6 rounded-lg hover:bg-white/20 transition">
+            <p class="font-semibold">Generadores de Vapor</p>
+        </a>
+         <a href={import.meta.env.BASE_URL + 'formacion/'} class="bg-white/10 p-6 rounded-lg hover:bg-white/20 transition">
+            <p class="font-semibold">Centro de Normativas</p>
+        </a>
+         <a href={import.meta.env.BASE_URL + 'conectate/'} class="bg-white/10 p-6 rounded-lg hover:bg-white/20 transition">
+            <p class="font-semibold">Contacto y Oficinas</p>
         </a>
       </div>
     </div>
