@@ -35,6 +35,33 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 </div>
             </div>
 
+            <!-- NUEVA SECCIÓN: Ubicación y Contactos Telefónicos -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                <!-- Columna 1: Mapa de Ubicación -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h2 class="text-2xl font-bold text-dark mb-4">Nuestra Ubicación</h2>
+                    <p class="text-gray-600 mb-6 text-sm">Alameda Juan Pablo II y 17 Ave. Nte. Edificios 2, 3 y 4, Centro de Gobierno, San Salvador.</p>
+                    <div class="aspect-video rounded-lg shadow-inner overflow-hidden">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7752.3983801064105!2d-89.2065772!3d13.7063826!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f62b78ca90cf287%3A0x509c8f65e22ac085!2sMinisterio%20de%20Trabajo%20y%20Previsi%C3%B3n%20Social!5e0!3m2!1ses-419!2ssv!4v1756825782839!5m2!1ses-419!2ssv" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+
+                <!-- Columna 2: Lista de Teléfonos -->
+                <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+                    <h2 class="text-2xl font-bold text-dark mb-6 border-b pb-4">Contactos Telefónicos</h2>
+                    <dl class="space-y-6">
+                        <!-- Item 1: Medidas Sustitutivas -->
+                        <div class="flex flex-col sm:flex-row"><dt class="w-full sm:w-1/2 font-semibold text-gray-800">Medidas Sustitutivas:</dt><dd class="w-full sm:w-1/2 mt-1 sm:mt-0"><a href="tel:+50322404132" class="block font-medium text-primary hover:text-accent transition">(+503) 2240-4132</a></dd></div>
+                        <!-- Item 2: Comité SSO -->
+                        <div class="flex flex-col sm:flex-row"><dt class="w-full sm:w-1/2 font-semibold text-gray-800">Comité SSO:</dt><dd class="w-full sm:w-1/2 mt-1 sm:mt-0 space-y-1"><a href="tel:+50325293998" class="block font-medium text-primary hover:text-accent transition">(+503) 2529-3998</a><a href="tel:+50325293999" class="block font-medium text-primary hover:text-accent transition">(+503) 2529-3999</a></dd></div>
+                        <!-- Item 3: Peritos y Empresas Asesoras -->
+                        <div class="flex flex-col sm:flex-row"><dt class="w-full sm:w-1/2 font-semibold text-gray-800">Peritos y Empresas:</dt><dd class="w-full sm:w-1/2 mt-1 sm:mt-0 space-y-1"><a href="tel:+50325293874" class="block font-medium text-primary hover:text-accent transition">(+503) 2529-3874</a><a href="tel:+50325293894" class="block font-medium text-primary hover:text-accent transition">(+503) 2529-3894</a></dd></div>
+                        <!-- Item 4: Generadores de Vapor -->
+                        <div class="flex flex-col sm:flex-row"><dt class="w-full sm:w-1/2 font-semibold text-gray-800">Generadores de Vapor:</dt><dd class="w-full sm:w-1/2 mt-1 sm:mt-0 space-y-1"><a href="tel:+50325293824" class="block font-medium text-primary hover:text-accent transition">(+503) 2529-3824</a><a href="tel:+50325293892" class="block font-medium text-primary hover:text-accent transition">(+503) 2529-3892</a></dd></div>
+                    </dl>
+                </div>
+            </div>
+
             <!-- Sección de Solicitudes en Línea -->
             <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg mb-16">
                 <h2 class="text-2xl font-bold text-center text-dark mb-6">Solicitudes en Línea</h2>
@@ -77,33 +104,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                         </div>
                     </form>
                     <div id="form-status" class="text-center mt-4 font-semibold"></div>
-                </div>
-            </div>
-
-            <!-- NUEVA SECCIÓN: Ubicación y Contactos Telefónicos -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                <!-- Columna 1: Mapa de Ubicación -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <h2 class="text-2xl font-bold text-dark mb-4">Nuestra Ubicación</h2>
-                    <p class="text-gray-600 mb-6 text-sm">Alameda Juan Pablo II y 17 Ave. Nte. Edificios 2, 3 y 4, Centro de Gobierno, San Salvador.</p>
-                    <div class="aspect-video rounded-lg shadow-inner overflow-hidden">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7752.3983801064105!2d-89.2065772!3d13.7063826!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f62b78ca90cf287%3A0x509c8f65e22ac085!2sMinisterio%20de%20Trabajo%20y%20Previsi%C3%B3n%20Social!5e0!3m2!1ses-419!2ssv!4v1756825782839!5m2!1ses-419!2ssv" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                    </div>
-                </div>
-
-                <!-- Columna 2: Lista de Teléfonos -->
-                <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg">
-                    <h2 class="text-2xl font-bold text-dark mb-6 border-b pb-4">Contactos Telefónicos</h2>
-                    <dl class="space-y-6">
-                        <!-- Item 1: Medidas Sustitutivas -->
-                        <div class="flex flex-col sm:flex-row"><dt class="w-full sm:w-1/2 font-semibold text-gray-800">Medidas Sustitutivas:</dt><dd class="w-full sm:w-1/2 mt-1 sm:mt-0"><a href="tel:+50322404132" class="block font-medium text-primary hover:text-accent transition">(+503) 2240-4132</a></dd></div>
-                        <!-- Item 2: Comité SSO -->
-                        <div class="flex flex-col sm:flex-row"><dt class="w-full sm:w-1/2 font-semibold text-gray-800">Comité SSO:</dt><dd class="w-full sm:w-1/2 mt-1 sm:mt-0 space-y-1"><a href="tel:+50325293998" class="block font-medium text-primary hover:text-accent transition">(+503) 2529-3998</a><a href="tel:+50325293999" class="block font-medium text-primary hover:text-accent transition">(+503) 2529-3999</a></dd></div>
-                        <!-- Item 3: Peritos y Empresas Asesoras -->
-                        <div class="flex flex-col sm:flex-row"><dt class="w-full sm:w-1/2 font-semibold text-gray-800">Peritos y Empresas:</dt><dd class="w-full sm:w-1/2 mt-1 sm:mt-0 space-y-1"><a href="tel:+50325293874" class="block font-medium text-primary hover:text-accent transition">(+503) 2529-3874</a><a href="tel:+50325293894" class="block font-medium text-primary hover:text-accent transition">(+503) 2529-3894</a></dd></div>
-                        <!-- Item 4: Generadores de Vapor -->
-                        <div class="flex flex-col sm:flex-row"><dt class="w-full sm:w-1/2 font-semibold text-gray-800">Generadores de Vapor:</dt><dd class="w-full sm:w-1/2 mt-1 sm:mt-0 space-y-1"><a href="tel:+50325293824" class="block font-medium text-primary hover:text-accent transition">(+503) 2529-3824</a><a href="tel:+50325293892" class="block font-medium text-primary hover:text-accent transition">(+503) 2529-3892</a></dd></div>
-                    </dl>
                 </div>
             </div>
 
