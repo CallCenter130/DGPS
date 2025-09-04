@@ -66,10 +66,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 </div>
 
             <!-- Sección de Solicitudes en Línea -->
-            <div class="grid grid-cols-1 lg:grid-cols-1 gap-12 items-start">
+            <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-bold text-center text-dark mb-6">Solicitudes en Línea</h2>
                 <div x-data="{ gestionType: 'consulta' }" class="max-w-4xl mx-auto">
-                     <form id="contact-form">
+                    <form id="contact-form">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <!-- Tipo de Gestión -->
                             <div class="md:col-span-2">
