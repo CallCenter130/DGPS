@@ -39,26 +39,26 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                 
                 <!-- Columna Izquierda: Formulario Dinámico -->
-                <div x-data="{ gestionType: 'consulta' }" class="bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+                <div x-data="{ tipocita: 'consulta' }" class="bg-white p-6 sm:p-8 rounded-lg shadow-lg">
                     <h2 class="text-2xl font-bold text-center text-dark mb-6">Solicitudes en Línea</h2>
                     <form id="contact-form">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="md:col-span-2">
-                                <label for="gestionType" class="block text-sm font-medium text-gray-700">Tipo de Gestión</label>
-                                <select id="gestionType" name="gestionType" x-model="gestionType" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-accent focus:border-accent">
+                                <label for="tipocita" class="block text-sm font-medium text-gray-700">Tipo de Gestión</label>
+                                <select id="tipocita" name="tipocita" x-model="tipocita" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-accent focus:border-accent">
                                     <option value="consulta">Consulta General</option>
                                     <option value="cita">Solicitar Cita</option>
                                 </select>
                             </div>
-                            <template x-if="gestionType === 'cita'">
+                            <template x-if="tipocita === 'cita'">
                                 <div class="grid grid-cols-2 gap-6 md:col-span-2">
                                     <div>
-                                        <label for="appointmentDate" class="block text-sm font-medium text-gray-700">Fecha Sugerida</label>
-                                        <input type="date" name="appointmentDate" id="appointmentDate" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3">
+                                        <label for="fechacita" class="block text-sm font-medium text-gray-700">Fecha Sugerida</label>
+                                        <input type="date" name="fechacita" id="fechacita" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3">
                                     </div>
                                     <div>
-                                        <label for="appointmentTime" class="block text-sm font-medium text-gray-700">Hora Sugerida</label>
-                                        <input type="time" name="appointmentTime" id="appointmentTime" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3">
+                                        <label for="horacita" class="block text-sm font-medium text-gray-700">Hora Sugerida</label>
+                                        <input type="time" name="horacita" id="horacita" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3">
                                     </div>
                                 </div>
                             </template>
