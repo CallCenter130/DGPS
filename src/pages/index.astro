@@ -23,20 +23,30 @@ import FeatureIcon from '../components/icons/FeatureIcon.astro'; // Reutilizamos
     </div>
 
     <!-- Contenido Superpuesto -->
-    <div class="relative container mx-auto px-4 py-24 md:py-32 flex flex-col items-left text-left">
-        <img 
-            src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/images/logoMTPS1.png`} 
-            alt="Escudo de El Salvador" 
-            class="h-5 md:h-6 w-auto mb-6"
-        >
-        <h3 class="font-display text-4xl md:text-5xl font-bold leading-tight">
+    <div class="relative container mx-auto px-4 py-24 md:py-32 flex">
+    <div class="max-w-2xl text-left">
+        <!-- Fila del Escudo -->
+        <div class="flex items-center mb-6">
+            <img 
+                src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/images/escudo_sv_blanco.png`} 
+                alt="Escudo de El Salvador" 
+                class="h-20 w-auto mr-4"
+            >
+            <!-- Opcional: Línea vertical separadora -->
+            <div class="border-l-2 border-gray-400 h-16"></div>
+        </div>
+
+        <!-- Título Principal -->
+        <h1 class="font-display text-4xl md:text-5xl font-bold leading-tight">
             Dirección General de Previsión Social
-        </h3>
-        <h5 class="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-200 text-left">
+        </h1>
+
+        <!-- Subtítulo -->
+        <p class="mt-4 text-lg md:text-xl text-gray-200">
             Trabajando por la seguridad y salud de los trabajadores de El Salvador.
-        </h5>
+        </p>
     </div>
-</section>
+</div>
 
   <!-- ======================================================= -->
   <!-- 2. SECCIÓN DE ACCESOS DIRECTOS: Funcional y Clara -->
