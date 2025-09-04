@@ -42,19 +42,42 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
                 <!-- Contenido de las Pestañas -->
                 <div>
+
                     <!-- Panel 1: Base Legal -->
-                    <div x-show="tab === 'legal'" x-transition class="bg-white p-6 sm:p-8 rounded-lg shadow-md">
-                        <h2 class="text-2xl font-bold text-dark mb-4">Registro y Notificación de Generadores de Vapor</h2>
-                        <div class="prose prose-lg max-w-none text-gray-700">
-                            <p>Todo usuario que pretenda utilizar generadores de vapor, deberá dar aviso a la Dirección, con la finalidad que quede registrado el que utiliza generadores de vapor y para la posterior verificación de la Bitácora correspondiente.</p>
-                            <p>El aviso de uso de generador deberá realizarse en formularios que para el efecto lleva la Dirección, el cual contendrá información, tal como el nombre del propietario y usuario, dirección de instalación del equipo, nombre del fabricante, número de fabricación, año de elaboración o construcción, superficie, presión, tipo de combustible empleado, certificado de pruebas de seguridad, copia del manual de operación, planos, entre otra información establecida por la Dirección.</p>
-                            <p>La Dirección le otorgará un número de registro, el cual concederá un número de orden para cada Generador de Vapor o recipiente y tendrá toda la información remitida por el interesado y la obtenida de las acciones de vigilancia que se realicen.</p>
-                            <p>Se deberá dar aviso a la Dirección cuando se compre un generador; cuando se realice cualquier modificación a las características del mismo; cuando estos dejen de funcionar; se venda, preste, traslade a otra instalación, se ubique en otro lugar del centro de trabajo, se exporte, se deje de utilizar, así como cualquier acción que se tome sobre el mismo. Dichas circunstancias se anotarán en el registro correspondiente.</p>
-                        </div>
-                        <footer class="mt-8 pt-4 border-t text-right text-gray-500 italic">
-                            ARTÍCULO 5 - DECRETO 87: REGLAMENTO PARA LA VERIFICACIÓN DEL FUNCIONAMIENTO Y MANTENIMIENTO DE GENERADORES DE VAPOR
-                        </footer>
+                <div x-show="tab === 'legal'" x-transition class="bg-white p-6 sm:p-8 rounded-lg shadow-md">
+                    <div class="prose prose-lg max-w-none text-gray-700">
+                        
+                        <p>De acuerdo a lo establecido en los artículos 68 y 70 de la Ley, los empleadores deberán apoyarse en empresas asesoras en prevención de riesgos laborales para el desarrollo de su gestión preventiva. Asimismo, recurrirán a peritos para el mantenimiento de equipos especiales cuyo funcionamiento pueda generar riesgos, teniendo la facultad también de recurrir a este tipo de prestadores para otros aspectos de la prevención de riesgos que requieran especialización.</p>
+                        
+                        <p>Estos peritos y empresas asesoras deberán contar con la competencia y capacitación técnica necesaria para el desempeño de actividades preventivas, siendo imprescindible que sean debidamente acreditados.</p>
+
+                        <h3 class="font-semibold text-dark mt-8">De las Funciones de los Peritos en Áreas Especializadas</h3>
+                        <p>Los peritos en áreas especializadas deben estar en condiciones de dedicarse a la revisión y asesoramiento de aspectos técnicos que requieren de especialización, como por ejemplo generadores de vapor, trabajo en atmósferas explosivas, equipos de izar, entre otros que puedan presentarse desempeñando funciones para:</p>
+                        <ul class="list-[lower-alpha] list-outside pl-6">
+                            <li>Evaluación de los factores de riesgos relacionados con su especialidad.</li>
+                            <li>Planificación de actividades preventivas que se deben realizar como consecuencia de las evaluaciones de los riesgos para eliminarlos, controlarlos y reducirlos.</li>
+                            <li>Información y formación de los trabajadores de la empresa o institución en su área de experticia.</li>
+                            <li>Adecuación entre los procedimientos y los medios materiales y humanos requeridos para realizar la actividad preventiva necesaria y los recursos propios o concertados de que disponga el empleador.</li>
+                        </ul>
+
+                        <h3 class="font-semibold text-dark mt-8">Servicios a prestar por empresas asesoras en prevención de riesgos</h3>
+                        <p>Las Empresas Asesoras en prevención de riesgos laborales deberán estar en condiciones de proporcionar a la empresa o institución que los contrate el asesoramiento y apoyo necesario en función de los tipos de riesgos que existan en la misma, en lo referente a:</p>
+                        <ul class="list-[lower-alpha] list-outside pl-6">
+                            <li>Diseño, formulación e implementación de Programa de Gestión de Prevención de Riesgos Ocupacionales.</li>
+                            <li>Evaluación de la identificación de los factores de riesgos que puedan afectar a la seguridad y salud de los trabajadores.</li>
+                            <li>Planificación de la actividad preventiva y la determinación de las prioridades en la adopción de las medidas preventivas y la vigilancia de su eficacia.</li>
+                            <li>Desarrollo de programas de información y formación de los trabajadores.</li>
+                            <li>Prestación de los primeros auxilios y planes de emergencia.</li>
+                            <li>Vigilancia de la salud de los trabajadores en relación con los riesgos derivados del trabajo.</li>
+                            <li>Servicios de formación a los trabajadores, relacionados con su área de especialidad.</li>
+                            <li>Servicio de estudio de contaminantes.</li>
+                        </ul>
+
                     </div>
+                    <footer class="mt-8 pt-4 border-t text-right text-gray-500 italic">
+                        ARTÍCULO 5-7 - DECRETO 88: PARA LA ACREDITACIÓN, REGISTRO Y SUPERVISIÓN DE PERITOS EN ÁREAS ESPECIALIZADAS Y EMPRESAS ASESORAS EN PREVENCIÓN DE RIESGOS OCUPACIONALES
+                    </footer>
+                </div>
                 </div>
 
                     <!-- Panel 2: Acreditaciones (Looker Studio) -->
