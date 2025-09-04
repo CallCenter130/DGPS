@@ -18,7 +18,27 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 </p>
             </div>
 
-            <!-- 2. Múltiples Vías de Contacto -->
+            
+                <!-- Tarjeta 2: Email -->
+                 <div class="bg-white p-8 rounded-lg shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                    <h3 class="text-xl font-bold text-dark mb-2">Consulta por Email</h3>
+                    <p class="text-gray-600 mb-4">Ideal para consultas detalladas. Respuesta en &lt; 24 h hábiles.</p>
+                    <a href="mailto:previsionsocial@mtps.gob.sv" class="font-semibold text-primary hover:text-accent transition">previsionsocial@mtps.gob.sv</a>
+                </div>
+                
+                <!-- 4. Ubicación Física (Opcional) -->
+            <!-- Si tienes una dirección, descomenta y rellena este bloque -->
+            
+            <div class="bg-white p-8 rounded-lg shadow-md">
+                 <h2 class="text-2xl font-bold text-dark mb-4">Visite Nuestras Oficinas</h2>
+                 <p class="text-gray-600 mb-6">Alameda Juan Pablo II y 17 Ave. Nte. Edificios 2, 3 y 4, Centro de Gobierno, San Salvador Centro, San Salvador, El Salvador</p>
+                 <div class="max-w-4xl mx-auto aspect-video rounded-lg shadow-lg overflow-hidden">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7752.3983801064105!2d-89.2065772!3d13.7063826!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f62b78ca90cf287%3A0x509c8f65e22ac085!2sMinisterio%20de%20Trabajo%20y%20Previsi%C3%B3n%20Social!5e0!3m2!1ses-419!2ssv!4v1756825782839!5m2!1ses-419!2ssv" width="100%" height="200%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                 </div>
+            </div>
+
+<!-- 2. Múltiples Vías de Contacto -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 text-center">
                 <!-- Tarjeta 1: Llamada -->
                 <div class="bg-white p-8 rounded-lg shadow-md">
@@ -68,31 +88,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     </dl>
                 </div>
                 </div>
-                <!-- Tarjeta 2: Email -->
-                 <div class="bg-white p-8 rounded-lg shadow-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                    <h3 class="text-xl font-bold text-dark mb-2">Consulta por Email</h3>
-                    <p class="text-gray-600 mb-4">Ideal para consultas detalladas. Respuesta en &lt; 24 h hábiles.</p>
-                    <a href="mailto:previsionsocial@mtps.gob.sv" class="font-semibold text-primary hover:text-accent transition">previsionsocial@mtps.gob.sv</a>
-                </div>
-                <!-- Tarjeta 3: Google Chat -->
-            <div class="bg-white p-8 rounded-lg shadow-md">
-                <!-- Icono de Google Chat -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-accent" viewBox="0 0 24 24" fill="currentColor"><path d="M12.431,11.314V12.9h3.755a3.64,3.64,0,0,1-1.54,2.365v2.03h2.6a8.472,8.472,0,0,0,2.585-6.395c0-.525-.047-.95-.14-1.375Zm0,0Z" style="fill:#34a853"></path><path d="M7.75,14.28a4.93,4.93,0,0,0,3.315,1.24c1.8,0,3.33-1.125,4.01-2.715H12.43v-2.1H7.75Zm0,0Z" style="fill:#4285f4"></path><path d="M12,4.5A7,7,0,0,0,5.08,8.26l-2.7.9A9.923,9.923,0,0,1,12,2.5c2.93,0,5.61,1.13,7.58,3l-2.31,2.31A6.9,6.9,0,0,0,12,4.5Zm0,0Z" style="fill:#ea4335"></path><path d="M12,18a9.921,9.921,0,0,1-8.06-4.14l-2.61.87A7,7,0,0,0,12,21.5a6.885,6.885,0,0,0,6.48-4.5h-2.1A4.93,4.93,0,0,1,12,18Zm0,0Z" style="fill:#fbbc04"></path></svg>
-                <h3 class="text-xl font-bold text-dark mb-2">Chat Directo</h3>
-                <p class="text-gray-600 mb-4">Inicie una conversación a través de Google Chat.</p>
-                <a href="https://mail.google.com/chat/u/0/#chat/space/AAQA-1au-dc" target="_blank" rel="noopener noreferrer" class="font-semibold text-primary hover:text-accent transition">Iniciar Conversación</a>
-            </div>
-                <!-- 4. Ubicación Física (Opcional) -->
-            <!-- Si tienes una dirección, descomenta y rellena este bloque -->
-            
-            <div class="bg-white p-8 rounded-lg shadow-md">
-                 <h2 class="text-2xl font-bold text-dark mb-4">Visite Nuestras Oficinas</h2>
-                 <p class="text-gray-600 mb-6">Alameda Juan Pablo II y 17 Ave. Nte. Edificios 2, 3 y 4, Centro de Gobierno, San Salvador Centro, San Salvador, El Salvador</p>
-                 <div class="max-w-4xl mx-auto aspect-video rounded-lg shadow-lg overflow-hidden">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7752.3983801064105!2d-89.2065772!3d13.7063826!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f62b78ca90cf287%3A0x509c8f65e22ac085!2sMinisterio%20de%20Trabajo%20y%20Previsi%C3%B3n%20Social!5e0!3m2!1ses-419!2ssv!4v1756825782839!5m2!1ses-419!2ssv" width="100%" height="200%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                 </div>
-            </div>
 
             <!-- 3. Formulario de Contacto Inteligente -->
             <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
