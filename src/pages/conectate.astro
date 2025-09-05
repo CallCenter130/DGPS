@@ -154,6 +154,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             // Volvemos al fetch que funcionaba, sin 'no-cors' para poder leer la respuesta
             const response = await fetch(gasUrl, {
                 method: 'POST',
+                mode: 'no-cors',
                 body: JSON.stringify(data),
             });
             
