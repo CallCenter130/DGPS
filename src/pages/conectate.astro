@@ -105,72 +105,70 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </section>
 
     <script is:inline>
-  const gasUrl = 'https://script.google.com/macros/s/AKfycbzVE4JZuVSJBPBOEd7g-2aybP5K-bVNKT_ivxObOTZ1-PiVGzxytk63smsVXFfgcf28/exec';
-  const apiToken = 'DgPs_SeCrEt_ApI_KeY_2024!#';
+        const gasUrl = 'https://script.google.com/macros/s/AKfycbzVE4JZuVSJBPBOEd7g-2aybP5K-bVNKT_ivxObOTZ1-PiVGzxytk63smsVXFfgcf28/exec';
+        const apiToken = 'DgPs_SeCrEt_ApI_KeY_2024!#';
 
-  // Usamos un único event listener en el documento para que sea más robusto con Astro
-  document.addEventListener('submit', async (e) => {
-    // Solo actuamos si el envío proviene de nuestro formulario de contacto
-    if (e.target.id !== 'contact-form') {
-      return;
-    }
+        document.addEventListener('submit', async (e) => {
+            if (e.target.id !== 'contact-form') {
+            return;
+            }
 
-    e.preventDefault();
-    const form = e.target;
-    const submitButton = form.querySelector('#submit-button');
-    const formStatus = document.querySelector('#form-status');
-    
-    submitButton.disabled = true;
-    submitButton.textContent = 'Enviando...';
-    formStatus.textContent = '';
-    formStatus.className = 'text-center mt-4 font-semibold'; // Resetea la clase
+            e.preventDefault();
+            const form = e.target;
+            const submitButton = form.querySelector('#submit-button');
+            const formStatus = document.querySelector('#form-status');
+            
+            submitButton.disabled = true;
+            submitButton.textContent = 'Enviando...';
+            formStatus.textContent = '';
+            formStatus.className = 'text-center mt-4 font-semibold';
 
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
-    data.token = apiToken;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            data.token = apiToken;
 
-    try {
-      // --- CORRECCIÓN CRÍTICA: Se elimina la cabecera 'headers' ---
-      // Esto previene el error de CORS "Failed to fetch"
-      const response = await fetch(gasUrl, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        // No se especifica 'headers' para permitir una solicitud simple.
-        // No se especifica 'mode' a menos que sea estrictamente necesario.
-      });
-      
-      if (!response.ok) {
-        // Si el servidor responde con un error (4xx, 5xx), lo capturamos aquí
-        throw new Error(`Error del servidor: ${response.status} ${response.statusText}`);
-      }
+            try {
+            const response = await fetch(gasUrl, {
+                method: 'POST',
+                body: JSON.stringify(data),
+            });
+            
+            if (!response.ok) {
+                throw new Error(`Error del servidor: ${response.status} ${response.statusText}`);
+            }
+            
+            const result = await response.json();
 
-      // Si la respuesta es OK, intentamos leer el JSON
-      const result = await response.json();
+            if (result.result === 'success') {
+                // --- MEJORA DE UX POST-ENVÍO ---
+                formStatus.textContent = '¡Gracias! Su solicitud ha sido enviada exitosamente.';
+                formStatus.className += ' text-green-600';
 
-      if (result.result === 'success') {
-        formStatus.textContent = '¡Gracias! Su solicitud ha sido enviada exitosamente.';
-        formStatus.className += ' text-green-600';
-        form.reset();
-        
-        // La recarga de la página después del éxito es una buena UX.
-        setTimeout(() => {
-          window.location.reload();
-        }, 3000);
+                // 1. Ocultamos el botón de envío para evitar clics duplicados
+                submitButton.style.display = 'none';
 
-      } else {
-        // Si el JSON de respuesta indica un error, lo lanzamos
-        throw new Error(result.details || 'Ocurrió un error reportado por el servidor.');
-      }
-    } catch (error) {
-      // Este bloque captura tanto errores de red (como el Failed to fetch) como los errores que lanzamos nosotros.
-      formStatus.textContent = 'Hubo un problema con el envío. Por favor, intente de nuevo.';
-      formStatus.className += ' text-red-600';
-      console.error('Error en el envío del formulario:', error);
-    } finally {
-      // El bloque finally asegura que el botón se reactive sin importar si hubo éxito o error.
-      submitButton.disabled = false;
-      submitButton.textContent = 'Enviar Solicitud';
-    }
-  });
-</script>
+                // 2. Deshabilitamos todos los campos del formulario para que el usuario no pueda modificarlos
+                // mientras ve el mensaje de éxito.
+                Array.from(form.elements).forEach(element => element.disabled = true);
+                
+                // 3. Después de 3 segundos, recargamos la página.
+                // El 'form.reset()' ya no es necesario porque la página se recargará a su estado inicial.
+                setTimeout(() => {
+                window.location.reload();
+                }, 3000);
+
+            } else {
+                throw new Error(result.details || 'Ocurrió un error reportado por el servidor.');
+            }
+            } catch (error) {
+            formStatus.textContent = 'Hubo un problema con el envío. Por favor, intente de nuevo.';
+            formStatus.className += ' text-red-600';
+            console.error('Error en el envío del formulario:', error);
+            // Solo en caso de error, reactivamos el botón
+            submitButton.disabled = false;
+            submitButton.textContent = 'Enviar Solicitud';
+            }
+            // No hay 'finally' aquí porque el estado final del botón depende del éxito o error.
+        });
+    </script>
 </BaseLayout>
