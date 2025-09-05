@@ -108,6 +108,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   const gasUrl = 'https://script.google.com/macros/s/AKfycbzVE4JZuVSJBPBOEd7g-2aybP5K-bVNKT_ivxObOTZ1-PiVGzxytk63smsVXFfgcf28/exec';
   const apiToken = 'DgPs_SeCrEt_ApI_KeY_2024!#';
 
+  // Usamos un único event listener en el documento para que sea más robusto con Astro
   document.addEventListener('submit', async (e) => {
     // Solo actuamos si el envío proviene de nuestro formulario de contacto
     if (e.target.id !== 'contact-form') {
@@ -122,38 +123,51 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     submitButton.disabled = true;
     submitButton.textContent = 'Enviando...';
     formStatus.textContent = '';
-    formStatus.className = 'text-center mt-4 font-semibold'; // Reset class
+    formStatus.className = 'text-center mt-4 font-semibold'; // Resetea la clase
 
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
     data.token = apiToken;
 
     try {
+      // --- CORRECCIÓN CRÍTICA: Se elimina la cabecera 'headers' ---
+      // Esto previene el error de CORS "Failed to fetch"
       const response = await fetch(gasUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'text/plain' }, // Es más robusto para GAS
         body: JSON.stringify(data),
+        // No se especifica 'headers' para permitir una solicitud simple.
+        // No se especifica 'mode' a menos que sea estrictamente necesario.
       });
       
       if (!response.ok) {
-        throw new Error(`Error del servidor: ${response.status}`);
+        // Si el servidor responde con un error (4xx, 5xx), lo capturamos aquí
+        throw new Error(`Error del servidor: ${response.status} ${response.statusText}`);
       }
+
+      // Si la respuesta es OK, intentamos leer el JSON
       const result = await response.json();
 
       if (result.result === 'success') {
         formStatus.textContent = '¡Gracias! Su solicitud ha sido enviada exitosamente.';
         formStatus.className += ' text-green-600';
-        form.reset(); // Resetea el formulario
-        // Opcional: Recargar la página después de un tiempo
-        // setTimeout(() => window.location.reload(), 3000);
+        form.reset();
+        
+        // La recarga de la página después del éxito es una buena UX.
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
+
       } else {
-        throw new Error(result.details || 'Error reportado por el servidor.');
+        // Si el JSON de respuesta indica un error, lo lanzamos
+        throw new Error(result.details || 'Ocurrió un error reportado por el servidor.');
       }
     } catch (error) {
-      formStatus.textContent = 'Hubo un problema. Por favor, intente de nuevo.';
+      // Este bloque captura tanto errores de red (como el Failed to fetch) como los errores que lanzamos nosotros.
+      formStatus.textContent = 'Hubo un problema con el envío. Por favor, intente de nuevo.';
       formStatus.className += ' text-red-600';
-      console.error('Error en el envío:', error);
+      console.error('Error en el envío del formulario:', error);
     } finally {
+      // El bloque finally asegura que el botón se reactive sin importar si hubo éxito o error.
       submitButton.disabled = false;
       submitButton.textContent = 'Enviar Solicitud';
     }
