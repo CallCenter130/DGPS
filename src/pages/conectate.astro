@@ -128,47 +128,41 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             data.token = apiToken;
 
             try {
+            // --- SOLUCIÓN CORS DEFINITIVA ---
+            // 1. Especificamos 'mode: "no-cors"' para evitar la comprobación pre-flight del navegador.
+            // 2. No se especifican cabeceras.
             const response = await fetch(gasUrl, {
                 method: 'POST',
+                mode: 'no-cors', // <-- La clave para evitar "Failed to fetch"
                 body: JSON.stringify(data),
             });
+
+            // IMPORTANTE: Con 'no-cors', NO PODEMOS leer la respuesta del servidor.
+            // El objeto 'response' estará opaco (status=0, ok=false).
+            // Por lo tanto, no podemos verificar result.result === 'success'.
+            // Si la línea de 'await fetch' no lanzó un error, asumimos éxito.
             
-            if (!response.ok) {
-                throw new Error(`Error del servidor: ${response.status} ${response.statusText}`);
-            }
+            // Mostramos el mensaje de éxito al usuario. La prueba real es que la fila aparezca en la hoja.
+            formStatus.textContent = '¡Gracias! Su solicitud ha sido enviada exitosamente.';
+            formStatus.className += ' text-green-600';
+
+            Array.from(form.elements).forEach(element => element.disabled = true);
+            submitButton.style.display = 'none';
             
-            const result = await response.json();
-
-            if (result.result === 'success') {
-                // --- MEJORA DE UX POST-ENVÍO ---
-                formStatus.textContent = '¡Gracias! Su solicitud ha sido enviada exitosamente.';
-                formStatus.className += ' text-green-600';
-
-                // 1. Ocultamos el botón de envío para evitar clics duplicados
-                submitButton.style.display = 'none';
-
-                // 2. Deshabilitamos todos los campos del formulario para que el usuario no pueda modificarlos
-                // mientras ve el mensaje de éxito.
-                Array.from(form.elements).forEach(element => element.disabled = true);
-                
-                // 3. Después de 3 segundos, recargamos la página.
-                // El 'form.reset()' ya no es necesario porque la página se recargará a su estado inicial.
-                setTimeout(() => {
+            setTimeout(() => {
                 window.location.reload();
-                }, 3000);
+            }, 3000);
 
-            } else {
-                throw new Error(result.details || 'Ocurrió un error reportado por el servidor.');
-            }
             } catch (error) {
-            formStatus.textContent = 'Hubo un problema con el envío. Por favor, intente de nuevo.';
+            // Este bloque 'catch' ahora solo capturará errores de red muy graves (ej. sin conexión a internet).
+            formStatus.textContent = 'Hubo un problema de conexión. Por favor, revise su red e intente de nuevo.';
             formStatus.className += ' text-red-600';
-            console.error('Error en el envío del formulario:', error);
-            // Solo en caso de error, reactivamos el botón
+            console.error('Error de red en el envío del formulario:', error);
+            
+            // Reactivamos el botón para que el usuario pueda reintentar.
             submitButton.disabled = false;
             submitButton.textContent = 'Enviar Solicitud';
             }
-            // No hay 'finally' aquí porque el estado final del botón depende del éxito o error.
         });
     </script>
 </BaseLayout>
