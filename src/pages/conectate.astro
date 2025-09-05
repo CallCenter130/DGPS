@@ -105,7 +105,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </section>
 
     <script is:inline>
-        const gasUrl = 'https://script.google.com/macros/s/AKfycbz1-UxfZlclf2_t7h66Wa6-vL1Zas3aynLmYvEvdUFQSy1ymel6DS3VWmo5oufEz_a9/exec';
+        const gasUrl = 'https://script.google.com/macros/s/AKfycbzVE4JZuVSJBPBOEd7g-2aybP5K-bVNKT_ivxObOTZ1-PiVGzxytk63smsVXFfgcf28/exec';
         const apiToken = 'DgPs_SeCrEt_ApI_KeY_2024!#';
 
         document.addEventListener('submit', async (e) => {
@@ -127,39 +127,55 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             const data = Object.fromEntries(formData.entries());
             data.token = apiToken;
 
-            try {
-            // --- SOLUCIÓN CORS DEFINITIVA ---
-            // 1. Especificamos 'mode: "no-cors"' para evitar la comprobación pre-flight del navegador.
-            // 2. No se especifican cabeceras.
-            const response = await fetch(gasUrl, {
-                method: 'POST',
-                mode: 'no-cors', // <-- La clave para evitar "Failed to fetch"
-                body: JSON.stringify(data),
+            // --- MEJORA CLAVE: FORMATEAR FECHA Y HORA AQUÍ ---
+            if (data.tipocita === 'cita' && data.fechacita && data.horacita) {
+            // Formatear Fecha (ej: "12 de septiembre de 2025")
+            const fechaObj = new Date(data.fechacita + 'T00:00:00'); // Añadir T00:00:00 para evitar problemas de zona horaria
+            data.fechacita_formateada = fechaObj.toLocaleDateString('es-SV', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+                timeZone: 'UTC' // Usar UTC aquí para que la fecha no cambie
             });
 
-            // IMPORTANTE: Con 'no-cors', NO PODEMOS leer la respuesta del servidor.
-            // El objeto 'response' estará opaco (status=0, ok=false).
-            // Por lo tanto, no podemos verificar result.result === 'success'.
-            // Si la línea de 'await fetch' no lanzó un error, asumimos éxito.
-            
-            // Mostramos el mensaje de éxito al usuario. La prueba real es que la fila aparezca en la hoja.
-            formStatus.textContent = '¡Gracias! Su solicitud ha sido enviada exitosamente.';
-            formStatus.className += ' text-green-600';
+            // Formatear Hora (ej: "02:26 PM")
+            const [horas, minutos] = data.horacita.split(':');
+            const horaObj = new Date();
+            horaObj.setHours(horas, minutos, 0, 0);
+            data.horacita_formateada = horaObj.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+            }
+            // --- FIN DE LA MEJORA ---
 
-            Array.from(form.elements).forEach(element => element.disabled = true);
-            submitButton.style.display = 'none';
+            try {
+            // Volvemos al fetch que funcionaba, sin 'no-cors' para poder leer la respuesta
+            const response = await fetch(gasUrl, {
+                method: 'POST',
+                body: JSON.stringify(data),
+            });
             
-            setTimeout(() => {
-                window.location.reload();
-            }, 3000);
+            if (!response.ok) {
+                throw new Error(`Error del servidor: ${response.status} ${response.statusText}`);
+            }
+            
+            const result = await response.json();
 
+            if (result.result === 'success') {
+                formStatus.textContent = '¡Gracias! Su solicitud ha sido enviada exitosamente.';
+                formStatus.className += ' text-green-600';
+                Array.from(form.elements).forEach(element => element.disabled = true);
+                submitButton.style.display = 'none';
+                setTimeout(() => window.location.reload(), 3000);
+            } else {
+                throw new Error(result.details || 'Ocurrió un error reportado por el servidor.');
+            }
             } catch (error) {
-            // Este bloque 'catch' ahora solo capturará errores de red muy graves (ej. sin conexión a internet).
-            formStatus.textContent = 'Hubo un problema de conexión. Por favor, revise su red e intente de nuevo.';
+            formStatus.textContent = 'Hubo un problema con el envío. Por favor, intente de nuevo.';
             formStatus.className += ' text-red-600';
-            console.error('Error de red en el envío del formulario:', error);
-            
-            // Reactivamos el botón para que el usuario pueda reintentar.
+            console.error('Error en el envío del formulario:', error);
             submitButton.disabled = false;
             submitButton.textContent = 'Enviar Solicitud';
             }
