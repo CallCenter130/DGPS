@@ -105,67 +105,58 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </section>
 
     <script is:inline>
-      const gasUrl = 'https://script.google.com/macros/s/AKfycbzVE4JZuVSJBPBOEd7g-2aybP5K-bVNKT_ivxObOTZ1-PiVGzxytk63smsVXFfgcf28/exec';
-      const apiToken = 'DgPs_SeCrEt_ApI_KeY_2024!#';
+  const gasUrl = 'https://script.google.com/macros/s/AKfycbzVE4JZuVSJBPBOEd7g-2aybP5K-bVNKT_ivxObOTZ1-PiVGzxytk63smsVXFfgcf28/exec';
+  const apiToken = 'DgPs_SeCrEt_ApI_KeY_2024!#';
 
-      let formSubmitHandler;
+  document.addEventListener('submit', async (e) => {
+    // Solo actuamos si el envío proviene de nuestro formulario de contacto
+    if (e.target.id !== 'contact-form') {
+      return;
+    }
 
-      function setupContactForm() {
-        const form = document.getElementById('contact-form');
-        if (!form) return;
+    e.preventDefault();
+    const form = e.target;
+    const submitButton = form.querySelector('#submit-button');
+    const formStatus = document.querySelector('#form-status');
+    
+    submitButton.disabled = true;
+    submitButton.textContent = 'Enviando...';
+    formStatus.textContent = '';
+    formStatus.className = 'text-center mt-4 font-semibold'; // Reset class
 
-        if (formSubmitHandler) {
-          form.removeEventListener('submit', formSubmitHandler);
-        }
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    data.token = apiToken;
 
-        formSubmitHandler = async (e) => {
-          e.preventDefault();
-          const submitButton = document.getElementById('submit-button');
-          const formStatus = document.getElementById('form-status');
-          
-          submitButton.disabled = true;
-          submitButton.textContent = 'Enviando...';
-          formStatus.textContent = '';
-
-          const formData = new FormData(form);
-          const data = Object.fromEntries(formData.entries());
-          data.token = apiToken;
-
-          try {
-            const response = await fetch(gasUrl, {
-              method: 'POST',
-              body: JSON.stringify(data),
-            });
-            
-            if (!response.ok) {
-                throw new Error(`Error del servidor: ${response.status} ${response.statusText}`);
-            }
-
-            const result = await response.json();
-
-            if (result.result === 'success') {
-              formStatus.textContent = '¡Gracias! Su solicitud ha sido enviada exitosamente.';
-              formStatus.className = 'text-center mt-4 font-semibold text-green-600';
-              
-              setTimeout(() => {
-                window.location.reload();
-              }, 3000);
-
-            } else {
-              throw new Error(result.details || 'Ocurrió un error reportado por el servidor.');
-            }
-          } catch (error) {
-            formStatus.textContent = 'Hubo un problema con el envío. Por favor, intente de nuevo.';
-            formStatus.className = 'text-center mt-4 font-semibold text-red-600';
-            console.error('Error en el envío del formulario:', error);
-            submitButton.disabled = false;
-            submitButton.textContent = 'Enviar Solicitud';
-          }
-        };
-        
-        form.addEventListener('submit', formSubmitHandler);
-      }
+    try {
+      const response = await fetch(gasUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' }, // Es más robusto para GAS
+        body: JSON.stringify(data),
+      });
       
-      document.addEventListener('astro:page-load', setupContactForm);
-    </script>
+      if (!response.ok) {
+        throw new Error(`Error del servidor: ${response.status}`);
+      }
+      const result = await response.json();
+
+      if (result.result === 'success') {
+        formStatus.textContent = '¡Gracias! Su solicitud ha sido enviada exitosamente.';
+        formStatus.className += ' text-green-600';
+        form.reset(); // Resetea el formulario
+        // Opcional: Recargar la página después de un tiempo
+        // setTimeout(() => window.location.reload(), 3000);
+      } else {
+        throw new Error(result.details || 'Error reportado por el servidor.');
+      }
+    } catch (error) {
+      formStatus.textContent = 'Hubo un problema. Por favor, intente de nuevo.';
+      formStatus.className += ' text-red-600';
+      console.error('Error en el envío:', error);
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = 'Enviar Solicitud';
+    }
+  });
+</script>
 </BaseLayout>
