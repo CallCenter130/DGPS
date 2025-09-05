@@ -104,73 +104,53 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
     </section>
     <script is:inline>
-        const gasUrl = 'https://script.google.com/macros/s/AKfycbzn-mbfz9e4XujZeUUaPSHf9Tx6HlwSbWGj6uQSEzDBYTznP2w5edSCYr4R5ginALit/exec';
-        const apiToken = 'DgPs_SeCrEt_ApI_KeY_2024!#';
+  const gasUrl = 'https://script.google.com/macros/s/AKfycbwSdWUXviOBXWcyoZWCg_RUO1bWi-xH9W4o6llRoTNt1P6Mks4Calw-zh-w7q_9Q9XY/exec';
+  const apiToken = 'DgPs_SeCrEt_ApI_KeY_2024!#';
 
-        document.addEventListener('submit', async (e) => {
-            if (e.target.id !== 'contact-form') {
-            return;
-            }
+  document.addEventListener('submit', async (e) => {
+    if (e.target.id !== 'contact-form') {
+      return;
+    }
 
-            e.preventDefault();
-            const form = e.target;
-            const submitButton = form.querySelector('#submit-button');
-            const formStatus = document.querySelector('#form-status');
-            
-            submitButton.disabled = true;
-            submitButton.textContent = 'Enviando...';
-            formStatus.textContent = '';
-            formStatus.className = 'text-center mt-4 font-semibold';
+    e.preventDefault();
+    const form = e.target;
+    const submitButton = form.querySelector('#submit-button');
+    const formStatus = document.querySelector('#form-status');
+    
+    submitButton.disabled = true;
+    submitButton.textContent = 'Enviando...';
+    formStatus.textContent = '';
+    formStatus.className = 'text-center mt-4 font-semibold';
 
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
-            data.token = apiToken;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    data.token = apiToken;
 
-            if (data.tipocita === 'cita' && data.fechacita && data.horacita) {
-            const fechaObj = new Date(data.fechacita + 'T00:00:00');
-            data.fechacita_formateada = fechaObj.toLocaleDateString('es-SV', {
-                day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC'
-            });
-            const [horas, minutos] = data.horacita.split(':');
-            const horaObj = new Date();
-            horaObj.setHours(horas, minutos, 0, 0);
-            data.horacita_formateada = horaObj.toLocaleTimeString('en-US', {
-                hour: '2-digit', minute: '2-digit', hour12: true
-            });
-            }
+    try {
+      await fetch(gasUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify(data),
+      });
 
-            try {
-            // --- SOLUCIÓN CORS DEFINITIVA Y CORRECTA ---
-            // Se utiliza 'mode: "no-cors"' para garantizar el envío sin bloqueos.
-            await fetch(gasUrl, {
-                method: 'POST',
-                mode: 'no-cors', // Previene el error 'Failed to fetch'
-                body: JSON.stringify(data),
-            });
+      formStatus.textContent = '¡Gracias! Su solicitud ha sido enviada exitosamente.';
+      formStatus.className += ' text-green-600';
 
-            // ¡IMPORTANTE! Se elimina la comprobación 'if (!response.ok)' porque
-            // con 'mode: no-cors', la respuesta siempre tiene status 0 y ok: false.
-            // Si la línea de 'await fetch' no lanzó una excepción, asumimos que tuvo éxito.
-            
-            formStatus.textContent = '¡Gracias! Su solicitud ha sido enviada exitosamente.';
-            formStatus.className += ' text-green-600';
+      Array.from(form.elements).forEach(element => element.disabled = true);
+      submitButton.style.display = 'none';
+      
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
 
-            Array.from(form.elements).forEach(element => element.disabled = true);
-            submitButton.style.display = 'none';
-            
-            setTimeout(() => {
-                window.location.reload();
-            }, 3000);
-
-            } catch (error) {
-            // Este bloque solo capturará errores graves de red (ej. sin conexión a internet).
-            formStatus.textContent = 'Hubo un problema de conexión. Por favor, revise su red e intente de nuevo.';
-            formStatus.className += ' text-red-600';
-            console.error('Error de red en el envío:', error);
-            
-            submitButton.disabled = false;
-            submitButton.textContent = 'Enviar Solicitud';
-            }
-        });
-    </script>
+    } catch (error) {
+      formStatus.textContent = 'Hubo un problema de conexión. Por favor, revise su red e intente de nuevo.';
+      formStatus.className += ' text-red-600';
+      console.error('Error de red en el envío:', error);
+      
+      submitButton.disabled = false;
+      submitButton.textContent = 'Enviar Solicitud';
+    }
+  });
+</script>
 </BaseLayout>
