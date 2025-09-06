@@ -1,9 +1,13 @@
 ---
-import { formatUrl } from '../utils/url.ts';
+// src/components/Header.astro
+import Link from './Link.astro';
+
 const pathname = new URL(Astro.request.url).pathname;
 
+// He movido menuItems aquí para que el componente sea autocontenido.
+// Asegúrate de que estas sean las URLs correctas para tu header.
 const menuItems = [
-    { name: 'Inicio', url: '/' },
+    { name: 'Inicio', url: '' },
     { name: 'Riesgo Psicosocial', url: '/RiesgoPsicosocial' },
     { name: 'Sistema SNNAT', url: '/sistema-snnat' },
     { name: 'Seguridad y Salud Ocupacional', url: '/sso' },
@@ -11,56 +15,74 @@ const menuItems = [
     { name: 'Generadores de Vapor', url: '/generadores-vapor' },
     { name: 'Formación', url: '/formacion' },
 ];
+
+const base = import.meta.env.BASE_URL;
 ---
-<header x-data="{ mobileMenuOpen: false }" class="bg-primary text-white shadow-md sticky top-0 z-50">
+
+<!-- 1. El 'x-data' define el estado. 'x-cloak' previene parpadeos. -->
+<header x-data="{ mobileMenuOpen: false }" x-cloak class="bg-primary text-white shadow-md sticky top-0 z-50">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-20">
+            
+            <Link href="/" class="flex-shrink-0">
+                <img src=`${base}/images/logomtps.svg` alt="Logo MTPS" class="h-12 w-auto transition-transform duration-300 hover:scale-105" />
+            </Link>
 
-            <a href={formatUrl('/')} class="flex-shrink-0">
-                <img src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/images/logomtps.svg`} alt="Logo de DGPS Consultores" class="h-12 w-auto transition-transform duration-300 hover:scale-105" />
-            </a>
-
+            <!-- Menú de Escritorio -->
             <nav class="hidden md:flex items-center space-x-6">
                 {menuItems.map(item => {
-                    const itemUrl = formatUrl(item.url);
-                    let isActive = false;
-                    if (item.url === '/') {
-                        isActive = pathname === itemUrl;
-                    } else {
-                        isActive = pathname.startsWith(itemUrl);
-                    }
+                    const itemFullPath = new URL(item.url, new URL(base, Astro.site)).pathname;
+                    const isActive = pathname.startsWith(itemFullPath) && item.url !== '/' || pathname === base && item.url === '/';
                     return (
-                        <a 
-                            href={itemUrl}
+                        <Link 
+                            href={item.url}
                             class:list={[
                                 "text-sm font-semibold uppercase tracking-wide transition-colors duration-300",
                                 isActive ? "text-accent" : "hover:text-accent"
                             ]}
                         >
                             {item.name}
-                        </a>
+                        </Link>
                     )
                 })}
             </nav>
 
             <div class="hidden md:flex items-center space-x-4">
-                 <a href={formatUrl('/conectate')} class="bg-accent text-primary font-bold py-2 px-4 rounded-md hover:bg-yellow-600 transition-colors duration-300">
+                 <Link href="/conectate" class="bg-accent text-primary font-bold py-2 px-4 rounded-md hover:bg-yellow-600 transition-colors duration-300">
                     Conéctate
-                </a>
+                </Link>
             </div>
 
+            <!-- Botón del Menú Móvil -->
             <div class="md:hidden flex items-center">
+                <!-- 2. El @click cambia el estado 'mobileMenuOpen' -->
                 <button @click="mobileMenuOpen = !mobileMenuOpen" class="inline-flex items-center justify-center p-2 rounded-md">
-                    <svg x-show="!mobileMenuOpen" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h4" /></svg>
-                    <svg x-show="mobileMenuOpen" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    <span class="sr-only">Abrir menú principal</span>
+                    <svg x-show="!mobileMenuOpen" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h4" /></svg>
+                    <svg x-show="mobileMenuOpen" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
             </div>
 
         </div>
     </div>
 
-    <!-- Panel Menú Móvil -->
-    <div x-show="mobileMenuOpen" x-transition class="md:hidden">
-        {/* ... (Aquí también se podría aplicar la misma lógica para el menú móvil) ... */}
+    <!-- Panel del Menú Móvil (el "slider") -->
+    <!-- 3. 'x-show' muestra/oculta este panel basado en el estado 'mobileMenuOpen' -->
+    <div x-show="mobileMenuOpen" x-transition class="md:hidden border-t border-gray-700">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            {menuItems.map(item => (
+                <Link 
+                    href={item.url}
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700"
+                >
+                    {item.name}
+                </Link>
+            ))}
+            <Link 
+                href="/conectate"
+                class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">
+                Conéctate
+            </Link>
+        </div>
     </div>
 </header>

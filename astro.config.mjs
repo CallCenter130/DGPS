@@ -10,12 +10,12 @@ import icon from 'astro-icon';
 export default defineConfig({
   // --- Configuración para GitHub Pages (la que ya funciona) ---
   site: 'https://callcenter130.github.io', 
-  base: '/DGPS/',
+  base: '/DGPS',
 
   build: {
     format: 'directory'
 },
-  trailingSlash: 'always',
+  trailingSlash: 'never',
   // -----------------------------------------------------------
 
   integrations: [//sitemap(), // <-- Integración de sitemap añadida

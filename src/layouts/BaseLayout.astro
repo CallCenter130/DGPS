@@ -3,6 +3,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Sidebar from '../components/Sidebar.astro';
 import '../styles/global.css'; 
+import { ViewTransitions } from 'astro:transitions';
 
 export interface Props { title: string; description: string; }
 const { title, description } = Astro.props;
@@ -21,9 +22,9 @@ const faviconUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/favicon.svg`;
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body class:list={["bg-light text-dark font-sans antialiased", isEmbed && "h-screen overflow-hidden"]}>
-    
     {isEmbed ? (
         // MODO EMBEBIDO: Layout tipo Aplicación/Dashboard
         <div x-data="{ isSidebarOpen: true }" class="flex h-screen bg-gray-100">
@@ -46,6 +47,14 @@ const faviconUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/favicon.svg`;
             <Footer />
         </div>
     )}
-
+<script is:inline>
+        document.addEventListener('astro:after-swap', () => {
+            // Esta línea le dice a Alpine.js que vuelva a inicializar
+            // todos los componentes en la nueva página.
+            if (window.Alpine) {
+                window.Alpine.start();
+            }
+        });
+    </script>
 </body>
 </html>

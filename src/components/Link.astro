@@ -1,0 +1,32 @@
+---
+// src/components/Link.astro (Versión Final Verificada)
+
+interface Props {
+  href: string;
+  embed?: boolean;
+  class?: string;
+  [key:string]: any;
+}
+
+const { href, embed = false, class: className, ...rest } = Astro.props;
+
+const base = import.meta.env.BASE_URL;
+
+// Lógica robusta para construir la URL:
+// 1. Asegura que 'base' termine con '/'
+const normalizedBase = base.endsWith('/') ? base : `${base}/`;
+// 2. Asegura que 'href' no empiece con '/'
+const normalizedHref = href.startsWith('/') ? href.slice(1) : href;
+
+// Une las partes para formar la ruta completa, ej: /DGPS/riesgo-psicosocial/
+let finalHref = `${normalizedBase}${normalizedHref}`;
+
+// Añade el parámetro ?embed=true si es necesario
+if (embed) {
+  finalHref = `${finalHref}?embed=true`;
+}
+---
+
+<a href={finalHref} class:list={[className]} {...rest}>
+  <slot />
+</a>
