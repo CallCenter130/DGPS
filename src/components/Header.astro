@@ -7,13 +7,13 @@ const pathname = new URL(Astro.request.url).pathname;
 // He movido menuItems aquí para que el componente sea autocontenido.
 // Asegúrate de que estas sean las URLs correctas para tu header.
 const menuItems = [
-    { name: 'Inicio', url: '/' },
-    { name: 'Riesgo Psicosocial', url: '/RiesgoPsicosocial/' },
-    { name: 'Sistema SNNAT', url: '/sistema-snnat/' },
-    { name: 'Seguridad y Salud Ocupacional', url: '/sso/' },
-    { name: 'Peritos y Empresas Acreditadas', url: '/peritos/' },
-    { name: 'Generadores de Vapor', url: '/generadores-vapor/' },
-    { name: 'Formación', url: '/formacion/' },
+    { name: 'Inicio', url: '' },
+    { name: 'Riesgo Psicosocial', url: '//RiesgoPsicosocial' },
+    { name: 'Sistema SNNAT', url: '//sistema-snnat' },
+    { name: 'Seguridad y Salud Ocupacional', url: '//sso' },
+    { name: 'Peritos y Empresas Acreditadas', url: '//peritos' },
+    { name: 'Generadores de Vapor', url: '//generadores-vapor' },
+    { name: 'Formación', url: '//formacion' },
 ];
 
 const base = import.meta.env.BASE_URL;
@@ -24,15 +24,15 @@ const base = import.meta.env.BASE_URL;
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-20">
             
-            <Link href="/" class="flex-shrink-0">
-                <img src=`${base}images/logomtps.svg` alt="Logo MTPS" class="h-12 w-auto transition-transform duration-300 hover:scale-105" />
+            <Link href="" class="flex-shrink-0">
+                <img src=`${base}/images/logomtps.svg` alt="Logo MTPS" class="h-12 w-auto transition-transform duration-300 hover:scale-105" />
             </Link>
 
             <!-- Menú de Escritorio -->
             <nav id="main-header-nav" class="hidden md:flex items-center space-x-6">
                 {menuItems.map(item => {
                     const itemFullPath = new URL(item.url, new URL(base, Astro.site)).pathname;
-                    const isActive = pathname.startsWith(itemFullPath) && item.url !== '/' || pathname === base && item.url === '/';
+                    const isActive = pathname.startsWith(itemFullPath) && item.url !== '' || pathname === base && item.url === '';
                     return (
                         <Link 
                             href={item.url}
@@ -48,7 +48,7 @@ const base = import.meta.env.BASE_URL;
             </nav>
 
             <div class="hidden md:flex items-center space-x-4">
-                 <Link href="/conectate/" class="bg-accent text-primary font-bold py-2 px-4 rounded-md hover:bg-yellow-600 transition-colors duration-300">
+                 <Link href="//conectate" class="bg-accent text-primary font-bold py-2 px-4 rounded-md hover:bg-yellow-600 transition-colors duration-300">
                     Conéctate
                 </Link>
             </div>
@@ -79,7 +79,7 @@ const base = import.meta.env.BASE_URL;
                 </Link>
             ))}
             <Link 
-                href="/conectate/"
+                href="//conectate"
                 class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">
                 Conéctate
             </Link>

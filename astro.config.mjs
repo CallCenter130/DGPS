@@ -7,7 +7,7 @@ import icon from 'astro-icon';
 
 export default defineConfig({
   site: 'https://callcenter130.github.io', 
-  //base: '/DGPS',
+  base: '/DGPS',
 
   build: {
     format: 'directory'
@@ -15,7 +15,7 @@ export default defineConfig({
   
   // ¡CAMBIO CLAVE AQUÍ!
   // 'directory' format funciona mejor con 'always'.
-  trailingSlash: 'always', 
+  trailingSlash: 'never', 
 
   integrations: [
     tailwind(),
