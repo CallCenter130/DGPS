@@ -7,26 +7,15 @@ interface Props {
   class?: string;
   [key:string]: any;
 }
-
 const { href, embed = false, class: className, ...rest } = Astro.props;
-
 const base = import.meta.env.BASE_URL;
 
-// Lógica robusta para construir la URL:
-// 1. Asegura que 'base' termine con '/'
-const normalizedBase = base.endsWith('/') ? base : `${base}/`;
-// 2. Asegura que 'href' no empiece con '/'
-const normalizedHref = href.startsWith('/') ? href.slice(1) : href;
+// new URL() construye la ruta completa respetando 'base'
+// y Astro se encargará de añadir el trailing slash según la configuración.
+const finalHref = new URL(href, Astro.site).pathname;
 
-// Une las partes para formar la ruta completa, ej: /DGPS/riesgo-psicosocial/
-let finalHref = `${normalizedBase}${normalizedHref}`;
-
-// Añade el parámetro ?embed=true si es necesario
-if (embed) {
-  finalHref = `${finalHref}?embed=true`;
-}
+const finalUrl = embed ? `${finalHref}?embed=true` : finalHref;
 ---
-
-<a href={finalHref} class:list={[className]} {...rest}>
+<a href={finalUrl} class:list={[className]} {...rest}>
   <slot />
 </a>

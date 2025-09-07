@@ -8,3 +8,13 @@
     background-size: cover;
     background-position: center;
 }
+
+.tutorial-highlight {
+  position: relative;
+  z-index: 101; /* Debe estar por encima del overlay oscuro */
+  box-shadow: 0 0 0 4px #FFC107, 0 0 15px rgba(0,0,0,0.5); /* Usando un color de acento, puedes cambiarlo */
+  border-radius: 0.5rem; /* 8px */
+  transition: box-shadow 0.3s ease-in-out;
+  /* Importante para que el overlay oscuro no lo cubra */
+  background-color: inherit; 
+}

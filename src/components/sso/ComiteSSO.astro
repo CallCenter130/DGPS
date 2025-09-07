@@ -193,25 +193,16 @@ const sedesRegionales = [
                     <li><strong>Pago en Efectivo:</strong> Puede realizar el pago en efectivo. Siga las indicaciones según corresponda la sede donde realice el trámite.</li>
                  </ul>
                  <h4>Números Telefónicos de Sedes Regionales y Departamentales</h4>
-                <div class="overflow-x-auto mt-6">
-                    <table class="min-w-full text-left text-sm">
-                        <thead class="bg-gray-100 font-semibold">
-                            <tr>
-                                <th class="p-2 border">Departamento</th>
-                                <th class="p-2 border">Número telefónico</th>
-                                <th class="p-2 border">Ubicación</th>
-                            </tr>
-                        </thead>
-                         <tbody>
-                            {sedesRegionales.map((sede, index) => (
-                                <tr class:list={[index % 2 !== 0 ? 'bg-white' : 'bg-gray-50']}>
-                                    <td class="p-2 border">{sede.depto}</td>
-                                    <td class="p-2 border">{sede.tel}</td>
-                                    <td class="p-2 border">{sede.ubi}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+
+                <div class="w-full aspect-video rounded-lg shadow-inner overflow-hidden">
+                <!-- 2. El iframe se hace más ancho que el contenedor y se posiciona -->
+                <iframe 
+                    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS4zRlRmZWGplZWS7CmSAhvFIU8sIQyQNt56F3TMngM-YrrjbizLvhPCpObGcT1fNdLh-XB0eU6JeiC/pubhtml?widget=true&amp;headers=false"" 
+                    class="w-[150%] h-full scale-[1.1867] origin-top-left" 
+                    allowfullscreen="" 
+                    loading="lazy"
+                    title="Sedes Regionales y Departamentales">
+                </iframe>
                 </div>
             </div>
         </div>

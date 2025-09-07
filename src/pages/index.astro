@@ -55,10 +55,10 @@ import Link from '../components/Link.astro';
         <p class="mt-4 text-lg text-gray-600">Acceda directamente a nuestros sistemas y programas de gestión.</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div id="servicios-link" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
   <!-- Tarjeta 1: Riesgo Psicosocial -->
   <Link 
-    href="/RiesgoPsicosocial/" 
+    href="//RiesgoPsicosocial" 
     class="block bg-white p-8 rounded-lg border border-gray-200 hover:border-primary hover:shadow-lg transition-all duration-300"
   >
     <FeatureIcon icon="brain" />
@@ -68,7 +68,7 @@ import Link from '../components/Link.astro';
 
       <!-- Tarjeta 2: SSO -->
       <Link 
-        href="/sso/" 
+        href="//sso" 
         class="block bg-white p-8 rounded-lg border border-gray-200 hover:border-primary hover:shadow-lg transition-all duration-300"
       >
         <FeatureIcon icon="shield-check" />
@@ -78,7 +78,7 @@ import Link from '../components/Link.astro';
 
       <!-- Tarjeta 3: SNNAT -->
       <Link 
-        href="/sistema-snnat/" 
+        href="//sistema-snnat" 
         class="block bg-white p-8 rounded-lg border border-gray-200 hover:border-primary hover:shadow-lg transition-all duration-300"
       >
         <FeatureIcon icon="gavel" />
@@ -120,27 +120,37 @@ import Link from '../components/Link.astro';
   <section class="bg-primary text-white">
     <div class="container mx-auto px-4 py-16">
       <h2 class="font-display text-3xl font-bold text-center mb-8">Enlaces Institucionales</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+      <div id="institucion-link" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
         
         <!-- 2. Reemplaza cada <a> con el componente <Link> -->
-        <Link href="/peritos/" class="bg-white/10 p-6 rounded-lg hover:bg-white/20 transition">
+        <Link href="//peritos" class="bg-white/10 p-6 rounded-lg hover:bg-white/20 transition">
             <p class="font-semibold">Peritos y Empresas Acreditadas</p>
         </Link>
         
-        <Link href="/generadores-vapor/" class="bg-white/10 p-6 rounded-lg hover:bg-white/20 transition">
+        <Link href="//generadores-vapor" class="bg-white/10 p-6 rounded-lg hover:bg-white/20 transition">
             <p class="font-semibold">Generadores de Vapor</p>
         </Link>
         
-        <Link href="/formacion/" class="bg-white/10 p-6 rounded-lg hover:bg-white/20 transition">
+        <Link href="//formacion" class="bg-white/10 p-6 rounded-lg hover:bg-white/20 transition">
             <p class="font-semibold">Centro de Normativas</p>
         </Link>
         
-        <Link href="/conectate/" class="bg-white/10 p-6 rounded-lg hover:bg-white/20 transition">
+        <Link href="//conectate" class="bg-white/10 p-6 rounded-lg hover:bg-white/20 transition">
             <p class="font-semibold">Contacto y Oficinas</p>
         </Link>
         
       </div>
     </div>
   </section>
+
+    <div class="container mx-auto text-center">
+      <br><br>  
+      <button
+            @click="$dispatch('start-tutorial')"
+            class="inline-block bg-accent text-primary font-bold py-3 px-6 rounded-md shadow-md hover:bg-yellow-600 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+        >
+            Reiniciar Tour Guiado
+        </button>
+    </div>
 
 </BaseLayout>

@@ -1,0 +1,121 @@
+---
+// src/components/Tutorial.astro
+const tutorialSteps = [
+  { title: "Bienvenido al Tour", content: "¡Hola! Te mostraremos rápidamente cómo navegar y usar las funciones clave de nuestro nuevo portal. Haz clic en 'Siguiente' para comenzar.", selector: null },
+  { title: "Navegación Principal", content: "Este es el menú principal. Desde aquí puedes acceder a todas las secciones informativas de nuestro sitio, como 'Riesgo Psicosocial' o 'Formación'.", selector: "#main-header-nav" },
+  { title: "Vista de Aplicación", content: "Algunas secciones, como 'Servicios y Gestiones', abren una vista de aplicación con un menú lateral. ¡Vamos a probarlo! Haz clic en una de las tarjetas de 'Servicios y Gestiones Principales'.", selector: "#servicios-link" },
+  { title: "Menú Lateral (Sidebar)", content: "¡Genial! Ahora estás en la vista de aplicación. Este menú te permite navegar rápidamente entre las diferentes herramientas y sistemas.", selector: "#main-sidebar" },
+  { title: "Expandir y Contraer", content: "Puedes expandir o contraer el menú para tener más espacio. ¡Inténtalo ahora!", selector: "#sidebar-toggle-button" },
+  { title: "¡Tour Completado!", content: "Has aprendido lo básico. Ahora puedes explorar el sitio por tu cuenta. Puedes reiniciar este tour desde el pie de página.", selector: null }
+];
+---
+<div 
+  x-data="tutorialController" 
+  x-show="isOpen" 
+  x-cloak
+  @start-tutorial.window="forceStartTutorial()"
+  @keydown.escape.window="closeTutorial()"
+  class="fixed inset-0 z-[100]"
+>
+    <!-- El HTML del modal no cambia, solo se limpia -->
+    <div x-show="isOpen" x-transition.opacity class="fixed inset-0 bg-black/60"></div>
+    <div class="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 w-[calc(100%-2rem)] max-w-sm p-6 bg-white rounded-lg shadow-2xl text-dark" x-show="isOpen" x-transition>
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="font-display text-xl font-bold text-primary" x-text="steps[currentStep].title"></h3>
+        <button @click="closeTutorial()" class="p-1 rounded-full hover:bg-gray-200 transition">
+          <svg class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+      <p class="text-gray-700 mb-6" x-text="steps[currentStep].content"></p>
+      <div class="flex justify-between items-center">
+        <div class="flex space-x-2">
+          {tutorialSteps.map((_, index) => (
+            <button 
+              @click=`goToStep(${index})`
+              class="h-2.5 w-2.5 rounded-full transition"
+              :class=`currentStep === ${index} ? 'bg-primary' : 'bg-gray-300 hover:bg-gray-400'`
+            ></button>
+          ))}
+        </div>
+        <div class="flex space-x-2">
+          <button 
+            x-show="currentStep > 0 && currentStep < totalSteps - 1" 
+            @click="prevStep()" 
+            class="font-semibold text-gray-600 px-4 py-2 rounded-md hover:bg-gray-100 transition"
+          >Anterior</button>
+          <button 
+            @click="nextStep()"
+            class="font-bold text-white bg-primary px-4 py-2 rounded-md hover:bg-opacity-80 transition"
+            x-text="currentStep < totalSteps - 1 ? 'Siguiente' : 'Finalizar'"
+          ></button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- 
+  CORRECCIÓN CLAVE:
+  - Usamos un solo script 'is:inline' para garantizar que se ejecute inmediatamente.
+  - 'define:vars' pasa los datos de Astro al script.
+  - El listener 'alpine:init' se asegura de que registremos nuestro controlador
+    ANTES de que Alpine intente usarlo. Esto resuelve el error "not defined".
+-->
+<script is:inline define:vars={{ tutorialSteps }}>
+  document.addEventListener('alpine:init', () => {
+    Alpine.data('tutorialController', () => ({
+      isOpen: false,
+      currentStep: 0,
+      steps: tutorialSteps, // La variable 'tutorialSteps' está disponible aquí gracias a define:vars
+      get totalSteps() { return this.steps.length },
+      highlightedElement: null,
+      init() {
+        setTimeout(() => {
+          if (!localStorage.getItem('tutorialCompleted')) {
+            this.open();
+          }
+        }, 1500);
+      },
+      open() {
+        this.isOpen = true;
+        this.currentStep = 0;
+        this.$nextTick(() => this.updateHighlight());
+      },
+      forceStartTutorial() {
+        localStorage.removeItem('tutorialCompleted');
+        this.open();
+      },
+      closeTutorial() {
+        this.isOpen = false;
+        localStorage.setItem('tutorialCompleted', 'true');
+        this.removeHighlight();
+      },
+      nextStep() {
+        if (this.currentStep < this.totalSteps - 1) this.currentStep++;
+        else this.closeTutorial();
+        this.$nextTick(() => this.updateHighlight());
+      },
+      prevStep() {
+        if (this.currentStep > 0) this.currentStep--;
+        this.$nextTick(() => this.updateHighlight());
+      },
+      goToStep(index) {
+        this.currentStep = index;
+        this.$nextTick(() => this.updateHighlight());
+      },
+      removeHighlight() {
+        if (this.highlightedElement) {
+          this.highlightedElement.classList.remove('tutorial-highlight');
+          this.highlightedElement = null;
+        }
+      },
+      updateHighlight() {
+        this.removeHighlight();
+        const selector = this.steps[this.currentStep]?.selector;
+        if (selector) {
+          this.highlightedElement = document.querySelector(selector);
+          if (this.highlightedElement) this.highlightedElement.classList.add('tutorial-highlight');
+        }
+      }
+    }));
+  });
+</script>
