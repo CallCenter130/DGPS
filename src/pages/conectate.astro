@@ -95,7 +95,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                             <div><label for="company" class="block text-sm font-medium text-gray-700">Empresa</label><input type="text" name="company" id="company" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"></div>
                             <div><label for="email" class="block text-sm font-medium text-gray-700">Email Corporativo</label><input type="email" name="email" id="email" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"></div>
                             <div><label for="phone" class="block text-sm font-medium text-gray-700">Teléfono</label><input type="tel" name="phone" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"></div>
-                            <div class="md:col-span-2"><label for="interest" class="block text-sm font-medium text-gray-700">Área de Interés</label><select id="interest" name="interest" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"><option>Consulta General</option><option>Riesgo Psicosocial</option><option>Sistema SNNAT</option><option>Seguridad y Salud Ocupacional</option><option>Peritos y Acreditaciones</option><option>Generadores de Vapor</option></select></div>
+                            <div class="md:col-span-2"><label for="interest" class="block text-sm font-medium text-gray-700">Área de Interés</label><select id="interest" name="interest" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"><option>Consulta General</option><!--option>Riesgo Psicosocial</option--><option>Sistema SNNAT</option><option>Seguridad y Salud Ocupacional</option><option>Peritos y Acreditaciones</option><option>Generadores de Vapor</option></select></div>
                             <div class="md:col-span-2"><label for="message" class="block text-sm font-medium text-gray-700">Mensaje / Motivo de la Cita</label><textarea id="message" name="message" rows="4" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"></textarea></div>
                         </div>
                         <div class="text-center mt-6">
@@ -127,14 +127,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             </div>
         </div>
     </section>
-    <script is:inline>
+   <script is:inline>
   const gasUrl = 'https://script.google.com/macros/s/AKfycbzPv3nfOkT8Ogwuj87JTvviQqeAzJpddgavtr6uHOWGsazrXi4pw6d2Gtd9FKQjNcXk/exec';
   const apiToken = 'DgPs_SeCrEt_ApI_KeY_2024!#';
 
   document.addEventListener('submit', async (e) => {
-    if (e.target.id !== 'contact-form') {
-      return;
-    }
+    if (e.target.id !== 'contact-form') return;
 
     e.preventDefault();
     const form = e.target;
@@ -151,26 +149,35 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     data.token = apiToken;
 
     try {
-      await fetch(gasUrl, {
+      // CORRECCIÓN #1: Eliminar 'mode: no-cors' y añadir cabeceras.
+      const response = await fetch(gasUrl, {
         method: 'POST',
-        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'text/plain;charset=utf-8', // Usar text/plain para evitar preflight de CORS
+        },
         body: JSON.stringify(data),
       });
 
-      formStatus.textContent = '¡Gracias! Su solicitud ha sido enviada exitosamente.';
-      formStatus.className += ' text-green-600';
+      // CORRECCIÓN #2: Leer y procesar la respuesta del servidor.
+      const result = await response.json();
 
-      Array.from(form.elements).forEach(element => element.disabled = true);
-      submitButton.style.display = 'none';
-      
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000);
+      if (result.result === 'success') {
+        formStatus.textContent = '¡Gracias! Su solicitud ha sido enviada exitosamente.';
+        formStatus.className += ' text-green-600';
+        
+        Array.from(form.elements).forEach(element => element.disabled = true);
+        submitButton.style.display = 'none';
+        
+        setTimeout(() => window.location.reload(), 3000);
+      } else {
+        // Muestra el error real que viene del servidor de Google
+        throw new Error(result.details || 'Ocurrió un error en el servidor.');
+      }
 
     } catch (error) {
-      formStatus.textContent = 'Hubo un problema de conexión. Por favor, revise su red e intente de nuevo.';
+      formStatus.textContent = `Hubo un problema con el envío: ${error.message}`;
       formStatus.className += ' text-red-600';
-      console.error('Error de red en el envío:', error);
+      console.error('Error en el envío:', error);
       
       submitButton.disabled = false;
       submitButton.textContent = 'Enviar Solicitud';
