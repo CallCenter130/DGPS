@@ -132,55 +132,63 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   const apiToken = 'DgPs_SeCrEt_ApI_KeY_2024!#';
 
   document.addEventListener('submit', async (e) => {
-    if (e.target.id !== 'contact-form') return;
+    // Solo actuar sobre nuestro formulario de contacto
+    if (e.target.id !== 'contact-form') {
+      return;
+    }
 
     e.preventDefault();
     const form = e.target;
     const submitButton = form.querySelector('#submit-button');
     const formStatus = document.querySelector('#form-status');
     
-    submitButton.disabled = true;
-    submitButton.textContent = 'Enviando...';
-    formStatus.textContent = '';
-    formStatus.className = 'text-center mt-4 font-semibold';
+    // Deshabilitar botón y limpiar estado
+    if (submitButton) submitButton.disabled = true;
+    if (submitButton) submitButton.textContent = 'Enviando...';
+    if (formStatus) formStatus.textContent = '';
+    if (formStatus) formStatus.className = 'text-center mt-4 font-semibold';
 
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
     data.token = apiToken;
 
     try {
-      // CORRECCIÓN #1: Eliminar 'mode: no-cors' y añadir cabeceras.
+      // Usar 'text/plain' para evitar la solicitud de "preflight" de CORS, que a veces falla con GAS.
       const response = await fetch(gasUrl, {
         method: 'POST',
         headers: {
-          'Content-Type': 'text/plain;charset=utf-8', // Usar text/plain para evitar preflight de CORS
+          'Content-Type': 'text/plain;charset=utf-8',
         },
         body: JSON.stringify(data),
       });
-
-      // CORRECCIÓN #2: Leer y procesar la respuesta del servidor.
+      
+      // La respuesta de nuestro GAS siempre será JSON, así que la procesamos.
       const result = await response.json();
 
       if (result.result === 'success') {
-        formStatus.textContent = '¡Gracias! Su solicitud ha sido enviada exitosamente.';
-        formStatus.className += ' text-green-600';
-        
+        if (formStatus) formStatus.textContent = '¡Gracias! Su solicitud ha sido enviada exitosamente.';
+        if (formStatus) formStatus.className += ' text-green-600';
+
+        // Deshabilitar formulario y ocultar botón tras el éxito
         Array.from(form.elements).forEach(element => element.disabled = true);
-        submitButton.style.display = 'none';
+        if (submitButton) submitButton.style.display = 'none';
         
+        // Recargar la página después de 3 segundos
         setTimeout(() => window.location.reload(), 3000);
+
       } else {
-        // Muestra el error real que viene del servidor de Google
+        // Si GAS devuelve un error (ej. "Token inválido"), lo mostramos.
         throw new Error(result.details || 'Ocurrió un error en el servidor.');
       }
 
     } catch (error) {
-      formStatus.textContent = `Hubo un problema con el envío: ${error.message}`;
-      formStatus.className += ' text-red-600';
+      if (formStatus) formStatus.textContent = `Hubo un problema con el envío: ${error.message}`;
+      if (formStatus) formStatus.className += ' text-red-600';
       console.error('Error en el envío:', error);
       
-      submitButton.disabled = false;
-      submitButton.textContent = 'Enviar Solicitud';
+      // Volver a habilitar el botón en caso de error
+      if (submitButton) submitButton.disabled = false;
+      if (submitButton) submitButton.textContent = 'Enviar Solicitud';
     }
   });
 </script>
