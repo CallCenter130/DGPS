@@ -128,65 +128,115 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
     </section>
    <script is:inline>
-  const gasUrl = 'https://script.google.com/macros/s/AKfycbzGlOQjn8ro5klLmfWSQCUOqkRac-LJQ3CF8rjeune4DQd1uO1F0exqXMQLVpI4YN-g/exec';
+  // =================================================================================
+  // SCRIPT DE ENVÍO DE FORMULARIO PARA conectate.astro
+  // =================================================================================
+
+  // --- 1. CONFIGURACIÓN ---
+  // URL de la Web App de Google Apps Script. Asegúrate de que esta sea la URL
+  // de tu ÚLTIMA implementación.
+  const gasUrl = 'https://script.google.com/macros/s/AKfycbzPv3nfOkT8Ogwuj87JTvviQqeAzJpddgavtr6uHOWGsazrXi4pw6d2Gtd9FKQjNcXk/exec';
+  
+  // Token secreto para autenticar la solicitud. Debe coincidir EXACTAMENTE
+  // con el que está en tu código de Google Apps Script.
   const apiToken = 'DgPs_SeCrEt_ApI_KeY_2024!#';
 
+  // --- 2. LÓGICA PRINCIPAL ---
+  // Se adjunta un "escuchador" al documento que se activará cada vez
+  // que se intente enviar CUALQUIER formulario en la página.
   document.addEventListener('submit', async (e) => {
-    // Solo actuar sobre nuestro formulario de contacto
+    
+    // Filtro: Solo nos interesa el formulario con id="contact-form".
+    // Si el envío no viene de nuestro formulario, ignoramos el evento.
     if (e.target.id !== 'contact-form') {
       return;
     }
 
+    console.log('[DEBUG] 1. Evento "submit" detectado en #contact-form.');
+    
+    // Prevenimos el comportamiento por defecto del navegador (que recargaría la página).
     e.preventDefault();
+
+    // --- 3. PREPARACIÓN DE LA INTERFAZ DE USUARIO ---
     const form = e.target;
     const submitButton = form.querySelector('#submit-button');
     const formStatus = document.querySelector('#form-status');
     
-    // Deshabilitar botón y limpiar estado
+    // Cambiamos el estado visual para que el usuario sepa que algo está pasando.
     if (submitButton) submitButton.disabled = true;
     if (submitButton) submitButton.textContent = 'Enviando...';
     if (formStatus) formStatus.textContent = '';
     if (formStatus) formStatus.className = 'text-center mt-4 font-semibold';
-
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
-    data.token = apiToken;
-
+    
+    // --- 4. CAPTURA Y ENVÍO DE DATOS ---
     try {
-      // Usar 'text/plain' para evitar la solicitud de "preflight" de CORS, que a veces falla con GAS.
+      console.log('[DEBUG] 2. Creando objeto de datos del formulario...');
+      
+      // Capturamos todos los datos de los campos del formulario.
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      
+      // Añadimos nuestro token secreto a los datos que se enviarán.
+      data.token = apiToken;
+      
+      console.log('[DEBUG] 3. Datos listos para enviar (como objeto JS):', data);
+      
+      // Convertimos el objeto de datos a una cadena de texto en formato JSON.
+      const jsonData = JSON.stringify(data);
+      console.log('[DEBUG] 4. Datos convertidos a string JSON:', jsonData);
+
+      console.log(`[DEBUG] 5. Realizando llamada 'fetch' a la API de Google...`);
+      
+      // Enviamos los datos. 'text/plain' es usado para evitar una solicitud extra (preflight)
+      // que a veces causa problemas de CORS con Google Apps Script.
       const response = await fetch(gasUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'text/plain;charset=utf-8',
         },
-        body: JSON.stringify(data),
+        body: jsonData,
       });
-      
-      // La respuesta de nuestro GAS siempre será JSON, así que la procesamos.
-      const result = await response.json();
 
+      console.log('[DEBUG] 6. Respuesta recibida del servidor. Código de Estado:', response.status);
+      
+      // Leemos la respuesta del servidor como texto.
+      const resultText = await response.text();
+      console.log('[DEBUG] 7. Respuesta del servidor (como texto plano):', resultText);
+      
+      // Intentamos convertir el texto de la respuesta a un objeto JSON.
+      const result = JSON.parse(resultText);
+      console.log('[DEBUG] 8. Respuesta parseada a JSON:', result);
+
+      // --- 5. MANEJO DE LA RESPUESTA ---
       if (result.result === 'success') {
+        // El servidor confirmó que todo salió bien.
+        console.log('[DEBUG] 9. ÉXITO: El servidor confirmó el guardado.');
+        
         if (formStatus) formStatus.textContent = '¡Gracias! Su solicitud ha sido enviada exitosamente.';
         if (formStatus) formStatus.className += ' text-green-600';
 
-        // Deshabilitar formulario y ocultar botón tras el éxito
+        // Deshabilitamos el formulario para prevenir envíos duplicados.
         Array.from(form.elements).forEach(element => element.disabled = true);
         if (submitButton) submitButton.style.display = 'none';
         
-        // Recargar la página después de 3 segundos
+        // Recargamos la página después de 3 segundos para limpiar todo.
         setTimeout(() => window.location.reload(), 3000);
 
       } else {
-        // Si GAS devuelve un error (ej. "Token inválido"), lo mostramos.
+        // El servidor respondió, pero indicó que hubo un error de lógica (ej. token inválido).
+        console.error('[DEBUG] 9. FALLO: El servidor devolvió un error de negocio.');
         throw new Error(result.details || 'Ocurrió un error en el servidor.');
       }
 
     } catch (error) {
+      // Este bloque se ejecuta si la llamada 'fetch' falla (ej. sin internet) o si el servidor
+      // devuelve un error que lanzamos en el bloque 'if' anterior.
+      console.error('[DEBUG] 10. ERROR CATASTRÓFICO capturado:', error);
+      
       if (formStatus) formStatus.textContent = `Hubo un problema con el envío: ${error.message}`;
       if (formStatus) formStatus.className += ' text-red-600';
-      console.error('Error en el envío:', error);
       
-      // Volver a habilitar el botón en caso de error
+      // Volvemos a habilitar el botón para que el usuario pueda intentarlo de nuevo.
       if (submitButton) submitButton.disabled = false;
       if (submitButton) submitButton.textContent = 'Enviar Solicitud';
     }
